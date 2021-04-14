@@ -1,0 +1,21 @@
+<nav>
+    <ul>
+
+        {% set currentPath = path(app.request.attributes.get('_route'),
+            app.request.attributes.get('_route_params')) %}
+
+        {# décommenter la condition pour que l'entete n'apparaisse pas si on est sur la page de login une fois les pages mises en place #}
+        {# {% if 'login' not in currentPath %} #}
+        {# TODO: ajouter les liens vers les controlleurs ou les pages #}
+        <li><a href="" title="Home">Villes</a></li>
+        <li><a href="" title="Home">Campus</a></li>
+
+
+        <li><a href="" title="Home">Accuei</a></li>
+        <li><a href="" title="Test">Mon profil</a></li>
+        <li><a href="" title="All series">Se déconnecter</a></li>
+        {# {% endif %} #}
+
+
+    </ul>
+</nav>
