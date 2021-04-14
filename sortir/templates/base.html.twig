@@ -9,13 +9,14 @@
     <title>{% block title %} Sortir ENI {% endblock %}</title>
 </head>
 <body>
-
-<div>
+{# entête du site #}
     <header>
+        <div class="container">
         {# insertion de l'entete #}
         {% block nav %}
             Mon bloc nav
         {% endblock %}
+        </div>
     </header>
 
     {# affichage des erreurs #}
@@ -26,14 +27,17 @@
             </div>
         {% endfor %}
     {% endfor %}
-
+{# contenu principal de chaque page #}
     <main>
-        {# insertion du contenu principal de la page #}
-        {% block content %}
-            mon block content
-        {% endblock %}
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
     </main>
-</div>
-
+{# pied-de-page du site #}
+    <footer>
+        <div class="container">
+            © Sortir {{ "now"|date("Y") }}
+        </div>
+    </footer>
 </body>
 </html>
