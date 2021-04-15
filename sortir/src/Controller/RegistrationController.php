@@ -36,9 +36,11 @@ class RegistrationController extends AbstractController
             $em = $this->getDoctrine()->getManager();
 
             foreach ($csv as $row) {
-                
+
                 $user = $this->get('serializer')->deserialize(json_encode($row), User::class, 'json', [
                     ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT => true]);
+                $password = $user->getPassword();
+                $user->setPassword($passwordEncoder->encodePassword($user, $password));
                 $em->persist($user);
             }
             $em->flush();
