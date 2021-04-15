@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container -md">
+    <h3>Ville</h3>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ ville.id }}</td>
+        </tr>
+        <tr>
+            <th>Nom</th>
+            <td>{{ ville.nom }}</td>
+        </tr>
+        <tr>
+            <th>CodePostal</th>
+            <td>{{ ville.codePostal }}</td>
+        </tr>
+        </tbody>
+    </table>
+<div class="container">
+    <a href="{{ path('ville_modifier', {'id': ville.id}) }}"class="btn btn-outline-primary">Modifier</a>
+       {{ include('ville/_supprimer_form.html.twig') }}
+</div>
+    <a href="{{ path('ville_indexVille') }}">Retour à la liste</a>
+</div>
+{% endblock %}
