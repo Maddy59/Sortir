@@ -14,6 +14,7 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset("css/app.css" ) }}">
+		<link rel="stylesheet" href="{{ asset("css/base.css" )}}"> {% block stylesheets %}{% endblock %}
 
     {# le favicon #}
     <link rel="icon" href="{{ asset('img/soiree-dj.png') }}">
@@ -21,6 +22,7 @@
 <body>
 {# entête du site #}
 <header>
+    <div class="container">
 
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
@@ -48,9 +50,7 @@
 {% endfor %}
 {# contenu principal de chaque page #}
 <main>
-    <div class="container">
         {% block body %}{% endblock %}
-    </div>
 </main>
 {# pied-de-page du site #}
 <footer >
@@ -58,5 +58,7 @@
         © Sortir - {{ "now"|date("Y") }}
     </div>
 </footer>
+    </div>
+
 </body>
 </html>
