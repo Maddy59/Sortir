@@ -77,9 +77,13 @@ class User implements UserInterface
     private $photo;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Sortie::class, mappedBy="participant")
+     * @ORM\ManyToMany(targetEntity=Sortie::class, mappedBy="participants")
      */
     private $sorties;
+ /**
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="organisateur")
+     */
+    private $sortiesCreees;
 
     /**
      * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="users")
@@ -277,6 +281,33 @@ class User implements UserInterface
     public function removeSortie(Sortie $sorty): self
     {
         if ($this->sorties->removeElement($sorty)) {
+            $sorty->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sortie[]
+     */
+    public function getSortiesCrees(): Collection
+    {
+        return $this->sortiesCreees;
+    }
+
+    public function addSortieCreee(Sortie $sorty): self
+    {
+        if (!$this->sortiesCreees->contains($sorty)) {
+            $this->sortiesCreees[] = $sorty;
+            $sorty->addParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSortieCreee(Sortie $sorty): self
+    {
+        if ($this->sortiesCreees->removeElement($sorty)) {
             $sorty->removeParticipant($this);
         }
 

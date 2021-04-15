@@ -6,6 +6,7 @@ use App\Repository\LieuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=LieuRepository::class)
@@ -45,8 +46,9 @@ class Lieu
     private $sorties;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="lieu")
+     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="lieux")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $ville;
 
@@ -148,5 +150,8 @@ class Lieu
         $this->ville = $ville;
 
         return $this;
+    }
+    public function __toString(){
+        return $this->nom;
     }
 }

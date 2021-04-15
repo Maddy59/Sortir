@@ -6,6 +6,7 @@ use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -20,26 +21,31 @@ class Sortie
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Un doux nom pour donner envie de participer ?")
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="On se rejoint quand ?")
      * @ORM\Column(type="datetime")
      */
     private $dateHeureDebut;
 
     /**
+     * @Assert\NotBlank(message="Durée, pleaaaase")
      * @ORM\Column(type="integer")
      */
     private $duree;
 
     /**
+     * @Assert\NotBlank(message="Il faut une date limite d'inscription")
      * @ORM\Column(type="date")
      */
     private $dateLimiteInscription;
 
     /**
+     * @Assert\NotBlank(message="Combien ?")
      * @ORM\Column(type="integer")
      */
     private $nbInscriptionsMax;
@@ -73,7 +79,7 @@ class Sortie
     private $participants;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sortiesCreees")
      * @ORM\JoinColumn(nullable=false)
      */
     private $organisateur;

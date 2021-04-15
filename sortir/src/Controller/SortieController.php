@@ -28,9 +28,13 @@ class SortieController extends AbstractController
 
         $sortieForm->handleRequest($request);
         if($sortieForm->isSubmitted()){
+
             $etatDefaut = new Etat();
             $etatDefaut->setLibelle('Créée');
             $sortie->setEtat($etatDefaut);
+            $entityManager->persist($etatDefaut);
+
+
 
             $entityManager->persist($sortie);
             $entityManager->flush();
