@@ -37,7 +37,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
     public function loadUserByUsername(string $PseudoOrEmail)
-    {
+    {   
         $entityManager = $this->getEntityManager();
 
         return $entityManager->createQuery(
