@@ -19,14 +19,14 @@ class AccueilController extends AbstractController
     {
 
         $user = $userRepository->findOneBy(['id'=>1]);
+        $sorties = $sortieRepository->findAll();
+//        $data = new SearchFormSortie();
+//        $form = $this->createForm(SearchFormSortie::class,$data);
 
-        $data = new SearchFormSortie();
-        $form = $this->createForm(SearchFormSortie::class,$data);
-
-        return $this->render('accueil/index.html.twig', [
+        return $this->render('accueil/accueil.html.twig', [
             'sorties' => $sorties,
             'user'=>$user,
-            'formSortie' => $form->createView(),
+//            'formSortie' => $form->createView(),
         ]);
     }
 
