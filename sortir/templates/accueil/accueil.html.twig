@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}  | Accueil {% endblock %}
+{% block title %} {{ parent() }} | Accueil {% endblock %}
 
 {% block body %}
 
@@ -8,7 +8,7 @@
         <ul class="me-2">
             <li><strong>Date du jour: {{ "now"|date("d/m/Y") }} </strong></li>
             {# ajouter le nom dynamiquement une fois les pages finies et les utilisateurs ajoutés #}
-            <li><strong>Participant: {% if app.user %}{{ app.user.pseudo }} {% endif %} Anonyme </strong></li>
+            <li><strong>Participant: {% if app.user %} {{ app.user.pseudo }} {% endif %} Anonyme </strong></li>
         </ul>
     </div>
 

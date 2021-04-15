@@ -12,6 +12,11 @@ use App\Entity\Sortie;
 class SearchData
 {
     /**
+     * @var int
+     */
+    public int $userId;
+
+    /**
      * @var Campus
      */
     public Campus $campus;

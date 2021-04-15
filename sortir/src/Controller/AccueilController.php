@@ -21,6 +21,7 @@ class AccueilController extends AbstractController
     {
 
         $user = $userRepository->findOneBy(['id' => 1]);
+
         $sorties = $sortieRepository->findAll();
         $data = new SearchData();
         $formSortie = $this->createForm(SearchFormSortie::class, $data);
@@ -28,7 +29,7 @@ class AccueilController extends AbstractController
         $formSortie->handleRequest($request);
 
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
-            $sorties = $sortieRepository->findSearch($data);
+            $sorties = $sortieRepository->findSearch($data, $user);
 
         }
 
