@@ -78,7 +78,6 @@ class SortieController extends AbstractController
         $sortie = $sortieRepository->find($id);
         $sortie->addParticipant($user);
         $entityManager->flush();
-
         $user = $userRepository->findOneBy(['id' => 1]);
 
         $sorties = $sortieRepository->findAll();
@@ -90,12 +89,40 @@ class SortieController extends AbstractController
 
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
             $sorties = $sortieRepository->findSearch($data, $user);
-
+        }
             return $this->render('accueil/accueil.html.twig', [
                 'sorties' => $sorties,
                 'user' => $user,
                 'formSortie' => $formSortie->createView(),
             ]);
-        }
     }
+
+    /**
+     * @Route("/desistement/{id}", name="desistement")
+     */
+    public function desistement($id, SortieRepository $sortieRepository, EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request): Response
+    {
+        $user = $this->getUser();
+        $sortie = $sortieRepository->find($id);
+        $sortie->removeParticipant($user);
+        $entityManager->flush();
+
+        $user = $userRepository->findOneBy(['id' => 1]);
+
+        $sorties = $sortieRepository->findAll();
+        $data = new SearchData();
+        $formSortie = $this->createForm(SearchFormSortie::class, $data);
+
+        $formSortie->handleRequest($request);
+
+        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
+            $sorties = $sortieRepository->findSearch($data, $user);
+        }
+            return $this->render('accueil/accueil.html.twig', [
+                'sorties' => $sorties,
+                'user' => $user,
+                'formSortie' => $formSortie->createView(),
+            ]);
+    }
+
 }
