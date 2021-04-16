@@ -3,18 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use League\Csv\Reader;
 use App\Form\RegistrationCsv;
 use App\Form\RegistrationForm;
 use App\Security\AppAuthenticator;
-use League\Csv\Reader;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -44,6 +45,7 @@ class RegistrationController extends AbstractController
                 $em->persist($user);
             }
             $em->flush();
+            $this->addFlash('succes', 'Utilisateur(s) ajouté(s).');
         }
         return $this->render('registration/registerCsv.html.twig', [
             'registrationCsv' => $form->createView(),
@@ -64,20 +66,14 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-
-            return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $authenticator,
-                'main'
-            );
+            return $this->redirectToRoute('accueil_accueil');
         }
 
         return $this->render('registration/registerForm.html.twig', [

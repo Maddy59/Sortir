@@ -1,64 +1,63 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %} Sortir ENI {% endblock %}</title>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>
+			{% block title %}
+				Sortir ENI
+			{% endblock %}
+		</title>
 
-    {# notre css #}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{ asset("css/app.css" ) }}">
+		{# notre css #}
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="{{ asset("css/app.css" ) }}">
 		<link rel="stylesheet" href="{{ asset("css/base.css" )}}"> {% block stylesheets %}{% endblock %}
 
-    {# le favicon #}
-    <link rel="icon" href="{{ asset('img/soiree-dj.png') }}">
-</head>
-<body>
-{# entête du site #}
-<header>
-    <div class="container">
+		{# le favicon #}
+		<link rel="icon" href="{{ asset('img/soiree-dj.png') }}">
+	</head>
+	<body>
+		{# entête du site #}
+		<header>
+			<div class="container">
 
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            {# insertion de l'entete #}
-            <h1>
-                <a class="navbar-brand px-3" href="{{ path('accueil_accueil') }}">
-                    <img src="{{ asset('img/soiree-dj.png') }}" alt="" width="30" height="24"
-                         class="d-inline-block align-text-top img-fluid">
-                    Sortir
-                </a>
-            </h1>
-            {% include('inc/nav.html.twig') %}
-        </div>
-    </nav>
+				<nav class="navbar navbar-expand-lg">
+					<div
+						class="container-fluid">
+						{# insertion de l'entete #}
+						<h1>
+							<a class="navbar-brand px-3" href="{{ path('accueil_accueil') }}">
+								<img src="{{ asset('img/soiree-dj.png') }}" alt="" width="30" height="24" class="d-inline-block align-text-top img-fluid">
+								Sortir
+							</a>
+						</h1>
+						{% include('inc/nav.html.twig') %}
+					</div>
+				</nav>
 
-</header>
+			</header>
 
-{# affichage des erreurs #}
-{% for label, messages in app.flashes %}
-    {% for message in messages %}
-        <div class="alert alert-{{ label }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endfor %}
-{# contenu principal de chaque page #}
-<main>
-        {% block body %}{% endblock %}
-</main>
-{# pied-de-page du site #}
-<footer >
-    <div class="nav-bar fixed-bottom bg-light text-center text-lg-start p-4">
-        © Sortir - {{ "now"|date("Y") }}
-    </div>
-</footer>
-    </div>
+			{# affichage des erreurs #}
+			{% for label, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-{{ label }}">
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endfor %}
+			{# contenu principal de chaque page #}
+			<main>
+				{% block body %}{% endblock %}
+			</main>
+			{# pied-de-page du site #}
+			<footer>
+				© Sortir -
+				{{ "now"|date("Y") }}
+			</footer>
+		</div>
 
-</body>
+	</body>
 </html>
