@@ -27,9 +27,6 @@ class Sortie
     private $nom;
 
     /**
-     * @Assert\DateTime()
-     * @var string A "Y-m-d H:i:s" formatted value
-     * @Assert\NotNull()
      * @Assert\NotBlank(message="Pouvez-vous renseigner une date ?")
      * * @Assert\Range(min = "now",
      * notInRangeMessage = "La date de votre activité doit être supérieure au {{ min }}.")
@@ -46,8 +43,6 @@ class Sortie
     private $duree;
 
     /**
-     * @Assert\Date()
-     * @Assert\NotNull()
      * @Assert\NotBlank(message="Pouvez-vous renseigner une date limite d'inscription ?")
      * @Assert\Range(min = "now", maxPropertyPath="dateHeureDebut",
      * notInRangeMessage = "La date limite d'inscription doit être supérieure au {{ min }} et ne pas dépasser la date de l'activité.")

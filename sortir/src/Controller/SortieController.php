@@ -36,7 +36,7 @@ class SortieController extends AbstractController
 
         $sortieForm->handleRequest($request);
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
-
+            dd($sortieForm->getData());
             $etatDefaut = $etatRepository->find(1);
             $sortie->setEtat($etatDefaut);
             $entityManager->persist($etatDefaut);
