@@ -28,14 +28,15 @@ class SortieRepository extends ServiceEntityRepository
     public function findAll(): array
     {
         $query = $this->createQueryBuilder('s')
-            ->select('s', 'e')
+            ->select('s', 'e','p')
             ->join('s.etat', 'e')
+            ->leftjoin('s.participants', 'p')
             ->andWhere('e.libelle not like :libelle1')
             ->setParameter('libelle1', 'Passee')
-                ->andWhere('e.libelle not like :libelle2')
-                ->setParameter('libelle2', 'Creee')
+            ->andWhere('e.libelle not like :libelle2')
+            ->setParameter('libelle2', 'Creee')
             ->orderBy('s.dateHeureDebut', 'DESC');
-//            dd($query->getQuery());
+
         return $query->getQuery()->execute();
     }
 
@@ -47,9 +48,10 @@ class SortieRepository extends ServiceEntityRepository
     {
 
         $query = $this->createQueryBuilder('s')
-            ->select('s', 'c', 'e')
+            ->select('s', 'c', 'e', 'p')
             ->join('s.campus', 'c')
             ->join('s.etat', 'e')
+            ->leftjoin('s.participants', 'p')
             ->orderBy('s.dateHeureDebut', 'DESC');
         /**
          * si la barre de recherche n'est pas vide on ajoute
@@ -77,8 +79,7 @@ class SortieRepository extends ServiceEntityRepository
         if (in_array('organisateur', $search->categories)) {
             $query = $query
                 ->andWhere("s.organisateur = :organisateur")
-                ->setParameter('organisateur', $user)
-            ;
+                ->setParameter('organisateur', $user);
         }
         /**
          * si on a coché la case "Sorties passées" on ajoute
@@ -97,43 +98,41 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('libelle2', 'Creee');
         }
 
-        if($search->dateDebut){
+        if ($search->dateDebut) {
             $query = $query
                 ->andWhere('s.dateHeureDebut >= :dateDebut')
-                ->setParameter('dateDebut', $search->dateDebut)
-            ;
+                ->setParameter('dateDebut', $search->dateDebut);
         }
 
-        if($search->dateFin){
+        if ($search->dateFin) {
             $query = $query
                 ->andWhere('s.dateHeureDebut <= :dateFin')
-                ->setParameter('dateFin', $search->dateFin)
-            ;
+                ->setParameter('dateFin', $search->dateFin);
         }
 
 
-
-        $resultat = $query->getQuery()->execute();
 
 
         if (in_array('inscrit', $search->categories)) {
-            $resultat = array_filter($resultat, function ($user) {
-                if (isset($user)) {
-                    return false;
-                }
-                return true;
-            });
+                $query = $query
+                    ->andWhere(':participant MEMBER OF s.participants ')
+                    ->setParameter('participant', $user);
+            //            $resultat = array_filter($resultat, function ($user) {
+//                if (isset($user)) {
+//                    return true;
+//                }
+//                return false;
+//            });
+//            dd($query->getQuery());
         }
 
         if (in_array('non-inscrit', $search->categories)) {
-            $resultat = array_filter($resultat, function ($user) {
-                if (isset($user)) {
-                    return true;
-                }
-                return false;
-            });
+            $query = $query
+                ->andWhere(':participant NOT MEMBER OF s.participants ')
+                ->setParameter('participant', $user);
         }
 
+        $resultat = $query->getQuery()->execute();
 
         return $resultat;
     }

@@ -32,6 +32,7 @@ class AccueilController extends AbstractController
             $sorties = $sortieRepository->findSearch($data, $user);
         } else {
             $sorties = $sortieRepository->findAll();
+//            dd($sorties);
         }
 
         return $this->render('accueil/accueil.html.twig', [
