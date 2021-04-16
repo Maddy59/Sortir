@@ -12,9 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class MonProfilController extends AbstractController
 {
     /**
-     * @Route("/profil", name="profil")
+     * @Route("/profil", name="profil_profil")
      */
-    public function index(Request $request): Response
+    public function profil(Request $request): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(ProfilForm::class, $user);

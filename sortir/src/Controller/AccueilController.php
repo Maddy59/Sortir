@@ -15,9 +15,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class AccueilController extends AbstractController
 {
     /**
-     * @Route("/accueil", name="accueil_accueil")
+     * @Route("/", name="accueil_accueil")
      */
-    public function index(Request $request, SortieRepository $sortieRepository, UserRepository $userRepository, CampusRepository $campusRepository): Response
+    public function accueil(Request $request, SortieRepository $sortieRepository, UserRepository $userRepository, CampusRepository $campusRepository): Response
     {
 
         $user = $userRepository->findOneBy(['id' => 1]);

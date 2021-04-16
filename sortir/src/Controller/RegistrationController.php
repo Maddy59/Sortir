@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/register/csv", name="csv_register")
+     * @Route("/register/csv", name="register_registerCsv")
      */
     public function registerCsv(Request $request, UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer): Response
     {
@@ -51,7 +51,7 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/register/form", name="form_register")
+     * @Route("/register/form", name="register_registerForm")
      */
     public function registerForm(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthenticator $authenticator): Response
     {

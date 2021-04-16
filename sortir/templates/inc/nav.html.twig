@@ -4,16 +4,16 @@
         {% set currentPath = path(app.request.attributes.get('_route'),
             app.request.attributes.get('_route_params')) %}
 
-        {# décommenter la condition pour que l'entete n'apparaisse pas si on est sur la page de login une fois les pages mises en place #}
+        {# TODO décommenter la condition pour que l'entete n'apparaisse pas si on est sur la page de login une fois les pages mises en place #}
         {# {% if 'login' not in currentPath %} #}
-        {# TODO: ajouter les liens vers les controlleurs ou les pages #}
-        <li class="nav-item"><a class="nav-link px-3" href="" title="Home">Villes</a></li>
-        <li class="nav-item"><a class="nav-link px-3" href="" title="Home">Campus</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="{{ path('ville_lister') }}" title="Villes">Villes</a></li>
+        {# TODO: ajouter les liens vers le controlleur campus #}
+        <li class="nav-item"><a class="nav-link px-3" href="#" title="Campus">Campus</a></li>
 
 
-        <li class="nav-item"><a class="nav-link px-3" href="{{ path('accueil_accueil') }}" title="Home">Accueil</a></li>
-        <li class="nav-item"><a class="nav-link px-3" href="" title="Test">Mon profil</a></li>
-        <li class="nav-item"><a class="nav-link px-3" href="" title="All series">Se déconnecter</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="{{ path('accueil_accueil') }}" title="Accueil">Accueil</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="{{ path('profil_profil') }}" title="Mon profil">Mon profil</a></li>
+        <li class="nav-item"><a class="nav-link px-3" href="{{ path('app_logout') }}" title="Se deconnecter">Se déconnecter</a></li>
         {# {% endif %} #}
 
 
