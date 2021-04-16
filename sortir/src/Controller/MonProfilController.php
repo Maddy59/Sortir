@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class MonProfilController extends AbstractController
 {
     /**
@@ -16,23 +15,23 @@ class MonProfilController extends AbstractController
      */
     public function profil(Request $request): Response
     {
-        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser('fos_user.user_manager');
         $form = $this->createForm(ProfilForm::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $photoPath = $form->get('photo')->getData()->getlinkTarget();
-
-            $photo = file_get_contents($photoPath);
-            $base64 = base64_encode($photo);
-
-            $user->setPhoto($base64);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
+            $photoPath = $form->get('photo')->getData();
+            if ($photoPath) {
+                $photoPath->getlinkTarget();
+                $photo = file_get_contents($photoPath);
+                $base64 = base64_encode($photo);
+                $user->setPhoto($base64);
+            }
             $em->flush();
-
         }
 
         return $this->render('profil/profil.html.twig', [

@@ -9,7 +9,8 @@ main {
 }
 
 form {
-  max-width: 300px;
+  max-width: 250px;
+  min-width: 0;
   padding: 30px;
   border-radius: 10px;
   border-color: black;
@@ -17,7 +18,7 @@ form {
   background-color: white;
   display: flex;
   flex-direction: column;
-}
+} 
 
 form > div > div {
   display: flex;
@@ -29,7 +30,7 @@ select {
   min-width: 0;
   font-size: 15px;
   outline: none;
-  padding: 10px;
+  padding: 7px;
   border-radius: 5px;
   border: 1px solid #d0d0d0;
   margin: 0 0 10px 0;
@@ -45,6 +46,9 @@ button {
   border: none;
   outline: none;
   cursor: pointer;
+}
+label{
+  margin:0;
 }
 
 li {

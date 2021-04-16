@@ -3,17 +3,19 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Campus;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\File;
 
 class ProfilForm extends AbstractType
 {
@@ -25,6 +27,7 @@ class ProfilForm extends AbstractType
             ->add('pseudo', TextType::class)
             ->add('email', EmailType::class)
             ->add('password', RepeatedType::class, [
+                'mapped'=> false,
                 'type' => PasswordType::class,
                 'required' => false,
                 'invalid_message' => 'Les mots de passe doivent correspondre',
@@ -32,10 +35,11 @@ class ProfilForm extends AbstractType
                 'second_options' => ['label' => 'Confirmation'],
             ])
             ->add('telephone', TelType::class)
-            ->add('campus', TextType::class, [
-                'required' => false,
-            ]
-            )
+            ->add('campus', EntityType::class, [
+                'class' => Campus::class,
+                'multiple' => false,
+                'choice_label' => 'nom',
+            ])
             ->add('photo', FileType::class, [
                 'required' => false,
                 'constraints' => [
