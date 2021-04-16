@@ -8,7 +8,7 @@
         <ul class="me-2">
             <li><strong>Date du jour: {{ "now"|date("d/m/Y") }} </strong></li>
             {# ajouter le nom dynamiquement une fois les pages finies et les utilisateurs ajoutés #}
-            <li><strong>Participant: {% if app.user %} {{ app.user.pseudo }} {% endif %} Anonyme </strong></li>
+            <li><strong>Participant: {% if app.user %} {{ app.user.pseudo }} {% endif %} </strong></li>
         </ul>
     </div>
 
@@ -25,8 +25,11 @@
                 <div class="col-5">
                     {{ form_row(formSortie.campus) }}
                     {{ form_row(formSortie.recherche) }}
-                    {# {{ form_row(formSortie.dateDebut) }} #}
-                    {# {{ form_row(formSortie.dateCloture) }} #}
+
+                    Entre
+                    {{ form_row(formSortie.dateDebut) }}
+                    et
+                    {{ form_row(formSortie.dateFin) }}
 
                 </div>
                 <div class="col-5 list-group">
@@ -34,6 +37,7 @@
                 </div>
                 <div class="col-2">
                     <button>Rechercher</button>
+                    <button><a href="{{ path("accueil_accueil") }}"> Vider recherche</a></button>
                 </div>
             </div>
         </div>
@@ -82,7 +86,7 @@
                             {% else %}
                                 <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
                             {% endif %}
-                            
+
                         </th>
                     </tr>
                 {% endfor %}

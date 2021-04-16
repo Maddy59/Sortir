@@ -10,11 +10,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Date;
 
 class SearchFormSortie extends AbstractType
 {
@@ -34,17 +32,16 @@ class SearchFormSortie extends AbstractType
                 'attr' => ['placeholder' => 'Recherche'],
                 'empty_data' => '',
             ])
-//            ->add('dateDebut', DateType::class, [
-//                'html5' => true,
-//                'widget' => 'single_text',
-//                'required' => false,
-//            ])
-//            ->add('dateCloture', DateType::class, [
-//                'html5' => true,
-//                'widget' => 'single_text',
-//                'required' => false,
-//                'empty_data' => new Date(),
-//            ])
+            ->add('dateDebut', DateType::class, [
+                'html5' => true,
+                'widget' => 'single_text',
+                'required' => false,
+            ])
+            ->add('dateFin', DateType::class, [
+                'html5' => true,
+                'widget' => 'single_text',
+                'required' => false,
+            ])
             ->add('categories', ChoiceType::class, [
                 'label' => false,
                 'required' => false,

@@ -20,9 +20,8 @@ class AccueilController extends AbstractController
     public function accueil(Request $request, SortieRepository $sortieRepository, UserRepository $userRepository, CampusRepository $campusRepository): Response
     {
 
-        $user = $userRepository->findOneBy(['id' => 1]);
+        $user = $this->getUser();
 
-        $sorties = $sortieRepository->findAll();
         $data = new SearchData();
         $formSortie = $this->createForm(SearchFormSortie::class, $data);
 
@@ -31,7 +30,8 @@ class AccueilController extends AbstractController
 
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
             $sorties = $sortieRepository->findSearch($data, $user);
-
+        } else {
+            $sorties = $sortieRepository->findAll();
         }
 
         return $this->render('accueil/accueil.html.twig', [

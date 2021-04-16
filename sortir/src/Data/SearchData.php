@@ -5,40 +5,36 @@ namespace App\Data;
 
 
 use App\Entity\Campus;
-use App\Entity\Sortie;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class SearchData
 {
     /**
-     * @var int
-     */
-    public int $userId;
-
-    /**
      * @var Campus
      */
-    public Campus $campus;
+    public $campus;
 
     /**
      * @var string
      */
-    public string $recherche = '';
+    public $recherche = '';
 
     /**
      * @var Sortie[]
      */
-    public array $categories = [];
+    public $categories = [];
 
     /**
-     * @var Date
+     * @var Date|null
+     *
      */
-    public Date $dateDebut;
+    public $dateDebut;
 
     /**
-     * @var Date
+     * @var Date|null
+     *  @Assert\GreaterThanOrEqual(propertyPath="dateDebut", message="la date doit etre posterieur a la date de debut")
      */
-    public Date $dateCloture;
+    public $dateFin;
 
 }

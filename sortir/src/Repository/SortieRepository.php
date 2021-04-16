@@ -30,10 +30,12 @@ class SortieRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('s')
             ->select('s', 'e')
             ->join('s.etat', 'e')
-            ->andWhere('e.libelle not like :libelle')
-            ->setParameter('libelle', 'Passee')
+            ->andWhere('e.libelle not like :libelle1')
+            ->setParameter('libelle1', 'Passee')
+                ->andWhere('e.libelle not like :libelle2')
+                ->setParameter('libelle2', 'Creee')
             ->orderBy('s.dateHeureDebut', 'DESC');
-
+//            dd($query->getQuery());
         return $query->getQuery()->execute();
     }
 
@@ -47,52 +49,88 @@ class SortieRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('s')
             ->select('s', 'c', 'e')
             ->join('s.campus', 'c')
-            ->join('s.etat', 'e');
-
+            ->join('s.etat', 'e')
+            ->orderBy('s.dateHeureDebut', 'DESC');
+        /**
+         * si la barre de recherche n'est pas vide on ajoute
+         * les termes de la recherche à notre query
+         */
         if ($search->recherche != "") {
             $query = $query
                 ->andWhere("s.nom like :recherche")
                 ->setParameter('recherche', "%{$search->recherche}%");
         }
-
+        /**
+         * si un campus à été choisi  on ajoute
+         * le campus  à notre query
+         */
         if (!empty($search->campus)) {
             $query = $query
                 ->andWhere("c.id = :campus")
                 ->setParameter('campus', $search->campus->getId());
         }
+        /**
+         * si on a coché la case "Je suis organisateur/trice" on ajoute
+         * à notre query la clause where organisateur = user
+         * et on ajoutera les sorties qui ont etat = crée
+         */
         if (in_array('organisateur', $search->categories)) {
             $query = $query
                 ->andWhere("s.organisateur = :organisateur")
-                ->setParameter('organisateur', $user);
+                ->setParameter('organisateur', $user)
+            ;
         }
+        /**
+         * si on a coché la case "Sorties passées" on ajoute
+         * à notre query la clause where etat = passé
+         * sinon on fait notre query en excluant les etats Passee et Créee
+         */
         if (in_array('passes', $search->categories)) {
             $query = $query
                 ->andWhere('e.libelle like :libelle')
                 ->setParameter('libelle', 'Passee');
         } else {
             $query = $query
-                ->andWhere('e.libelle not like :libelle')
-                ->setParameter('libelle', 'Passee');
+                ->andWhere('e.libelle not like :libelle1')
+                ->setParameter('libelle1', 'Passee')
+                ->andWhere('e.libelle not like :libelle2')
+                ->setParameter('libelle2', 'Creee');
         }
 
-        $query = $query->orderBy('s.dateHeureDebut', 'DESC');
+        if($search->dateDebut){
+            $query = $query
+                ->andWhere('s.dateHeureDebut >= :dateDebut')
+                ->setParameter('dateDebut', $search->dateDebut)
+            ;
+        }
+
+        if($search->dateFin){
+            $query = $query
+                ->andWhere('s.dateHeureDebut <= :dateFin')
+                ->setParameter('dateFin', $search->dateFin)
+            ;
+        }
+
+
 
         $resultat = $query->getQuery()->execute();
 
+
         if (in_array('inscrit', $search->categories)) {
-            $resultat = array_filter($resultat, function ($user) {
-                if (isset($user)) {
-                    return true;
-                }
-                return false;
-            });
-        }
-        if (in_array('non-inscrit', $search->categories)) {
             $resultat = array_filter($resultat, function ($user) {
                 if (isset($user)) {
                     return false;
                 }
                 return true;
+            });
+        }
+
+        if (in_array('non-inscrit', $search->categories)) {
+            $resultat = array_filter($resultat, function ($user) {
+                if (isset($user)) {
+                    return true;
+                }
+                return false;
             });
         }
 
