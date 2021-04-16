@@ -21,31 +21,42 @@ class Sortie
     private $id;
 
     /**
-     * @Assert\NotBlank(message="Un doux nom pour donner envie de participer ?")
+     * @Assert\NotBlank(message="Pouvez-vous renseigner un nom ?")
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
-     * @Assert\NotBlank(message="On se rejoint quand ?")
+     * @Assert\DateTime()
+     * @var string A "Y-m-d H:i:s" formatted value
+     * @Assert\NotNull()
+     * @Assert\NotBlank(message="Pouvez-vous renseigner une date ?")
+     * * @Assert\Range(min = "now",
+     * notInRangeMessage = "La date de votre activité doit être supérieure au {{ min }}.")
      * @ORM\Column(type="datetime")
      */
     private $dateHeureDebut;
 
     /**
-     * @Assert\NotBlank(message="Durée, pleaaaase")
+     * @Assert\NotBlank(message="Pouvez-vous renseigner une durée ?")
+     * @Assert\Range(min = 10, max = 240,
+     * notInRangeMessage = "La durée de votre activité doit être comprise entre{{ min }}et {{ max }}minutes.")
      * @ORM\Column(type="integer")
      */
     private $duree;
 
     /**
-     * @Assert\NotBlank(message="Il faut une date limite d'inscription")
+     * @Assert\Date()
+     * @Assert\NotNull()
+     * @Assert\NotBlank(message="Pouvez-vous renseigner une date limite d'inscription ?")
+     * @Assert\Range(min = "now", maxPropertyPath="dateHeureDebut",
+     * notInRangeMessage = "La date limite d'inscription doit être supérieure au {{ min }} et ne pas dépasser la date de l'activité.")
      * @ORM\Column(type="date")
      */
     private $dateLimiteInscription;
 
     /**
-     * @Assert\NotBlank(message="Combien ?")
+     * @Assert\NotBlank(message="Merci de renseigner le nombre de participants maximum.")
      * @ORM\Column(type="integer")
      */
     private $nbInscriptionsMax;
@@ -62,12 +73,14 @@ class Sortie
     private $etat;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties", cascade={"persist"})
+     * @Assert\NotBlank(message="Merci de renseigner un lieu.")
+     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
      */
     private $lieu;
 
     /**
+     * @Assert\NotBlank(message="Merci de renseigner un campus.")
      * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
      */

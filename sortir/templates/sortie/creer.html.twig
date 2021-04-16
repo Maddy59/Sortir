@@ -1,18 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Créer une sortie{% endblock %}
-
-{% form_theme sortieForm 'bootstrap_4_layout.html.twig' %}
-
 {% block body %}
     <div>
         {{ form_start(sortieForm, {attr: {novalidate:'novalidate'}})}}
 
+        {{ form_row(sortieForm.nom) }}
+        {{ form_row(sortieForm.dateHeureDebut) }}
+        {{ form_row(sortieForm.dateLimiteInscription) }}
+        {{ form_row(sortieForm.nbInscriptionsMax) }}
+        {{ form_row(sortieForm.duree) }}
+        <span>minutes</span>
+        {{ form_row(sortieForm.infosSortie) }}
 
-        {{ form_widget(sortieForm) }}
-        <button value="enregistrer">Enregistrer</button>
-        <button value="publier">Publier la sortie</button>
-        <a href=""><button>Annuler</button></a>
+        {{ form_row(sortieForm.campus) }}
+        {{ form_row(sortieForm.ville) }}
+        <div>
+            {{ form_row(sortieForm.lieu) }}
+            <button><a href="{{ path('lieu_creer') }}">+</a></button>
+        </div>
+        <div>
+            <button value="enregistrer">Enregistrer</button>
+            <button value="publier">Publier la sortie</button>
+            <button><a href="{{ path('accueil_accueil') }}">Annuler</a></button>
+        </div>
         {{ form_end(sortieForm) }}
 
     </div>

@@ -23,7 +23,7 @@ class AccueilController extends AbstractController
         $data = new SearchFormSortie();
         $form = $this->createForm(SearchFormSortie::class,$data);
 
-        return $this->render('accueil/index.html.twig', [
+        return $this->render('accueil/creer.html.twig', [
             'sorties' => $sorties,
             'user'=>$user,
             'formSortie' => $form->createView(),

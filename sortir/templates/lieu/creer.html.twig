@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un lieu{% endblock %}
+
+{% block body %}
+    {{ form_start(lieuForm, {attr: {novalidate:'novalidate'}})}}
+    {{ form_widget(lieuForm) }}
+    <button>Créer un lieu</button>
+    <button><a href="{{ path('sortie_creer') }}">Annuler</a></button>
+    {{ form_end(lieuForm)}}
+{% endblock %}
