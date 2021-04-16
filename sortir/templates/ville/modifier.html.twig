@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container -md">
+    <h3>Modifier une ville</h3>
+
+    {{ include('ville/_form.html.twig', {'button_label': 'Mise à jour'}) }}
+
+
+    {{ include('ville/_supprimer_form.html.twig') }}
+    <a href="{{ path('ville_indexVille') }}">Retour à la liste</a>
+</div>
+{% endblock %}

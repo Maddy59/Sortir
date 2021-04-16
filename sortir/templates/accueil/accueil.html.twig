@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}  | Accueil {% endblock %}
+{% block title %} {{ parent() }} | Accueil {% endblock %}
 
 {% block body %}
 
@@ -8,19 +8,38 @@
         <ul class="me-2">
             <li><strong>Date du jour: {{ "now"|date("d/m/Y") }} </strong></li>
             {# ajouter le nom dynamiquement une fois les pages finies et les utilisateurs ajoutés #}
-            <li><strong>Participant: {% if app.user %}{{ app.user.pseudo }} {% endif %} Anonyme </strong></li>
+            <li><strong>Participant: {% if app.user %} {{ app.user.pseudo }} {% endif %} Anonyme </strong></li>
         </ul>
     </div>
 
     <div class="container">
         <h2>Filter les sorties</h2>
-        <div class="row">
-            <div class="">
-                {{ form_start(formSortie) }}
+        {{ form_start(formSortie) }}
 
-                {{ form_end(formSortie) }}
+        {% if form_errors(formSortie) %}
+            form_errors(formSortie)
+        {% endif %}
+
+        <div class="container">
+            <div class="row">
+                <div class="col-5">
+                    {{ form_row(formSortie.campus) }}
+                    {{ form_row(formSortie.recherche) }}
+{#                    {{ form_row(formSortie.dateDebut) }}#}
+{#                    {{ form_row(formSortie.dateCloture) }}#}
+
+                </div>
+                <div class="col-5 list-group">
+                    {{ form_row(formSortie.categories) }}
+                </div>
+                <div class="col-2">
+                    <button>Rechercher</button>
+                </div>
             </div>
         </div>
+
+
+        {{ form_end(formSortie) }}
 
         <div>
 
@@ -47,7 +66,7 @@
                         <th scope="col"> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }} </th>
                         <th scope="col"> {{ sortie.etat.libelle }} </th>
                         <th scope="col"> {% if app.user in sortie.participants %} X {% endif %}</th>
-                        <th scope="col"> <a href="">{{ sortie.organisateur.nom }}</a> </th>
+                        <th scope="col"><a href="">{{ sortie.organisateur.nom }}</a></th>
                         <th scope="col">
                             <a href="">Afficher</a>
                             <a href="">Se désister </a>
