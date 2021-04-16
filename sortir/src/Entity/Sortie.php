@@ -28,7 +28,7 @@ class Sortie
 
     /**
      * @Assert\NotBlank(message="Pouvez-vous renseigner une date ?")
-     * * @Assert\Range(min = "now",
+     * @Assert\Range(min = "now",
      * notInRangeMessage = "La date de votre activité doit être supérieure au {{ min }}.")
      * @ORM\Column(type="datetime")
      */

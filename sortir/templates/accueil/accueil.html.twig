@@ -47,6 +47,7 @@
                 <thead>
                 <tr>
                     <th scope="col">Nom de la sortie</th>
+                    <th scope="col" class="idCache">Id</th>
                     <th scope="col">Date de la sortie</th>
                     <th scope="col">Clôture</th>
                     <th scope="col">Inscrits/places</th>
@@ -61,6 +62,7 @@
                 {% for sortie in sorties %}
                     <tr>
                         <th scope="col"> {{ sortie.nom }} </th>
+                        <th scope="col" class="idCache"> {{ sortie.id }} </th>
                         <th scope="col"> {{ sortie.dateHeureDebut | date('d/m/y m:h') }} </th>
                         <th scope="col"> {{ sortie.dateLimiteInscription | date('d/m/y') }} </th>
                         <th scope="col"> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }} </th>
@@ -78,7 +80,7 @@
                             {% if app.user in sortie.participants %}
                                 <a href="">Se désister </a>
                             {% else %}
-                                <a href="">S'inscrire</a>
+                                <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
                             {% endif %}
                             
                         </th>
