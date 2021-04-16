@@ -14,19 +14,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class VilleController extends AbstractController
 {
     /**
-     * @Route("/indexVille", name="ville_indexVille", methods={"GET"})
+     * @Route("/villes", name="ville_lister", methods={"GET"})
      */
-    public function index(VilleRepository $villeRepository): Response
+    public function lister(VilleRepository $villeRepository): Response
     {
-        return $this->render('ville/indexVille.html.twig', [
+        return $this->render('ville/listeVilles.html.twig', [
             'ville' => $villeRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/ajout", name="ville_ajout", methods={"GET","POST"})
+     * @Route("/ville/ajouter", name="ville_ajouter", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function ajouter(Request $request): Response
     {
         $ville = new Ville();
         $form = $this->createForm(VilleType::class, $ville);
@@ -37,7 +37,7 @@ class VilleController extends AbstractController
             $entityManager->persist($ville);
             $entityManager->flush();
 
-            return $this->redirectToRoute('ville_indexVille');
+            return $this->redirectToRoute('ville_lister');
         }
 
         return $this->render('ville/ajoutVille.html.twig', [
@@ -47,11 +47,11 @@ class VilleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="ville_voir", methods={"GET"})
+     * @Route("/ville/{id}", name="ville_detail", methods={"GET"})
      */
-    public function show(Ville $ville): Response
+    public function detail(Ville $ville): Response
     {
-        return $this->render('ville/voir.html.twig', [
+        return $this->render('ville/detailVille.html.twig', [
             'ville' => $ville,
         ]);
     }
@@ -59,7 +59,7 @@ class VilleController extends AbstractController
     /**
      * @Route("/{id}/modifier", name="ville_modifier", methods={"GET","POST"})
      */
-    public function edit(Request $request, Ville $ville): Response
+    public function modifier(Request $request, Ville $ville): Response
     {
         $form = $this->createForm(VilleType::class, $ville);
         $form->handleRequest($request);
@@ -67,7 +67,7 @@ class VilleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('ville_indexVille');
+            return $this->redirectToRoute('ville_lister');
         }
 
         return $this->render('ville/modifier.html.twig', [
@@ -79,7 +79,7 @@ class VilleController extends AbstractController
     /**
      * @Route("/{id}/supprimer", name="ville_supprimer", methods={"DELETE"})
      */
-    public function delete(Request $request, Ville $ville): Response
+    public function supprimer(Request $request, Ville $ville): Response
     {
         if ($this->isCsrfTokenValid('delete'.$ville->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -87,7 +87,7 @@ class VilleController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('ville_indexVille');
+        return $this->redirectToRoute('ville_lister');
     }
 
 

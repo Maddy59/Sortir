@@ -29,7 +29,7 @@
                 <td>{{ ville.nom }}</td>
                 <td>{{ ville.codePostal }}</td>
                 <td>
-                   <a href="{{ path('ville_voir', {'id': ville.id}) }}">Voir</a>
+                   <a href="{{ path('ville_detail', {'id': ville.id}) }}">Voir</a>
                    <a href="{{ path('ville_modifier', {'id': ville.id}) }}">Modifier</a>
                 </td>
             </tr>
@@ -40,6 +40,6 @@
         {% endfor %}
         </tbody>
     </table>
-            <a href="{{ path('ville_ajout') }}" class="btn btn-outline-primary">Ajouter une ville</a>
+            <a href="{{ path('ville_ajouter') }}" class="btn btn-outline-primary">Ajouter une ville</a>
        </div>
 {% endblock %}

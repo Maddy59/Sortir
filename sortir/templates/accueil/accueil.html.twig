@@ -25,8 +25,8 @@
                 <div class="col-5">
                     {{ form_row(formSortie.campus) }}
                     {{ form_row(formSortie.recherche) }}
-{#                    {{ form_row(formSortie.dateDebut) }}#}
-{#                    {{ form_row(formSortie.dateCloture) }}#}
+                    {# {{ form_row(formSortie.dateDebut) }} #}
+                    {# {{ form_row(formSortie.dateCloture) }} #}
 
                 </div>
                 <div class="col-5 list-group">
@@ -52,7 +52,7 @@
                     <th scope="col">Inscrits/places</th>
                     <th scope="col">Etat</th>
                     <th scope="col">Inscrit</th>
-                    <th scope="col">Origanisateur</th>
+                    <th scope="col">Organisateur</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -68,10 +68,19 @@
                         <th scope="col"> {% if app.user in sortie.participants %} X {% endif %}</th>
                         <th scope="col"><a href="">{{ sortie.organisateur.nom }}</a></th>
                         <th scope="col">
+
                             <a href="">Afficher</a>
-                            <a href="">Se désister </a>
-                            <a href="">Modifier</a>
-                            <a href="">S'inscrire</a>
+
+                            {% if app.user == sortie.organisateur %}
+                                <a href="">Modifier</a>
+                            {% endif %}
+
+                            {% if app.user in sortie.participants %}
+                                <a href="">Se désister </a>
+                            {% else %}
+                                <a href="">S'inscrire</a>
+                            {% endif %}
+                            
                         </th>
                     </tr>
                 {% endfor %}
