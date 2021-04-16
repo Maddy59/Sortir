@@ -65,15 +65,15 @@
                 <tbody>
                 {% for sortie in sorties %}
                     <tr>
-                        <th scope="col"> {{ sortie.nom }} </th>
-                        <th scope="col" class="idCache"> {{ sortie.id }} </th>
-                        <th scope="col"> {{ sortie.dateHeureDebut | date('d/m/y m:h') }} </th>
-                        <th scope="col"> {{ sortie.dateLimiteInscription | date('d/m/y') }} </th>
-                        <th scope="col"> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }} </th>
-                        <th scope="col"> {{ sortie.etat.libelle }} </th>
-                        <th scope="col"> {% if app.user in sortie.participants %} X {% endif %}</th>
-                        <th scope="col"><a href="{{ path('app_logout') }}">{{ sortie.organisateur.nom }}</a></th>
-                        <th scope="col">
+                        <td scope="col"> {{ sortie.nom }} </td>
+                        <td scope="col" class="idCache"> {{ sortie.id }} </td>
+                        <td scope="col"> {{ sortie.dateHeureDebut | date('d/m/y m:h') }} </td>
+                        <td scope="col"> {{ sortie.dateLimiteInscription | date('d/m/y') }} </td>
+                        <td scope="col"> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }} </td>
+                        <td scope="col"> {{ sortie.etat.libelle }} </td>
+                        <td scope="col"> {% if app.user in sortie.participants %} X {% endif %}</td>
+                        <td scope="col"><a href="{{ path('app_logout') }}">{{ sortie.organisateur.nom }}</a></td>
+                        <td scope="col">
 
                             <a href="">Afficher</a>
 
@@ -84,10 +84,12 @@
                             {% if app.user in sortie.participants %}
                                 <a href="">Se désister </a>
                             {% else %}
-                                <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
+                                {% if app.user != sortie.organisateur %}
+                                    <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
+                                {% endif %}
                             {% endif %}
 
-                        </th>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
