@@ -12,7 +12,7 @@
 
 		{# notre css #}
 		{% block stylesheets %}
-			{{ encore_entry_link_tags('app') }}
+			<link href="{{ asset('build/app.css') }}" rel="stylesheet"/>
 		{% endblock %}
 
 		{# le favicon #}
@@ -42,5 +42,4 @@
 			{{ "now"|date("Y") }}
 		</footer>
 	</body>
-</html></div>{% block javascripts %}
-{{ encore_entry_script_tags('app') }}{% endblock %}</body></html>
+</html></div>{% block javascripts %}{% endblock %}</body></html>

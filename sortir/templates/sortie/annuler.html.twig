@@ -4,7 +4,7 @@
 {% endblock %}
 {% block stylesheets %}
 	{{ parent() }}
-	{{ encore_entry_link_tags('form') }}
+			<link href="{{ asset('build/form.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}

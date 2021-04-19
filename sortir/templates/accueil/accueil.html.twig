@@ -7,7 +7,7 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	{{ encore_entry_link_tags('accueil') }}
+			<link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
@@ -23,9 +23,12 @@
 			<span>
 				{{ "now"|date("d/m/Y") }}
 			</span>
+			{% if app.user %}
 			<span>
 				{{ app.user.pseudo }}
 			</span>
+			{% endif %}
+
 		</div>
 	</div>
 
