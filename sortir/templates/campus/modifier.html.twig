@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container -md">
+    <h3>Modifier un campus</h3>
+
+    {{ include('campus/_form.html.twig', {'button_label': 'Mise à jour'}) }}
+    {{ include('campus/_supprimer_form.html.twig') }}
+    
+    <a href="{{ path('campus_lister') }}">Retour à la liste</a>
+</div>
+{% endblock %}

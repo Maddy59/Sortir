@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Ville;
 use App\Form\VilleType;
 use App\Repository\VilleRepository;
@@ -18,8 +19,18 @@ class VilleController extends AbstractController
      */
     public function lister(VilleRepository $villeRepository): Response
     {
+       $ville = [];
+       $data = new SearchData();
+       $formVille = $this->createForm(VilleType::class, $data);
+        if ($formVille ->isSubmitted()&& $formVille->isValid()){
+           $ville= $villeRepository->findSearch($data, $ville);
+        }else {
+            $ville= $villeRepository->findAll();
+        }
+
         return $this->render('ville/listeVilles.html.twig', [
             'ville' => $villeRepository->findAll(),
+            'formVille' =>$formVille->createView(),
         ]);
     }
 
@@ -45,6 +56,7 @@ class VilleController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 
     /**
      * @Route("/ville/{id}", name="ville_detail", methods={"GET"})

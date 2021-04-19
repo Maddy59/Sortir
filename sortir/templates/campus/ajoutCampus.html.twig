@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container -md">
+    <h3>Enregistrer un nouveau campus</h3>
+<div class="form-group">
+    {{ include('campus/_form.html.twig') }}
+    </div>
+    <a href="{{ path('campus_lister') }}">Retour à la liste</a>
+
+    </div>
+{% endblock %}

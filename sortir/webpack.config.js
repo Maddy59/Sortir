@@ -6,8 +6,8 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
   Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev')
 }
 
-Encore.setOutputPath('public/build/')
-  .setPublicPath('/')
+Encore.setOutputPath('Sortir/sortir/public/build/')
+  .setPublicPath('/build')
 
   //js
   .addEntry('app', './assets/app.js')
