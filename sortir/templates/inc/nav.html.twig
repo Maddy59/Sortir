@@ -25,13 +25,15 @@
 
 				</button>
 				<button>
-					<a class="campus" href="#" title="Campus">Campus</a>
+					<a class="campus" href="{{ path('campus_lister') }}" title="Campus">Campus</a>
 
 				</button>
 				<button>
-					<a class="addUser" href="#" title="Ajouter utilisateur">Ajouter utilisateur</a>
+					<a class="addUser" href="{{ path('register_form') }}" title="Ajouter utilisateur">Ajouter utilisateur</a>
 				</button>
-
+				<button>
+					<a class="addUser" href="{{ path('admin_profilutilisateurs') }}" title="Ajouter utilisateur">Gestion des utilisateurs</a>
+				</button>
 			{% endif %}
 			<button>
 				<a class="accueil" href="{{ path('accueil_accueil') }}" title="Accueil">Accueil</a>
