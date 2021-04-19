@@ -35,7 +35,6 @@ class AccueilController extends AbstractController
             $sorties = $sortieRepository->findSearch($data, $user);
         } else {
             $sorties = $sortieRepository->findAll();
-            //            dd($sorties);
         }
 
         $this->miseAJourEtatSorties($sorties, $etatRepository, $entityManager);

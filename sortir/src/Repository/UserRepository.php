@@ -36,8 +36,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->persist($user);
         $this->_em->flush();
     }
+
     public function loadUserByUsername(string $PseudoOrEmail)
-    {   
+    {
         $entityManager = $this->getEntityManager();
 
         return $entityManager->createQuery(
@@ -49,6 +50,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->setParameter('query', $PseudoOrEmail)
             ->getOneOrNullResult();
     }
+
+    public function getUserByFilter(string $filtre): array
+    {
+
+        return $this->createQueryBuilder('u')
+            ->select('u')
+            ->andWhere('u.pseudo like :filtre')
+            ->orWhere('u.nom like :filtre')
+            ->orWhere('u.prenom like :filtre')
+            ->orWhere('u.email like :filtre')
+            ->setParameter('filtre', "%{$filtre}%")
+            ->getQuery()
+            ->execute();
+    }
+
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

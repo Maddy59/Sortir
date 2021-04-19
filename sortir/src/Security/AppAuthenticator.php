@@ -22,9 +22,7 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class AppAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
-    use TargetPathTrait;
-
-    public const LOGIN_ROUTE = 'app_login';
+    use TargetPathTrait;public const LOGIN_ROUTE = 'app_login';
 
     private $entityManager;
     private $urlGenerator;
@@ -67,10 +65,14 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
         }
 
         $user = $userProvider->loadUserByUsername($credentials['identification']);
-        
+
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email or pseudo could not be found.');
+        }
+
+        if(in_array('ROLE_DESACTIVE',$user->getRoles())){
+            throw new CustomUserMessageAuthenticationException('Votre compte a été desactivé veuillez contacter votre administrateur.');
         }
 
         return $user;
