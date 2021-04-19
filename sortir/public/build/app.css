@@ -1,10 +1,10 @@
 @font-face {
   font-family: HMSansLatin-Regular;
-  src: url(/build/fonts/HMSansLatin-Regular.1e8dbb69.woff2) format("woff2"), url(/build/fonts/HMSansLatin-Regular.990e7004.woff) format("woff");
+  src: url(fonts/HMSansLatin-Regular.1e8dbb69.woff2) format("woff2"), url(fonts/HMSansLatin-Regular.990e7004.woff) format("woff");
 }
 @font-face {
   font-family: HMSansLatin-SemiBold;
-  src: url(/build/fonts/HMSansLatin-SemiBold.500b1fc1.woff2) format("woff2"), url(/build/fonts/HMSansLatin-SemiBold.b3afab32.woff) format("woff");
+  src: url(fonts/HMSansLatin-SemiBold.500b1fc1.woff2) format("woff2"), url(fonts/HMSansLatin-SemiBold.b3afab32.woff) format("woff");
 }
 li {
   list-style: none;
