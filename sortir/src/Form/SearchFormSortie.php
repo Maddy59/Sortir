@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Form;
-
 
 use App\Data\SearchData;
 use App\Entity\Campus;
@@ -21,16 +19,14 @@ class SearchFormSortie extends AbstractType
 
         $builder
             ->add('campus', EntityType::class, [
-                'label' => 'Campus',
                 'required' => false,
                 'class' => Campus::class,
+                'placeholder' => 'Tous',
 
             ])
             ->add('recherche', TextType::class, [
-                'label' => 'Le nom de la sortie contient:',
                 'required' => false,
-                'attr' => ['placeholder' => 'Recherche'],
-                'empty_data' => '',
+                'attr' => ['placeholder' => 'Nom de la sortie'],
             ])
             ->add('dateDebut', DateType::class, [
                 'html5' => true,
@@ -48,14 +44,14 @@ class SearchFormSortie extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'choices' => [
-                    'Sortie dont je suis l\'organisateur/trice' => 'organisateur',
-                    'Sortie auxquelles je suis inscrit/e' => 'inscrit',
-                    'Sortie auxquelles je ne suis pas inscrit/e' => 'non-inscrit',
-                    'Sorties passées' => 'passes',]
+                    'Sortie(s) dont je suis l\'organisateur(trice)' => 'organisateur',
+                    'Sortie(s) auxquelle(s) je suis inscrit(e)' => 'inscrit',
+                    'Sortie(s) auxquelle(s) je ne suis pas inscrit(e)' => 'non-inscrit',
+                    'Sortie(s) passée(s)' => 'passes'],
+
             ],
             );
     }
-
 
     public function configureOptions(OptionsResolver $resolver)
     {

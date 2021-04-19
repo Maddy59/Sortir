@@ -3,26 +3,28 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use League\Csv\Reader;
 use App\Form\RegistrationCsv;
 use App\Form\RegistrationForm;
 use App\Security\AppAuthenticator;
+use League\Csv\Reader;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
 
+/**
+ * @Route("register/", name="register_")
+ */
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/register/csv", name="register_registerCsv")
+     * @Route("csv", name="csv")
      */
-    public function registerCsv(Request $request, UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer): Response
+    public function csv(Request $request, UserPasswordEncoderInterface $passwordEncoder, SerializerInterface $serializer): Response
     {
 
         $form = $this->createForm(RegistrationCsv::class);
@@ -47,15 +49,15 @@ class RegistrationController extends AbstractController
             $em->flush();
             $this->addFlash('succes', 'Utilisateur(s) ajouté(s).');
         }
-        return $this->render('registration/registerCsv.html.twig', [
+        return $this->render('registration/csv.html.twig', [
             'registrationCsv' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/register/form", name="register_registerForm")
+     * @Route("form", name="form")
      */
-    public function registerForm(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthenticator $authenticator): Response
+    public function form(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppAuthenticator $authenticator): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationForm::class, $user);
@@ -76,7 +78,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('accueil_accueil');
         }
 
-        return $this->render('registration/registerForm.html.twig', [
+        return $this->render('registration/form.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }

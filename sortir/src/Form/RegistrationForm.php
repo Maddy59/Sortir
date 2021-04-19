@@ -24,7 +24,7 @@ class RegistrationForm extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
-            ->add('pseudo', TextType::class)
+            ->add('pseudo')
             ->add('email', EmailType::class)
             ->add('password', RepeatedType::class, [
                 'mapped' => false,

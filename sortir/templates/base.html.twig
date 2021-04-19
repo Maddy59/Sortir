@@ -11,10 +11,9 @@
 		</title>
 
 		{# notre css #}
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-		<link rel="stylesheet" href="{{ asset("css/app.css" ) }}">
-		<link rel="stylesheet" href="{{ asset("css/base.css" )}}"> {% block stylesheets %}{% endblock %}
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
 
 		{# le favicon #}
 		<link rel="icon" href="{{ asset('img/soiree-dj.png') }}">
@@ -22,42 +21,26 @@
 	<body>
 		{# entête du site #}
 		<header>
-			<div class="container">
+			{% include('inc/nav.html.twig') %}
+		</header>
 
-				<nav class="navbar navbar-expand-lg">
-					<div
-						class="container-fluid">
-						{# insertion de l'entete #}
-						<h1>
-							<a class="navbar-brand px-3" href="{{ path('accueil_accueil') }}">
-								<img src="{{ asset('img/soiree-dj.png') }}" alt="" width="30" height="24" class="d-inline-block align-text-top img-fluid">
-								Sortir
-							</a>
-						</h1>
-						{% include('inc/nav.html.twig') %}
-					</div>
-				</nav>
-
-			</header>
-
-			{# affichage des erreurs #}
-			{% for label, messages in app.flashes %}
-				{% for message in messages %}
-					<div class="alert alert-{{ label }}">
-						{{ message }}
-					</div>
-				{% endfor %}
+		{# affichage des erreurs #}
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }}">
+					{{ message }}
+				</div>
 			{% endfor %}
-			{# contenu principal de chaque page #}
-			<main>
-				{% block body %}{% endblock %}
-			</main>
-			{# pied-de-page du site #}
-			<footer>
-				© Sortir -
-				{{ "now"|date("Y") }}
-			</footer>
-		</div>
-
+		{% endfor %}
+		{# contenu principal de chaque page #}
+		<main>
+			{% block body %}{% endblock %}
+		</main>
+		{# pied-de-page du site #}
+		<footer>
+			© Sortir -
+			{{ "now"|date("Y") }}
+		</footer>
 	</body>
-</html>
+</html></div>{% block javascripts %}
+{{ encore_entry_script_tags('app') }}{% endblock %}</body></html>

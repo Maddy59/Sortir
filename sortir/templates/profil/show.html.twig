@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('profil_show') }}
+{% endblock %}
+
+{% block title %}
+	{{user.pseudo}}
+{% endblock %}
+
+{% block body %}
+
+	<div class="wrapper">
+		<div class="swag"></div>
+		<img class="img" src="{{photo}}" onerror="this.src='{{asset('img/blank.png')}}'"/>
+		<div class="info">
+			<div class="key">
+				<label>Prénom :</label>
+				<label>Nom :</label>
+				<label>Téléphone :</label>
+				<label>Email :</label>
+				<label>Campus :</label>
+			</div>
+			<div class="value">
+				<label>{{user.prenom}}</label>
+				<label>{{user.nom}}</label>
+				<label>{{user.telephone}}</label>
+				<label>{{user.email}}</label>
+				<label>{{user.campus}}</label>
+			</div>
+		</div>
+	</div>
+{% endblock %}

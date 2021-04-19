@@ -1,33 +1,50 @@
-<div class="d-flex">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0 me-2">
+<nav>
+	{% block stylesheets %}
+		{{ encore_entry_link_tags('nav') }}
+	{% endblock %}
 
-        {% set currentPath = path(app.request.attributes.get('_route'),
+
+	{% set currentPath = path(app.request.attributes.get('_route'),
             app.request.attributes.get('_route_params')) %}
 
-        {# TODO décommenter la condition pour que l'entete n'apparaisse pas si on est sur la page de login une fois les pages mises en place #}
-        {% if app.user %}
-            {% if "ROLE_ADMIN" in app.user.roles  %}
+	{# TODO décommenter la condition pour que l'entete n'apparaisse pas si on est sur la page de login une fois les pages mises en place #}
+
+	<a class="logo" href="{{ path('accueil_accueil') }}">
+		<img src="{{ asset('img/logo.png') }}" alt="">
+		<label for="">SORTIR</label>
+	</a>
+		{% if app.user %}
+
+	<li class="link">
+
+			{% if "ROLE_ADMIN" in app.user.roles  %}
+
+				{# TODO: ajouter les liens vers le controlleur campus #}
+				<button>
+					<a class="ville" href="{{ path('ville_lister') }}" title="Villes">Villes</a>
+
+				</button>
+				<button>
+					<a class="campus" href="#" title="Campus">Campus</a>
+
+				</button>
+				<button>
+					<a class="addUser" href="#" title="Ajouter utilisateur">Ajouter utilisateur</a>
+				</button>
+
+			{% endif %}
+			<button>
+				<a class="accueil" href="{{ path('accueil_accueil') }}" title="Accueil">Accueil</a>
+			</button>
+			<button>
+				<a class="profil" href="{{ path('profil_edit') }}" title="Mon profil">Mon profil</a>
+			</button>
+			<button>
+				<a class="logout" href="{{ path('app_logout') }}" title="Se deconnecter">Se déconnecter</a>
+			</button>
+
+		</li>
+	{% endif %}
 
 
-                <li class="nav-item"><a class="nav-link px-3" href="{{ path('ville_lister') }}"
-                                        title="Villes">Villes</a>
-                </li>
-                {# TODO: ajouter les liens vers le controlleur campus #}
-                <li class="nav-item"><a class="nav-link px-3" href="#" title="Campus">Campus</a></li>
-                <li class="nav-item"><a class="nav-link px-3" href="#" title="Ajouter utilisateur">Ajouter
-                        utilisateur</a>
-                </li>
-            {% endif %}
-
-            <li class="nav-item"><a class="nav-link px-3" href="{{ path('accueil_accueil') }}"
-                                    title="Accueil">Accueil</a>
-            </li>
-            <li class="nav-item"><a class="nav-link px-3" href="{{ path('profil_profil') }}" title="Mon profil">Mon
-                    profil</a></li>
-            <li class="nav-item"><a class="nav-link px-3" href="{{ path('app_logout') }}" title="Se deconnecter">Se
-                    déconnecter</a></li>
-        {% endif %}
-
-
-    </ul>
-</div>
+</nav>

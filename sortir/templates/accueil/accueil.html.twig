@@ -1,100 +1,148 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} {{ parent() }} | Accueil {% endblock %}
+{% block title %}
+	{{ parent() }}
+	| Accueil
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('accueil') }}
+{% endblock %}
 
 {% block body %}
 
-    <div class="d-flex flex-row-reverse">
-        <ul class="me-2">
-            <li><strong>Date du jour: {{ "now"|date("d/m/Y") }} </strong></li>
-            {# ajouter le nom dynamiquement une fois les pages finies et les utilisateurs ajoutés #}
-            <li><strong>Participant: {% if app.user %} {{ app.user.pseudo }} {% endif %} </strong></li>
-        </ul>
-    </div>
-
-    <div class="container">
-        <h2>Filter les sorties</h2>
-        {{ form_start(formSortie) }}
-
-        {% if form_errors(formSortie) %}
-            form_errors(formSortie)
-        {% endif %}
-
-        <div class="container">
-            <div class="row">
-                <div class="col-5">
-                    {{ form_row(formSortie.campus) }}
-                    {{ form_row(formSortie.recherche) }}
-
-                    Entre
-                    {{ form_row(formSortie.dateDebut) }}
-                    et
-                    {{ form_row(formSortie.dateFin) }}
-
-                </div>
-                <div class="col-5 list-group">
-                    {{ form_row(formSortie.categories) }}
-                </div>
-                <div class="col-2">
-                    <button>Rechercher</button>
-                    <button><a href="{{ path("accueil_accueil") }}"> Vider recherche</a></button>
-                </div>
-            </div>
-        </div>
+	<div class="info">
+		<div class="key">
+			<span>Date du jour :
+			</span>
+			<span>Participant :
+			</span>
+		</div>
+		<div class="value">
+			<span>
+				{{ "now"|date("d/m/Y") }}
+			</span>
+			<span>
+				{{ app.user.pseudo }}
+			</span>
+		</div>
+	</div>
 
 
-        {{ form_end(formSortie) }}
+	<div class="wrapper">
+		<div class="title">
+			<h2>SORTIES DU MOMENT</h2>
+		</div>
 
-        <div>
+		{{ form_start(formSortie) }}
 
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Nom de la sortie</th>
-                    <th scope="col" class="idCache">Id</th>
-                    <th scope="col">Date de la sortie</th>
-                    <th scope="col">Clôture</th>
-                    <th scope="col">Inscrits/places</th>
-                    <th scope="col">Etat</th>
-                    <th scope="col">Inscrit</th>
-                    <th scope="col">Organisateur</th>
-                    <th scope="col">Actions</th>
-                </tr>
-                </thead>
+		{% if form_errors(formSortie) %}
+			form_errors(formSortie)
+		{% endif %}
 
-                <tbody>
-                {% for sortie in sorties %}
-                    <tr>
-                        <td scope="col"> {{ sortie.nom }} </td>
-                        <td scope="col" class="idCache"> {{ sortie.id }} </td>
-                        <td scope="col"> {{ sortie.dateHeureDebut | date('d/m/y m:h') }} </td>
-                        <td scope="col"> {{ sortie.dateLimiteInscription | date('d/m/y') }} </td>
-                        <td scope="col"> {{ sortie.participants | length }} / {{ sortie.nbInscriptionsMax }} </td>
-                        <td scope="col"> {{ sortie.etat.libelle }} </td>
-                        <td scope="col"> {% if app.user in sortie.participants %} X {% endif %}</td>
-                        <td scope="col"><a href="{{ path('app_logout') }}">{{ sortie.organisateur.nom }}</a></td>
-                        <td scope="col">
+		<div class="filterWrapper">
 
-                            <a href="">Afficher</a>
+			<div class="search">
+				{{ form_widget(formSortie.recherche) }}
+				<button class="searchButton">
+					Chercher</button>
+			</div>
 
-                            {% if app.user == sortie.organisateur %}
-                                <a href="">Modifier</a>
-                            {% endif %}
+			<div class="filter">
 
-                            {% if app.user in sortie.participants and sortie.etat.libelle == "Ouverte" %}
-                                <a href="{{ path('sortie_desistement', {'id': sortie.id}) }}">Se désister </a>
-                            {% else %}
-                                {% if app.user != sortie.organisateur and sortie.etat.libelle == "Ouverte" %}
-                                    <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
-                                {% endif %}
-                            {% endif %}
+				<div class="inputFilter">
 
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+					<div class="row">
+						<span>Campus :
+						</span>
+						{{ form_widget(formSortie.campus) }}
+					</div>
+					<div class="row">
+						<span>Debut :
+						</span>
+						{{ form_widget(formSortie.dateDebut) }}
+					</div>
+					<div class="row">
+						<span>Fin :
+						</span>
+						{{ form_widget(formSortie.dateFin) }}
+					</div>
+				</div>
 
-{% endblock %}
+				<div class="boxFilter">
+					{% for key, categorie in formSortie.categories.children %}
+						<div class="row">
+							{{ form_widget(categorie) }}
+							{{ form_label(categorie) }}
+						</div>
+					{% endfor %}
+				</div>
+
+			</div>
+
+		</div>
+		{{ form_end(formSortie) }}
+
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">Nom</th>
+					<th scope="col">Debut</th>
+					<th scope="col">Fin</th>
+					<th scope="col">Participants</th>
+					<th scope="col">Etat</th>
+					<th scope="col">Inscrit</th>
+					<th scope="col">Organisateur</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			{% for sortie in sorties %}
+				<tr>
+					<td data-label="Nom">
+						{{ sortie.nom }}
+					</td>
+					<td data-label="Debut">
+						{{ sortie.dateHeureDebut | date('d/m/y m:h') }}
+					</td>
+					<td data-label="Fin">
+						{{ sortie.dateLimiteInscription | date('d/m/y') }}
+					</td>
+					<td data-label="Participant(s)">
+						{{ sortie.participants | length }}
+						/
+						{{ sortie.nbInscriptionsMax }}
+					</td>
+					<td data-label="Etat">
+						{{ sortie.etat.libelle }}
+					</td>
+					<td data-label="Inscrit">
+						&nbsp;
+						{% if app.user in sortie.participants %}
+							X
+						{% endif %}
+					</td>
+					<td data-label="Organisateur">
+						<a href="{{ path('profil_show',{'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.nom }}</a>
+					</td>
+					<td data-label="Actions">
+						<a href="">Afficher</a>
+						{% if app.user == sortie.organisateur %}
+							<a href="">Modifier</a>
+							<a href="{{ path('sortie_annuler', {'id': sortie.id}) }}">Annuler</a>
+
+						{% endif %}
+						{% if app.user in sortie.participants and sortie.etat.libelle == "Ouverte" %}
+							<a href="{{ path('sortie_desistement', {'id': sortie.id}) }}">Se désister
+							</a>
+						{% else %}
+							{% if app.user != sortie.organisateur and sortie.etat.libelle == "Ouverte" %}
+								<a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
+							{% endif %}
+						{% endif %}
+					</td>
+				</tr>
+			</tbody>
+		{% endfor %}
+	</table>
+</div>{% endblock %}
