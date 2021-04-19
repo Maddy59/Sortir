@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('build/form.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block title %}
+    Mon Profil
+{% endblock %}
+
+{% block body %}
+    {{ form(EditProfilForm) }}
+
+{% endblock %}

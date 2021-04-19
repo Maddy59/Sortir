@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un lieu
+{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('form') }}
+{% endblock %}
+
+{% block body %}
+	{{ form(lieuForm) }}
+
+		{% block javascripts %}
+			<script>
+				document.getElementById("lieu_Annuler").addEventListener("click", () => window.location ="{{ path('sortie_creer') }}");
+			</script>
+		{% endblock %}
+	{% endblock %}

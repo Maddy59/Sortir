@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+			<link href="{{ asset('build/login.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block body %}
+
+
+	<form method="post">
+		{% if error %}
+			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
+
+		<div class="title">
+			<h3>
+				AUTHENTIFICATION
+			</h3>
+		</div>
+
+		<div class="log">
+
+
+			<input type="text" placeholder="Email ou Pseudo" name="identification" id="inputIdentification" required autofocus>
+			<input type="password" placeholder="Mot de passe" name="password" id="inputPassword" required>
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+			<div class="checkbox">
+				<input type="checkbox" name="_remember_me" id="checkbox">
+				<label for="checkbox">
+					Se souvenir de moi
+				</label>
+			</div>
+
+			{# todo : ajouter le lien pour réinitialiser son mot de passe #}
+
+			<button type="submit">
+				Connexion
+			</button>
+			<a href="" title="">Mot de passe oublié ?</a>
+		</div>
+	</form>
+{% endblock %}

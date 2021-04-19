@@ -1,0 +1,52 @@
+<nav>
+	{% block stylesheets %}
+			<link href="{{ asset('build/nav.css') }}" rel="stylesheet"/>
+	{% endblock %}
+
+
+	{% set currentPath = path(app.request.attributes.get('_route'),
+            app.request.attributes.get('_route_params')) %}
+
+	{# TODO décommenter la condition pour que l'entete n'apparaisse pas si on est sur la page de login une fois les pages mises en place #}
+
+	<a class="logo" href="{{ path('accueil_accueil') }}">
+		<img src="{{ asset('img/logo.png') }}" alt="">
+		<label for="">SORTIR</label>
+	</a>
+		{% if app.user %}
+
+	<li class="link">
+
+			{% if "ROLE_ADMIN" in app.user.roles  %}
+
+				{# TODO: ajouter les liens vers le controlleur campus #}
+				<button>
+					<a class="ville" href="{{ path('ville_lister') }}" title="Villes">Villes</a>
+
+				</button>
+				<button>
+					<a class="campus" href="{{ path('campus_lister') }}" title="Campus">Campus</a>
+
+				</button>
+				<button>
+					<a class="addUser" href="{{ path('register_form') }}" title="Ajouter utilisateur">Ajouter utilisateur</a>
+				</button>
+				<button>
+					<a class="addUser" href="{{ path('admin_profilutilisateurs') }}" title="Ajouter utilisateur">Gestion des utilisateurs</a>
+				</button>
+			{% endif %}
+			<button>
+				<a class="accueil" href="{{ path('accueil_accueil') }}" title="Accueil">Accueil</a>
+			</button>
+			<button>
+				<a class="profil" href="{{ path('profil_edit') }}" title="Mon profil">Mon profil</a>
+			</button>
+			<button>
+				<a class="logout" href="{{ path('app_logout') }}" title="Se deconnecter">Se déconnecter</a>
+			</button>
+
+		</li>
+	{% endif %}
+
+
+</nav>

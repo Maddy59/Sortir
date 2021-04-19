@@ -1,0 +1,51 @@
+@import './mixins.scss';
+
+@font-face {
+  font-family: HMSansLatin-Regular;
+  src: url('./fonts/HMSansLatin-Regular.woff2') format('woff2'),
+    url('./fonts/HMSansLatin-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: HMSansLatin-SemiBold;
+  src: url('./fonts/HMSansLatin-SemiBold.woff2') format('woff2'),
+    url('./fonts/HMSansLatin-SemiBold.woff') format('woff');
+}
+
+li {
+  list-style: none;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: HMSansLatin-Regular;
+  button,
+  select,
+  input {
+    @include border;
+    @include shadow;
+  }
+}
+
+html {
+  height: 100%;
+  body {
+    @include gradient;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    main {
+      flex-grow: 1;
+    }
+    footer {
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.idCache {
+  display: none;
+}

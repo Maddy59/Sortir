@@ -1,0 +1,56 @@
+@import './mixins.scss';
+
+nav {
+  * {
+    color: white;
+    button {
+      @include shadow;
+      border-radius: 5px;
+      background: #2f3036;
+      padding: 9px 5px 9px 5px;
+      margin: 0 5px 0 5px;
+      &:hover {
+        @include color(bluel);
+        a {
+          color: #24252a;
+        }
+      }
+    }
+  }
+
+  @include shadow;
+  @include flex(space-between, center);
+  padding: 0 20px 0 20px;
+  background: #24252a;
+  height: 75px;
+
+  .logo {
+    @include flex(none, center);
+    * {
+      cursor: pointer;
+    }
+    img {
+      border-radius: 50%;
+    }
+    text-decoration: none;
+    text-align: center;
+
+    label {
+      margin: 0;
+      font-size: 25px;
+      @include bold;
+    }
+
+    img {
+      width: 50px;
+      margin: 0 20px 0 0;
+    }
+  }
+
+  .link {
+    a {
+      text-decoration: none;
+      margin: 0 10px 0 10px;
+    }
+  }
+}
