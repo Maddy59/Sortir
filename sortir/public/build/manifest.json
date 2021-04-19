@@ -1,15 +1,15 @@
 {
-  "build/app.css": "/build/app.css",
-  "build/app.js": "/build/app.js",
-  "build/profil_show.css": "/build/profil_show.css",
-  "build/form.css": "/build/form.css",
-  "build/nav.css": "/build/nav.css",
-  "build/accueil.css": "/build/accueil.css",
-  "build/login.css": "/build/login.css",
-  "build/runtime.js": "/build/runtime.js",
-  "build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-bca252.js": "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-bca252.js",
-  "build/fonts/HMSansLatin-SemiBold.woff": "/build/fonts/HMSansLatin-SemiBold.b3afab32.woff",
-  "build/fonts/HMSansLatin-Regular.woff": "/build/fonts/HMSansLatin-Regular.990e7004.woff",
-  "build/fonts/HMSansLatin-SemiBold.woff2": "/build/fonts/HMSansLatin-SemiBold.500b1fc1.woff2",
-  "build/fonts/HMSansLatin-Regular.woff2": "/build/fonts/HMSansLatin-Regular.1e8dbb69.woff2"
+  "app.css": "/app.css",
+  "app.js": "/app.js",
+  "profil_show.css": "/profil_show.css",
+  "form.css": "/form.css",
+  "nav.css": "/nav.css",
+  "accueil.css": "/accueil.css",
+  "login.css": "/login.css",
+  "runtime.js": "/runtime.js",
+  "vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-bca252.js": "/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-bca252.js",
+  "fonts/HMSansLatin-SemiBold.woff": "/fonts/HMSansLatin-SemiBold.b3afab32.woff",
+  "fonts/HMSansLatin-Regular.woff": "/fonts/HMSansLatin-Regular.990e7004.woff",
+  "fonts/HMSansLatin-SemiBold.woff2": "/fonts/HMSansLatin-SemiBold.500b1fc1.woff2",
+  "fonts/HMSansLatin-Regular.woff2": "/fonts/HMSansLatin-Regular.1e8dbb69.woff2"
 }

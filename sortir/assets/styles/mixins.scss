@@ -21,9 +21,15 @@ $blued: hsl(0deg + 0.59turn, 47%, 45%);
 
 @mixin flex($justify: none, $align: none, $direction: none) {
   display: flex;
-  justify-content: $justify;
-  align-items: $align;
-  flex-direction: $direction;
+  @if $justify != none {
+    justify-content: $justify;
+  }
+  @if $align != none {
+    align-items: $align;
+  }
+  @if $direction != none {
+    flex-direction: $direction;
+  }
 }
 
 @mixin maxsize {
