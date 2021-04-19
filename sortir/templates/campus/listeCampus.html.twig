@@ -6,17 +6,15 @@
     <h3>Filtrer les campus</h3>
     <div class="container">
         Le nom contient:
-        <div class="input-group">
-            <input type="search" class="form-control rounded" placeholder="Campus" aria-label="Search"
-                   aria-describedby="search-addon" />
-            <button type="button" class="btn btn-outline-primary">Rechercher</button>
-        </div>
+        {{ form_start(formCampus) }}
+        {{ form_widget(formCampus) }}
+        <button>Rechercher</button>
+        {{ form_end(formCampus) }}
     </div>
     <br>
     <table class="table">
         <thead>
         <tr>
-            <th>Id</th>
             <th>Nom</th>
             <th>Actions</th>
         </tr>
@@ -24,10 +22,9 @@
         <tbody>
         {% for campus in campus %}
             <tr>
-                <td>{{ campus.id }}</td>
-                <td>{{ campus.nom }}</td>
+               <td>{{ campus.nom }}</td>
                 <td>
-                   <a href="{{ path('campus_detail', {'id': campus.id}) }}">Détail</a>
+                   <a href="{{ path('campus_detail', {'id': campus.id}) }}">Supprimer</a>
                    <a href="{{ path('campus_modifier', {'id': campus.id}) }}">Modifier</a>
                 </td>
             </tr>
@@ -40,4 +37,7 @@
     </table>
             <a href="{{ path('campus_ajouter') }}" class="btn btn-outline-primary">Ajouter un campus</a>
        </div>
+    </div>
+    <a href="{{ path('campus_lister') }}">Retour à la liste</a>
+    </div>
 {% endblock %}
