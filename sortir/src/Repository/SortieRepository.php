@@ -117,12 +117,6 @@ class SortieRepository extends ServiceEntityRepository
                 $query = $query
                     ->andWhere(':participant MEMBER OF s.participants ')
                     ->setParameter('participant', $user);
-            //            $resultat = array_filter($resultat, function ($user) {
-//                if (isset($user)) {
-//                    return true;
-//                }
-//                return false;
-//            });
 //            dd($query->getQuery());
         }
 

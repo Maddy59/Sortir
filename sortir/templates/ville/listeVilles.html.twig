@@ -6,11 +6,16 @@
     <h3>Filtrer les villes</h3>
     <div class="container">
         Le nom contient:
-        <div class="input-group">
+        {#<form action = "../../src/Form/verif-form.php" method = "get">
+            <input type = "search" name = "terme">
+            <input type = "submit" name = "s" value = "Rechercher">
+        </form>
+        ----------------------
+             <div class="input-group">
             <input type="search" class="form-control rounded" placeholder="Ville" aria-label="Search"
                    aria-describedby="search-addon" />
             <button type="button" class="btn btn-outline-primary">Rechercher</button>
-        </div>
+        </div>#}
     </div>
     <br>
     <table class="table">
@@ -19,7 +24,7 @@
             <th>Id</th>
             <th>Nom</th>
             <th>CodePostal</th>
-            <th>actions</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -29,7 +34,7 @@
                 <td>{{ ville.nom }}</td>
                 <td>{{ ville.codePostal }}</td>
                 <td>
-                   <a href="{{ path('ville_detail', {'id': ville.id}) }}">Voir</a>
+                   <a href="{{ path('ville_detail', {'id': ville.id}) }}">Détail</a>
                    <a href="{{ path('ville_modifier', {'id': ville.id}) }}">Modifier</a>
                 </td>
             </tr>

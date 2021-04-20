@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | gestion utilisateurs !{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block body %}
+
+<div class="wrapper">
+    <div class="title">
+        <h2>GESTION UTILISATEUR</h2>
+    </div>
+
+    {{ form_start(gestionForm) }}
+
+    {% if form_errors(gestionForm) %}
+        form_errors(gestionForm)
+    {% endif %}
+
+    <div class="filterWrapper">
+
+        <div class="search">
+            <button class="searchButton">
+                Chercher
+            </button>
+        </div>
+
+        <div class="filter">
+
+            <div class="inputFilter">
+
+                <div class="row">
+						<span>Recherche :
+						</span>
+                    {{ form_widget(gestionForm.nom) }}
+                </div>
+
+            </div>
+
+        </div>
+        {{ form_end(gestionForm) }}
+
+
+        <table>
+            <thead>
+            <tr>
+                <th scope="col">Pseudo</th>
+                <th scope="col">Email</th>
+                <th scope="col">Admin</th>
+                <th scope="col">Actif</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            {% for user in users %}
+                <tr>
+                    <td data-label="Nom">
+                        {{ user.pseudo }}
+                    </td>
+                    <td data-label="Prenom">
+                        {{ user.email }}
+                    </td>
+                    <td data-label="actif">
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            oui
+                        {% endif %}
+                    </td>
+                    <td data-label="admin">
+                        {% if user.actif %}
+                            Actif
+                        {% else %}
+                            Inactif
+                        {% endif %}
+                    </td>
+
+                    <td data-label="Actions">
+                        <a href="">
+                            {% if 'ROLE_ADMIN' in user.roles %}
+                                Enlever acces admin
+                            {% else %}
+                                Donner acces admin
+                            {% endif %}
+                        </a>
+
+                        <br>
+                        <a href="{{ path('admin_activedesactive', {'id': user.id}) }}">
+                            {% if user.actif %}
+                                Desactiver le compte
+                            {% else %}
+                                Activer le compte
+                            {% endif %}
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+
+    </div>
+    {% endblock %}

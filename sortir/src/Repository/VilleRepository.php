@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Ville|null findOneBy(array $criteria, array $orderBy = null)
  * @method Ville[]    findAll()
  * @method Ville[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
  */
 class VilleRepository extends ServiceEntityRepository
 {
@@ -19,6 +20,7 @@ class VilleRepository extends ServiceEntityRepository
         parent::__construct($registry, Ville::class);
     }
 
+    
     // /**
     //  * @return Ville[] Returns an array of Ville objects
     //  */

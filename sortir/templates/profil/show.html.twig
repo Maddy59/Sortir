@@ -1,34 +1,50 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-	{{ parent() }}
-			<link href="{{ asset('build/profil_show.css') }}" rel="stylesheet"/>
+    {{ parent() }}
+    <link href="{{ asset('build/profil_show.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block title %}
-	{{user.pseudo}}
+    {{ user.pseudo }}
 {% endblock %}
 
 {% block body %}
 
-	<div class="wrapper">
-		<div class="swag"></div>
-		<img class="img" src="{{photo}}" onerror="this.src='{{asset('img/blank.png')}}'"/>
-		<div class="info">
-			<div class="key">
-				<label>Prénom :</label>
-				<label>Nom :</label>
-				<label>Téléphone :</label>
-				<label>Email :</label>
-				<label>Campus :</label>
-			</div>
-			<div class="value">
-				<label>{{user.prenom}}</label>
-				<label>{{user.nom}}</label>
-				<label>{{user.telephone}}</label>
-				<label>{{user.email}}</label>
-				<label>{{user.campus}}</label>
-			</div>
-		</div>
-	</div>
+    <div class="wrapper">
+        <div class="swag"></div>
+        <img class="img" src="{{ photo }}" onerror="this.src='{{ asset('img/blank.png') }}'"/>
+        <div class="info">
+            <div class="key">
+                <label>Prénom :</label>
+                <label>Nom :</label>
+                <label>Téléphone :</label>
+                <label>Email :</label>
+                <label>Campus :</label>
+            </div>
+            <div class="value">
+                <label>{{ user.prenom }}</label>
+                <label>{{ user.nom }}</label>
+                <label>{{ user.telephone }}</label>
+                <label>{{ user.email }}</label>
+                <label>{{ user.campus }}</label>
+            </div>
+
+        </div>
+        <br>
+        {% if 'ROLE_ADMIN' in app.user.roles %}
+            {% if not ('ROLE_ADMIN' in user.roles) %}
+                <div class="info">
+                    <label><a href="{{ path('admin_activedesactive', {'id': user.id}) }}">
+                            {% if user.actif %}
+                                Desactiver le compte
+                            {% else %}
+                                Activer le compte
+                            {% endif %}
+                        </a>
+                    </label>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}

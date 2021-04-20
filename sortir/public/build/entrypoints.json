@@ -1,0 +1,54 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-bca252.js",
+        "/build/app.js"
+      ],
+      "css": [
+        "/build/app.css"
+      ]
+    },
+    "profil_show": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/profil_show.css"
+      ]
+    },
+    "form": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/form.css"
+      ]
+    },
+    "nav": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/nav.css"
+      ]
+    },
+    "accueil": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/accueil.css"
+      ]
+    },
+    "login": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/login.css"
+      ]
+    }
+  }
+}
