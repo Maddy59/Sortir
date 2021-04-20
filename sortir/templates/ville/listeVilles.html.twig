@@ -5,23 +5,14 @@
     <h1 class='text-center'>Gestion des villes</h1>
     <h3>Filtrer les villes</h3>
     <div class="container">
-        Le nom contient:
-        {#<form action = "../../src/Form/verif-form.php" method = "get">
-            <input type = "search" name = "terme">
-            <input type = "submit" name = "s" value = "Rechercher">
-        </form>
-        ----------------------
-             <div class="input-group">
-            <input type="search" class="form-control rounded" placeholder="Ville" aria-label="Search"
-                   aria-describedby="search-addon" />
-            <button type="button" class="btn btn-outline-primary">Rechercher</button>
-        </div>#}
+        Le nom contient: {{ form_start(formVille) }} {{ form_widget(formVille) }}
+        <button>Rechercher</button>
+        {{ form_end(formVille) }}
     </div>
     <br>
     <table class="table">
         <thead>
         <tr>
-            <th>Id</th>
             <th>Nom</th>
             <th>CodePostal</th>
             <th>Actions</th>
@@ -30,11 +21,10 @@
         <tbody>
         {% for ville in ville %}
             <tr>
-                <td>{{ ville.id }}</td>
                 <td>{{ ville.nom }}</td>
                 <td>{{ ville.codePostal }}</td>
                 <td>
-                   <a href="{{ path('ville_detail', {'id': ville.id}) }}">Détail</a>
+                   <a href="{{ path('ville_detail', {'id': ville.id}) }}">Supprimer</a>
                    <a href="{{ path('ville_modifier', {'id': ville.id}) }}">Modifier</a>
                 </td>
             </tr>
@@ -47,4 +37,7 @@
     </table>
             <a href="{{ path('ville_ajouter') }}" class="btn btn-outline-primary">Ajouter une ville</a>
        </div>
+    </div>
+    <a href="{{ path('ville_lister') }}">Retour à la liste</a>
+    </div>
 {% endblock %}

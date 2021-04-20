@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Campus;
 use App\Form\CampusType;
-use App\Form\VilleType;
+use App\Form\SearchFormCampusType;
 use App\Repository\CampusRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +15,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class CampusController extends AbstractController
 {
     /**
-     * @Route("/campus", name="campus_lister", methods={"GET"})
+     * @Route("/campus", name="campus_lister")
      */
-    public function lister(CampusRepository $villeRepository): Response
+    public function lister(CampusRepository $campusRepository,Request $request): Response
     {
+        $campusees = [];
+        $campus =new Campus();
+        $formCampus =$this->createForm(SearchFormCampusType::class,$campus);
+        $formCampus->handleRequest($request);
+        if($formCampus->isSubmitted()&& $formCampus->isValid()){
+            $campusees=$campusRepository->rechercheCampus($campus);
+        }else{
+            $campusees=$campusRepository->findAll();
+        }
+
         return $this->render('campus/listeCampus.html.twig', [
-            'campus' => $villeRepository->findAll(),
+            'campus' => $campusees,
+            'formCampus'=>$formCampus->createView(),
         ]);
     }
 

@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Data\SearchData;
 use App\Entity\Ville;
+use App\Form\SearchFormVilleType;
 use App\Form\VilleType;
 use App\Repository\VilleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,21 +15,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class VilleController extends AbstractController
 {
     /**
-     * @Route("/villes", name="ville_lister", methods={"GET"})
+     * @Route("/villes", name="ville_lister")
      */
-    public function lister(VilleRepository $villeRepository): Response
+    public function lister(VilleRepository $villeRepository,Request $request ): Response
     {
-       $ville = [];
-       $data = new SearchData();
-       $formVille = $this->createForm(VilleType::class, $data);
+       $villes = [];
+       $ville = new Ville();
+       $formVille = $this->createForm(SearchFormVilleType::class, $ville);
+        $formVille->handleRequest($request);
         if ($formVille ->isSubmitted()&& $formVille->isValid()){
-           $ville= $villeRepository->findSearch($data, $ville);
+            $villes= $villeRepository->rechercheVille($ville);
+
         }else {
-            $ville= $villeRepository->findAll();
+            $villes= $villeRepository->findAll();
         }
 
         return $this->render('ville/listeVilles.html.twig', [
-            'ville' => $villeRepository->findAll(),
+            'ville' => $villes,
             'formVille' =>$formVille->createView(),
         ]);
     }
@@ -69,7 +71,7 @@ class VilleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/modifier", name="ville_modifier", methods={"GET","POST"})
+     * @Route("/ville/modifier/{id}", name="ville_modifier", methods={"GET","POST"})
      */
     public function modifier(Request $request, Ville $ville): Response
     {
@@ -89,7 +91,7 @@ class VilleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/supprimer", name="ville_supprimer", methods={"DELETE"})
+     * @Route("/ville/supprimer/{id}", name="ville_supprimer", methods={"DELETE"})
      */
     public function supprimer(Request $request, Ville $ville): Response
     {

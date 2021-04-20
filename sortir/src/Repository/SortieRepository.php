@@ -71,32 +71,6 @@ class SortieRepository extends ServiceEntityRepository
                 ->andWhere("c.id = :campus")
                 ->setParameter('campus', $search->campus->getId());
         }
-        /**
-         * si on a coché la case "Je suis organisateur/trice" on ajoute
-         * à notre query la clause where organisateur = user
-         * et on ajoutera les sorties qui ont etat = crée
-         */
-        if (in_array('organisateur', $search->categories)) {
-            $query = $query
-                ->andWhere("s.organisateur = :organisateur")
-                ->setParameter('organisateur', $user);
-        }
-        /**
-         * si on a coché la case "Sorties passées" on ajoute
-         * à notre query la clause where etat = passé
-         * sinon on fait notre query en excluant les etats Passee et Créee
-         */
-        if (in_array('passes', $search->categories)) {
-            $query = $query
-                ->andWhere('e.libelle like :libelle')
-                ->setParameter('libelle', 'Passee');
-        } else {
-            $query = $query
-                ->andWhere('e.libelle not like :libelle1')
-                ->setParameter('libelle1', 'Passee')
-                ->andWhere('e.libelle not like :libelle2')
-                ->setParameter('libelle2', 'Creee');
-        }
 
         if ($search->dateDebut) {
             $query = $query
@@ -111,13 +85,10 @@ class SortieRepository extends ServiceEntityRepository
         }
 
 
-
-
         if (in_array('inscrit', $search->categories)) {
-                $query = $query
-                    ->andWhere(':participant MEMBER OF s.participants ')
-                    ->setParameter('participant', $user);
-//            dd($query->getQuery());
+            $query = $query
+                ->andWhere(':participant MEMBER OF s.participants ')
+                ->setParameter('participant', $user);
         }
 
         if (in_array('non-inscrit', $search->categories)) {
@@ -125,6 +96,40 @@ class SortieRepository extends ServiceEntityRepository
                 ->andWhere(':participant NOT MEMBER OF s.participants ')
                 ->setParameter('participant', $user);
         }
+
+        if(!(in_array('organisateur', $search->categories)) and !(in_array('passes', $search->categories))){
+            $query = $query
+                ->andWhere('e.libelle not like :libelle1')
+                ->setParameter('libelle1', 'Passee')
+                ->andWhere('e.libelle not like :libelle2')
+                ->setParameter('libelle2', 'Creee');
+        }
+
+        /**
+         * si on a coché la case "Je suis organisateur/trice" on ajoute
+         * à notre query la clause where organisateur = user
+         * et on ajoutera les sorties qui ont etat = crée
+         */
+        if (in_array('organisateur', $search->categories)) {
+            $query = $query
+                ->andWhere("s.organisateur = :organisateur")
+                ->setParameter('organisateur', $user);
+        }
+
+        /**
+         * si on a coché la case "Sorties passées" on ajoute
+         * à notre query la clause where etat = passé
+         * sinon on fait notre query en excluant les etats Passee et Créee
+         */
+        if (in_array('passes', $search->categories)) {
+            $query = $query
+                ->orWhere('e.libelle like :libelle')
+                ->setParameter('libelle', 'Passee');
+        }
+
+
+
+
 
         $resultat = $query->getQuery()->execute();
 

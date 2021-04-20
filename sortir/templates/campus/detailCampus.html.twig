@@ -7,17 +7,13 @@
     <table class="table">
         <tbody>
         <tr>
-            <th>Id</th>
-            <td>{{ campus.id }}</td>
-        </tr>
-        <tr>
             <th>Nom</th>
             <td>{{ campus.nom }}</td>
         </tr>
         </tbody>
     </table>
 <div class="container">
-    <a href="{{ path('campus_modifier', {'id': campus.id}) }}"class="btn btn-outline-primary">Modifier</a>
+   {#  <a href="{{ path('campus_modifier', {'id': campus.id}) }}"class="btn btn-outline-primary">Modifier</a>#}
        {{ include('campus/_supprimer_form.html.twig') }}
 </div>
     <a href="{{ path('campus_lister') }}">Retour à la liste</a>

@@ -5,8 +5,7 @@
     <h3>Modifier une ville</h3>
 
     {{ include('ville/_form.html.twig', {'button_label': 'Mise à jour'}) }}
-    {{ include('ville/_supprimer_form.html.twig') }}
-    
+
     <a href="{{ path('ville_lister') }}">Retour à la liste</a>
 </div>
 {% endblock %}

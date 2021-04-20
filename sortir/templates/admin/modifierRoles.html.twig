@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | gestion utilisateurs !{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block body %}
+
+<div class="wrapper">
+    <div class="title">
+        <h2>GESTION ROLE {{ user.pseudo }}</h2>
+    </div>
+
+
+    {% if form_errors(rolesForm) %}
+        form_errors(rolesForm)
+    {% endif %}
+
+    <div class="wrapper">
+        <div class="info">
+            <div class="">
+                <label>Prénom :</label>
+                <label>Nom :</label>
+                <label>Téléphone :</label>
+                <label>Email :</label>
+                <label>Campus :</label>
+            </div>
+            <div class="">
+                <label>{{ user.prenom }}</label>
+                <label>{{ user.nom }}</label>
+                <label>{{ user.telephone }}</label>
+                <label>{{ user.email }}</label>
+                <label>{{ user.campus }}</label>
+            </div>
+
+        </div>
+        <div class="">
+
+        </div>
+    </div>
+    <div class="wrapper">
+        {{ form_start(rolesForm) }}
+        {{ form_widget(rolesForm) }}
+        {{ form_end(rolesForm) }}
+
+    </div>
+    {% endblock %}
