@@ -107,7 +107,7 @@
 						{{ sortie.nom }}
 					</td>
 					<td data-label="Debut">
-						{{ sortie.dateHeureDebut | date('d/m/y m:h') }}
+						{{ sortie.dateHeureDebut | date('d/m/y') }} à {{ sortie.dateHeureDebut | date('m') }}h{{ sortie.dateHeureDebut | date('h')}}
 					</td>
 					<td data-label="Fin">
 						{{ sortie.dateLimiteInscription | date('d/m/y') }}
@@ -127,10 +127,10 @@
 						{% endif %}
 					</td>
 					<td data-label="Organisateur">
-						<a href="{{ path('profil_show',{'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.nom }}</a>
+						<a href="{{ path('profil_show',{'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
 					</td>
 					<td data-label="Actions">
-						<a href="">Afficher</a>
+						<a href="{{ path('sortie_afficher', {'id': sortie.id}) }}">Afficher</a>
 						{% if app.user == sortie.organisateur %}
 							<a href="">Modifier</a>
 							<a href="{{ path('sortie_annuler', {'id': sortie.id}) }}">Annuler</a>

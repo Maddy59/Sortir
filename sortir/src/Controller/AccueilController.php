@@ -9,6 +9,8 @@ use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use DateTime;
+use App\Services\MiseAJourEtatSorties;
+use App\Services\ArchivageSorties;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +22,12 @@ class AccueilController extends AbstractController
     /**
      * @Route("/", name="accueil_accueil")
      */
-    public function accueil(Request $request,SortieRepository $sortieRepository,EtatRepository $etatRepository,EntityManagerInterface $entityManager): Response
+    public function accueil(Request $request,
+                            SortieRepository $sortieRepository,
+                            EtatRepository $etatRepository,
+                            EntityManagerInterface $entityManager,
+                            MiseAJourEtatSorties $etatSorties,
+                            ArchivageSorties $archivageSorties): Response
     {
 
         $user = $this->getUser();
@@ -37,39 +44,13 @@ class AccueilController extends AbstractController
             $sorties = $sortieRepository->findAll();
         }
 
-        $this->miseAJourEtatSorties($sorties, $etatRepository, $entityManager);
+        $etatSorties->miseAJourEtatSorties($sorties, $etatRepository, $entityManager);
+        $archivageSorties->archivage($sorties, $entityManager);
 
         return $this->render('accueil/accueil.html.twig', [
             'sorties' => $sorties,
             'formSortie' => $formSortie->createView(),
         ]);
-    }
-
-    /**
-     * Mise à jour de l'état des sorties
-     */
-    public function miseAJourEtatSorties(array $sorties, EtatRepository $etatRepository, EntityManagerInterface $entityManager): void
-    {
-        foreach ($sorties as $sortie) {
-            if (new dateTime("now") > $sortie->getDateLimiteInscription()) {
-                $etat = $etatRepository->find(3);
-                $sortie->setEtat($etat);
-                $entityManager->persist($etat);
-                $entityManager->flush();
-            }
-            if (new dateTime("now") == $sortie->getDateHeureDebut()) {
-                $etat = $etatRepository->find(4);
-                $sortie->setEtat($etat);
-                $entityManager->persist($etat);
-                $entityManager->flush();
-            }
-            if (new dateTime("now") > $sortie->getDateHeureDebut()) {
-                $etat = $etatRepository->find(5);
-                $sortie->setEtat($etat);
-                $entityManager->persist($etat);
-                $entityManager->flush();
-            }
-        }
     }
 
 }

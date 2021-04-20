@@ -86,7 +86,7 @@ class SortieController extends AbstractController
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
             $sorties = $sortieRepository->findSearch($data, $user);
         }
-        return $this->render('accueil/adminProfilUtilisateurs.html.twig', [
+        return $this->render('accueil/accueil.html.twig', [
             'sorties' => $sorties,
             'user' => $user,
             'formSortie' => $formSortie->createView(),
@@ -114,10 +114,21 @@ class SortieController extends AbstractController
         if ($formSortie->isSubmitted() && $formSortie->isValid()) {
             $sorties = $sortieRepository->findSearch($data, $user);
         }
-        return $this->render('accueil/adminProfilUtilisateurs.html.twig', [
+        return $this->render('accueil/accueil.html.twig', [
             'sorties' => $sorties,
             'user' => $user,
             'formSortie' => $formSortie->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/afficher/{id}", name="afficher")
+     */
+    public function afficher($id, SortieRepository $sortieRepository){
+        $sortie = $sortieRepository->find($id);
+
+        return $this->render('sortie/afficher.html.twig', [
+            'sortie' => $sortie
         ]);
     }
 

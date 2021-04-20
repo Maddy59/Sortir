@@ -97,6 +97,15 @@ class Sortie
      */
     private $motif;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $archivee;
+
+
+
+
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -258,6 +267,18 @@ class Sortie
     public function setMotif(?string $motif): self
     {
         $this->motif = $motif;
+
+        return $this;
+    }
+
+    public function getArchivee(): ?bool
+    {
+        return $this->archivee;
+    }
+
+    public function setArchivee(bool $archivee): self
+    {
+        $this->archivee = $archivee;
 
         return $this;
     }
