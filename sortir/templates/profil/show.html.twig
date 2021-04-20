@@ -33,18 +33,12 @@
         </div>
         <br>
         {% if 'ROLE_ADMIN' in app.user.roles %}
-            {% if not ('ROLE_ADMIN' in user.roles) %}
-                <div class="info">
-                    <label><a href="{{ path('admin_activedesactive', {'id': user.id}) }}">
-                            {% if user.actif %}
-                                Desactiver le compte
-                            {% else %}
-                                Activer le compte
-                            {% endif %}
-                        </a>
-                    </label>
-                </div>
-            {% endif %}
+            <div class="info">
+                <label><a href="{{ path('admin_modifier_role', {'id': user.id}) }}">
+                        Modifier les roles
+                    </a>
+                </label>
+            </div>
         {% endif %}
     </div>
 {% endblock %}
