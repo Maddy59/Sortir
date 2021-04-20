@@ -3,9 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Lieu;
+use App\Entity\Ville;
+use App\Form\VilleType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,18 +16,12 @@ class LieuType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
-            ->add('rue')
-            ->add('latitude', null, [
-                'required' => false,
-            ])
-            ->add('longitude', null, [
-                'required' => false,
-            ])
-            ->add('ville')
-            ->add('Creer', SubmitType::class)
-            ->add('Annuler', ButtonType::class);
-
+            ->add('nom', TextType::class, ['label' => 'Nom du lieu'])
+            ->add('rue', HiddenType::class)
+            ->add('latitude', HiddenType::class)
+            ->add('longitude', HiddenType::class)
+            ->add('ville', VilleType::class, [
+                'label' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -1,0 +1,217 @@
+@import './mixins.scss';
+
+main {
+  min-width: 0;
+  @include flex(center, center);
+  form {
+    @include flex(none, none, column);
+    min-width: 0;
+    padding: 25px;
+    border-radius: 10px;
+    background: white;
+    max-width: 900px;
+    width: 100%;
+    .core {
+      @media screen and (min-width: 715px) {
+        @include flex(none, none, row);
+      }
+      input,
+      select,
+      textarea {
+        padding: 7px;
+        border-radius: 5px;
+        margin: 0 0 10px 0;
+        font-size: 13px;
+        @media screen and (min-width: 715px) {
+          max-width: 250px;
+        }
+      }
+      textarea {
+        flex: 1;
+        @media screen and (min-width: 715px) {
+          margin: 0;
+        }
+      }
+      .left {
+        @media screen and (min-width: 715px) {
+          max-width: 250px;
+        }
+        width: 100%;
+        min-width: 0;
+        margin-right: 50px;
+        @include flex(none, none, column);
+        div {
+          &:last-of-type {
+            flex-grow: 1;
+          }
+          @include flex(none, none, column);
+        }
+      }
+      .right {
+        min-width: 0;
+        max-width: 750px;
+        width: 100%;
+        .mapWrapper {
+          @include flex;
+          margin-top: 10px;
+          height: 350px;
+          #map {
+            flex: 1;
+            @include shadow;
+          }
+        }
+        div {
+          @include flex(none, none, column);
+        }
+        #modifier_sortie_form_adresse,
+        #sortie_adresse {
+          max-width: unset;
+        }
+      }
+    }
+
+    .action {
+      margin-top: 15px;
+      min-width: 0;
+      @include flex(space-between, none, row);
+      @media screen and (max-width: 680px) {
+        @include flex(none, none, column);
+      }
+      div {
+        @include flex;
+        button {
+          @include buttond;
+          margin-right: 10px;
+          width: 100%;
+          padding: 0 30px 0 30px;
+        }
+      }
+    }
+  }
+}
+
+#map {
+  * {
+    font-family: HMSansLatin-Regular !important;
+  }
+}
+
+#description {
+  font-size: 15px;
+  font-weight: 300;
+}
+
+#infowindow-content .title {
+  font-weight: bold;
+}
+
+#infowindow-content {
+  display: none;
+}
+
+#map #infowindow-content {
+  display: inline;
+}
+
+.pac-card {
+  margin: 10px 10px 0 0;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+}
+
+#pac-container {
+  padding-bottom: 12px;
+  margin-right: 12px;
+}
+
+.pac-controls {
+  display: inline-block;
+  padding: 5px 11px;
+}
+
+.pac-controls label {
+  font-size: 13px;
+  font-weight: 300;
+}
+
+.gm-svpc {
+  img {
+    width: 25px !important;
+    height: 25px !important;
+  }
+  width: 28px !important;
+  height: 28px !important;
+}
+.gm-style-mtc {
+  width: 50px !important;
+  button {
+    padding: 0 !important;
+    min-width: 10px !important;
+    font-size: 12px !important;
+    height: 20px !important;
+    border-radius: 0 !important;
+    color: black !important;
+  }
+}
+#map > div > div > div:nth-child(13) > div {
+  right: 24px !important;
+}
+.gm-control-active {
+  width: 20px !important;
+  height: 20px !important;
+
+  img {
+    width: 10px !important;
+    height: 10px !important;
+  }
+}
+#map > div > div > div:nth-child(13) > div > div.gm-svpc {
+  background: white !important;
+  box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px !important;
+  width: 23px !important;
+  height: 38px !important;
+  top: 30px !important;
+}
+
+.gmnoprint > div {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+#map > div > div > div:nth-child(13) > div > div:nth-child(3) > div > button {
+  background: white !important;
+  width: 23px !important;
+  height: 23px !important;
+}
+#map > div > div > div:nth-child(13) > div > div:nth-child(3) > div > div {
+  visibility: hidden !important;
+}
+
+#map > div > div > div:nth-child(4) > div > div:nth-child(2) > ul {
+  &,
+  * {
+    width: 50px !important;
+    height: 20px !important;
+  }
+}
+#map > div > div > div:nth-child(16),
+#map > div > div > div:nth-child(4) > div > div:nth-child(2) > ul,
+.gm-style-cc,
+#map > div > div > div:nth-child(4) > div > div:nth-child(1) > ul {
+  display: none !important;
+}
+
+#title {
+  color: #fff;
+  background-color: #4d90fe;
+  font-size: 25px;
+  font-weight: 500;
+  padding: 6px 12px;
+}
+
+#target {
+  width: 345px;
+}

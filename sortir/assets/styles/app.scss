@@ -25,6 +25,12 @@ li {
     @include border;
     @include shadow;
   }
+  &:not(h1, h2, h3, h4) {
+    font-size: 16px;
+  }
+  button{
+    cursor: pointer;
+  }
 }
 
 html {
@@ -34,6 +40,7 @@ html {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    margin: 0;
     main {
       flex-grow: 1;
     }

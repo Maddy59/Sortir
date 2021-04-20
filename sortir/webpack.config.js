@@ -6,7 +6,7 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
   Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev')
 }
 
-Encore.setOutputPath('Sortir/sortir/public/build/')
+Encore.setOutputPath('public/build/')
   .setPublicPath('/build')
 
   //js
@@ -18,13 +18,13 @@ Encore.setOutputPath('Sortir/sortir/public/build/')
   .addStyleEntry('nav', './assets/styles/nav.scss')
   .addStyleEntry('accueil', './assets/styles/accueil.scss')
   .addStyleEntry('login', './assets/styles/login.scss')
+  .addStyleEntry('sortie', './assets/styles/sortie.scss')
 
   .enableStimulusBridge('./assets/controllers.json')
   .splitEntryChunks()
   .enableSingleRuntimeChunk()
 
   .cleanupOutputBeforeBuild()
-  .enableBuildNotifications()
   .enableSourceMaps(!Encore.isProduction())
   .enableVersioning(Encore.isProduction())
 
@@ -42,7 +42,6 @@ Encore.setOutputPath('Sortir/sortir/public/build/')
   .enableSassLoader()
 
   // uncomment if you use TypeScript
-  .enableTypeScriptLoader()
 
 // uncomment if you use React
 //.enableReactPreset()

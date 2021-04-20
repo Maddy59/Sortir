@@ -55,29 +55,41 @@ main {
     @include flex(none, none, column);
     .search {
       display: flex;
-      height: 42px;
+      flex: 1;
       margin: 80px 0 30px 0;
-      @media screen and (max-width: 400px) {
+      @media screen and (max-width: 700px) {
         @include flex(space-between, center, column);
         height: 100px;
       }
-      .searchButton {
-        @include color;
-        border-radius: 10px;
-        max-width: 100px;
-        max-height: 42px;
-        flex: 1;
-        color: white;
-        &:hover {
-          @include color(bluel);
-          color: #24252a;
+      .button {
+        @include flex;
+        @media screen and (max-width: 430px) {
+          @include flex(none, none, column);
+        }
+        button {
+          @media screen and (max-width: 430px) {
+            margin: 10px 0 0 0;
+          }
+          @media screen and (max-width: 700px) {
+            margin: 10px 10px 0 0;
+          }
+
+          margin: 0 10px 0 0;
+          @include color;
+          border-radius: 10px;
+          width: 150px;
+          height: 42px;
+          color: white;
+          &:hover {
+            @include color(bluel);
+            color: #24252a;
+          }
         }
       }
 
       input {
-        max-height: 42px;
+        height: 42px;
         padding: 0 0 0 30px;
-        flex: 1;
         width: 100%;
         max-width: 450px;
         border-radius: 10px;

@@ -1,10 +1,10 @@
 @import './mixins.scss';
 main {
-  @media screen and (min-width: 400px) {
-    @include flex(center, center);
-  }
+  @include flex(center, center);
+  min-width: 0;
 
   form {
+    min-width: 0;
     @media screen and (max-width: 400px) {
       margin: 30px 0 0 0;
     }

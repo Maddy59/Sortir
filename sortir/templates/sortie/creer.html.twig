@@ -1,36 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer une sortie{% endblock %}
+{% block title %}Créer une sortie
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link href="{{ asset('build/sortie.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block javascripts  %}
+	<script src="{{ asset('js/mapCreation.js') }}"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key={{ app.request.server.get('KEY') }}&callback=initAutocomplete&libraries=places&v=weekly" async></script>
+	<script>
+		document.getElementById('sortie_adresse').addEventListener('keypress', function (event) {
+if (event.keyCode == 13) {
+event.preventDefault();
+}
+});
+	</script>
+
+{% endblock %}
+
 {% block body %}
-    {% form_theme sortieForm 'bootstrap_4_horizontal_layout.html.twig' %}
+	{{ form_start(form)}}
+	<div class="core">
+		<div class="left">
+			{{ form_row(form.nom) }}
+			{{ form_row(form.dateHeureDebut) }}
+			{{ form_row(form.dateLimiteInscription) }}
+			{{ form_row(form.nbInscriptionsMax) }}
+			{{ form_row(form.duree) }}
+			{{ form_row(form.infosSortie) }}
+		</div>
+		<div class="right">
+			{{ form_row(form.campus) }}
+			{{ form_row(form.lieu) }}
+			{{ form_row(form.adresse) }}
+			<div class="mapWrapper">
+				<div id="map"></div>
+			</div>
 
-    <div class="container -md">
-        {{ form_start(sortieForm, {attr: {novalidate:'novalidate'}})}}
+		</div>
+	</div>
+	<div class="action">
+		{{ form_row(form.enregistrer) }}
+		{{ form_row(form.publier) }}
+		{{ form_row(form.annuler) }}
+	</div>
 
-        {{ form_row(sortieForm.nom) }}
-        {{ form_row(sortieForm.dateHeureDebut) }}
-        {{ form_row(sortieForm.dateLimiteInscription) }}
-        {{ form_row(sortieForm.nbInscriptionsMax) }}
-        {{ form_row(sortieForm.duree) }}
-        <span>minutes</span>
-        {{ form_row(sortieForm.infosSortie) }}
-        {{ form_row(sortieForm.campus) }}
-        {{ form_row(sortieForm.ville) }}
+	{{ form_end(form) }}
 
-        {{ form_row(sortieForm.lieu) }}
-        <button><a href="{{ path('lieu_creer') }}">+</a></button>
-
-        <div style="display: flex; justify-content: center">
-            {{ form_row(sortieForm.enregistrer) }}
-            {{ form_row(sortieForm.publier) }}
-            <div class="form-group row">
-                <div class="col-sm-2"></div>
-                <div class="col-sm-10">
-                <button class="btn-primary btn"><a style="text-decoration: none; color: white; display: block" href="{{ path('accueil_accueil') }}">Annuler</a></button>
-                </div>
-            </div>
-        </div>
-        {{ form_end(sortieForm) }}
-
-    </div>
 {% endblock %}

@@ -15,12 +15,7 @@
 			<link href="{{ asset('build/app.css') }}" rel="stylesheet"/>
 		{% endblock %}
 
-		{% block script %}
-		{% endblock %}
-		<script
-				src="https://code.jquery.com/jquery-3.6.0.min.js"
-				integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-				crossorigin="anonymous"></script>		{# le favicon #}
+		{# le favicon #}
 		<link rel="icon" href="{{ asset('img/soiree-dj.png') }}">
 	</head>
 	<body>
@@ -46,5 +41,9 @@
 			© Sortir -
 			{{ "now"|date("Y") }}
 		</footer>
+
+		{% block javascripts %}
+			<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		{% endblock %}
 	</body>
-</html></div>{% block javascripts %}{% endblock %}</body></html>
+</html>

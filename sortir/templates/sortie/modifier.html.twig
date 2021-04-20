@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier une sortie
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link href="{{ asset('build/sortie.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block javascripts  %}
+	<script src="{{ asset('js/map.js') }}"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key={{ app.request.server.get('KEY') }}&callback=initAutocomplete&libraries=places&v=weekly" async></script>
+	<script>
+		document.getElementById('modifier_sortie_form_adresse').addEventListener('keypress', function (event) {
+if (event.keyCode == 13) {
+event.preventDefault();
+}
+});
+	</script>
+
+{% endblock %}
+
+{% block body %}
+	{{ form_start(ModiferSortieForm)}}
+	<div class="core">
+		<div class="left">
+			{{ form_row(ModiferSortieForm.nom) }}
+			{{ form_row(ModiferSortieForm.dateHeureDebut) }}
+			{{ form_row(ModiferSortieForm.dateLimiteInscription) }}
+			{{ form_row(ModiferSortieForm.nbInscriptionsMax) }}
+			{{ form_row(ModiferSortieForm.duree) }}
+			{{ form_row(ModiferSortieForm.infosSortie) }}
+		</div>
+
+		<div class="right">
+			{{ form_row(ModiferSortieForm.campus) }}
+			{{ form_row(ModiferSortieForm.lieu) }}
+			{{ form_row(ModiferSortieForm.adresse) }}
+			<div class="mapWrapper" data-lat={{lat}} data-lng={{lng}}>
+				<div id="map"></div>
+			</div>
+
+		</div>
+	</div>
+	<div class="action">
+		{{ form_row(ModiferSortieForm.enregistrer) }}
+		{{ form_row(ModiferSortieForm.publier) }}
+		{{ form_row(ModiferSortieForm.supprimer) }}
+		{{ form_row(ModiferSortieForm.annuler) }}
+	</div>
+
+	{{ form_end(ModiferSortieForm) }}
+
+{% endblock %}

@@ -118,6 +118,9 @@ class Lieu
         return $this->sorties;
     }
 
+
+    
+
     public function addSortie(Sortie $sorty): self
     {
         if (!$this->sorties->contains($sorty)) {

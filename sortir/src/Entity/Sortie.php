@@ -102,10 +102,6 @@ class Sortie
      */
     private $archivee;
 
-
-
-
-
     public function __construct()
     {
         $this->participants = new ArrayCollection();
