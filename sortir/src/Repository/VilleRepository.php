@@ -21,9 +21,9 @@ class VilleRepository extends ServiceEntityRepository
     }
     public function rechercheVille (Ville $ville):array
     {
-        $Query= $this->createQueryBuilder('v')
-        ->select('v')
-        ->andWhere('v.nom like :chercheVille')
+        $Query= $this->createQueryBuilder('q')
+        ->select('q')
+        ->andWhere('q.nom like :chercheVille')
         ->setParameter('chercheVille', "%{$ville->getNom()}%");
 
         return $Query

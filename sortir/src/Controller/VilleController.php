@@ -71,7 +71,7 @@ class VilleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/modifier", name="ville_modifier", methods={"GET","POST"})
+     * @Route("modifier/{id}", name="ville_modifier", methods={"GET","POST"})
      */
     public function modifier(Request $request, Ville $ville): Response
     {
@@ -91,7 +91,7 @@ class VilleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/supprimer", name="ville_supprimer", methods={"DELETE"})
+     * @Route("supprimer/{id}", name="ville_supprimer", methods={"DELETE"})
      */
     public function supprimer(Request $request, Ville $ville): Response
     {

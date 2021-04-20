@@ -21,7 +21,6 @@ class CampusController extends AbstractController
     {
         $campusees = [];
         $campus =new Campus();
-        dump($campusees);
         $formCampus =$this->createForm(SearchFormCampusType::class,$campus);
         $formCampus->handleRequest($request);
         if($formCampus->isSubmitted()&& $formCampus->isValid()){
