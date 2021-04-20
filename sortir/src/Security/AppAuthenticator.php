@@ -71,7 +71,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
             throw new CustomUserMessageAuthenticationException('Email or pseudo could not be found.');
         }
 
-        if(in_array('ROLE_DESACTIVE',$user->getRoles())){
+        if(in_array('ROLE_INACTIF',$user->getRoles())){
             throw new CustomUserMessageAuthenticationException('Votre compte a été desactivé veuillez contacter votre administrateur.');
         }
 
