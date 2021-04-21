@@ -124,12 +124,10 @@ class SortieRepository extends ServiceEntityRepository
         if (in_array('passes', $search->categories)) {
             $query = $query
                 ->orWhere('e.libelle like :libelle')
-                ->setParameter('libelle', 'Passee');
+                ->setParameter('libelle', 'Passee')
+                ->andWhere('s.archivee = :archivee')
+                ->setParameter('archivee', '0');
         }
-
-
-
-
 
         $resultat = $query->getQuery()->execute();
 
