@@ -76,7 +76,7 @@ class SortieController extends AbstractController
         $user = $this->getUser();
         $sortie = $sortieRepository->find($id);
         if (count($sortie->getParticipants()) < $sortie->getNbInscriptionsMax() && !$objetDansArray->existsInArray($user, $sortie->getParticipants())) {
-            if ($sortie->getEtat() != 'Ouverte') {
+            if ($sortie->getEtat()->getLibelle() != 'Ouverte') {
                 $this->addFlash('echec', 'Les inscriptions ne sont plus ouvertes pour cette sortie');
             } else {
                 $sortie->addParticipant($user);
@@ -99,7 +99,7 @@ class SortieController extends AbstractController
         $user = $this->getUser();
         $sortie = $sortieRepository->find($id);
         if ($objetDansArray->existsInArray($user, $sortie->getParticipants())) {
-            if ($sortie->getEtat() != 'Ouverte' || $sortie->getEtat() != 'Annulée') {
+            if ($sortie->getEtat()->getLibelle() != 'Ouverte') {
                 $this->addFlash('echec', "Vous ne pouvez pas vous désinscrire car les inscriptions sont fermées");
             } else {
                 $this->addFlash('success', 'vous vous etes désinscrit de la sortie');
