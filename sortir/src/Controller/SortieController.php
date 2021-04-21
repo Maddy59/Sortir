@@ -26,9 +26,10 @@ class SortieController extends AbstractController
      * @Route("/creer", name="creer")
      */
     public function creer(Request $request,
-        EntityManagerInterface $entityManager,
-        UserRepository $userRepository,
-        EtatRepository $etatRepository): Response {
+                          EntityManagerInterface $entityManager,
+                          UserRepository $userRepository,
+                          EtatRepository $etatRepository): Response
+    {
 
         $sortie = new Sortie();
         $sortie->setOrganisateur($this->getUser());
@@ -73,12 +74,16 @@ class SortieController extends AbstractController
     {
         $user = $this->getUser();
         $sortie = $sortieRepository->find($id);
-        if(count($sortie->getParticipants()) < $sortie->getNbInscriptionsMax() && !$objetDansArray->existsInArray($user, $sortie->getParticipants())){
-            $sortie->addParticipant($user);
-            $entityManager->flush();
-            $this->addFlash('success', 'vous vous etes inscrits pour la sortie');
-        } else{
-            $this->addFlash('echec', "il n'y a plus la place pour s'inscrire");
+        if (count($sortie->getParticipants()) < $sortie->getNbInscriptionsMax() && !$objetDansArray->existsInArray($user, $sortie->getParticipants())) {
+            if ($sortie->getEtat() != 'Ouverte') {
+                $this->addFlash('echec', 'Les inscriptions ne sont plus ouvertes pour cette sortie');
+            } else {
+                $sortie->addParticipant($user);
+                $entityManager->flush();
+                $this->addFlash('success', 'vous vous etes inscrits pour la sortie');
+            }
+        } else {
+            $this->addFlash('echec', "vous etes deja inscrit dans la sortie");
         }
 
 
@@ -92,16 +97,16 @@ class SortieController extends AbstractController
     {
         $user = $this->getUser();
         $sortie = $sortieRepository->find($id);
-        if($objetDansArray->existsInArray($user, $sortie->getParticipants())) {
-            $this->addFlash('success', 'vous vous etes désinscrit de la sortie');
-            $sortie->removeParticipant($user);
-            $entityManager->flush();
-        } else{
-            $this->addFlash('echec','Echec: Vous ne pouvez pas vous désisncrire');
-            if($sortie->getEtat() != 'Ouverte'){
-                $this->addFlash('echec','La date de début est déjà passée');
+        if ($objetDansArray->existsInArray($user, $sortie->getParticipants())) {
+            if ($sortie->getEtat() != 'Ouverte' || $sortie->getEtat() != 'Annulée') {
+                $this->addFlash('echec', "Vous ne pouvez pas vous désinscrire car les inscriptions sont fermées");
+            } else {
+                $this->addFlash('success', 'vous vous etes désinscrit de la sortie');
+                $sortie->removeParticipant($user);
+                $entityManager->flush();
             }
-
+        } else {
+            $this->addFlash('echec', 'Echec: Vous ne pouvez pas vous désisncrire');
         }
 
         return $this->redirectToRoute('accueil_accueil');
@@ -110,7 +115,8 @@ class SortieController extends AbstractController
     /**
      * @Route("/afficher/{id}", name="afficher")
      */
-    public function afficher($id, SortieRepository $sortieRepository){
+    public function afficher($id, SortieRepository $sortieRepository)
+    {
         $sortie = $sortieRepository->find($id);
 
         return $this->render('sortie/afficher.html.twig', [
