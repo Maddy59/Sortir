@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -127,8 +128,13 @@ class SortieController extends AbstractController
     /**
      * @Route("/annuler/{id}", name="annuler")
      */
-    public function annuler(Sortie $sortie, EtatRepository $etatRepository, EntityManagerInterface $entityManager, Request $request): Response
+    public function annuler($id, Sortie $sortie, SortieRepository $sortieRepository, EtatRepository $etatRepository, EntityManagerInterface $entityManager, Request $request): Response
     {
+        $sortie = $sortieRepository->find($id);
+
+        if($this->getUser()->getUsername() != $sortie->getOrganisateur()->getUsername()){
+            return new Response(500);
+        }
         $form = $this->createForm(AnnulerSortieForm::class, $sortie);
         $form->handleRequest($request);
 
