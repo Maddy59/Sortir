@@ -2,14 +2,13 @@
 
 namespace App\Controller;
 
-use App\Data\SearchData;
 use App\Entity\Sortie;
 use App\Form\AnnulerSortieForm;
-use App\Form\SearchFormSortie;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
+use App\Services\ObjetDansArray;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +37,7 @@ class SortieController extends AbstractController
 
         $sortieForm->handleRequest($request);
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+            $sortie->setArchivee(false);
             if ($sortieForm->get('enregistrer')->isClicked()) {
                 $etatDefaut = $etatRepository->find(1);
                 $sortie->setEtat($etatDefaut);
@@ -69,56 +69,42 @@ class SortieController extends AbstractController
     /**
      * @Route("/inscription/{id}", name="inscription")
      */
-    public function inscription($id, SortieRepository $sortieRepository, EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request): Response
+    public function inscription($id, ObjetDansArray $objetDansArray, SortieRepository $sortieRepository, EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request): Response
     {
         $user = $this->getUser();
         $sortie = $sortieRepository->find($id);
-        $sortie->addParticipant($user);
-        $entityManager->flush();
-        $user = $userRepository->findOneBy(['id' => 1]);
-
-        $sorties = $sortieRepository->findAll();
-        $data = new SearchData();
-        $formSortie = $this->createForm(SearchFormSortie::class, $data);
-
-        $formSortie->handleRequest($request);
-
-        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
-            $sorties = $sortieRepository->findSearch($data, $user);
+        if(count($sortie->getParticipants()) < $sortie->getNbInscriptionsMax() && !$objetDansArray->existsInArray($user, $sortie->getParticipants())){
+            $sortie->addParticipant($user);
+            $entityManager->flush();
+            $this->addFlash('success', 'vous vous etes inscrits pour la sortie');
+        } else{
+            $this->addFlash('echec', "il n'y a plus la place pour s'inscrire");
         }
-        return $this->render('accueil/accueil.html.twig', [
-            'sorties' => $sorties,
-            'user' => $user,
-            'formSortie' => $formSortie->createView(),
-        ]);
+
+
+        return $this->redirectToRoute('accueil_accueil');
     }
 
     /**
      * @Route("/desistement/{id}", name="desistement")
      */
-    public function desistement($id, SortieRepository $sortieRepository, EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request): Response
+    public function desistement($id, ObjetDansArray $objetDansArray, SortieRepository $sortieRepository, EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request): Response
     {
         $user = $this->getUser();
         $sortie = $sortieRepository->find($id);
-        $sortie->removeParticipant($user);
-        $entityManager->flush();
+        if($objetDansArray->existsInArray($user, $sortie->getParticipants())) {
+            $this->addFlash('success', 'vous vous etes désinscrit de la sortie');
+            $sortie->removeParticipant($user);
+            $entityManager->flush();
+        } else{
+            $this->addFlash('echec','Echec: Vous ne pouvez pas vous désisncrire');
+            if($sortie->getEtat() != 'Ouverte'){
+                $this->addFlash('echec','La date de début est déjà passée');
+            }
 
-        $user = $userRepository->findOneBy(['id' => 1]);
-
-        $sorties = $sortieRepository->findAll();
-        $data = new SearchData();
-        $formSortie = $this->createForm(SearchFormSortie::class, $data);
-
-        $formSortie->handleRequest($request);
-
-        if ($formSortie->isSubmitted() && $formSortie->isValid()) {
-            $sorties = $sortieRepository->findSearch($data, $user);
         }
-        return $this->render('accueil/accueil.html.twig', [
-            'sorties' => $sorties,
-            'user' => $user,
-            'formSortie' => $formSortie->createView(),
-        ]);
+
+        return $this->redirectToRoute('accueil_accueil');
     }
 
     /**

@@ -1,152 +1,156 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{ parent() }}
-	| Accueil
+    {{ parent() }}
+    | Accueil
 {% endblock %}
 
 {% block stylesheets %}
-	{{ parent() }}
-			<link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
+    {{ parent() }}
+    <link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
 
-	<div class="info">
-		<div class="key">
+    <div class="info">
+        <div class="key">
 			<span>Date du jour :
 			</span>
-			<span>Participant :
+            <span>Participant :
 			</span>
-		</div>
-		<div class="value">
+        </div>
+        <div class="value">
 			<span>
 				{{ "now"|date("d/m/Y") }}
 			</span>
-			{% if app.user %}
-			<span>
+            {% if app.user %}
+                <span>
 				{{ app.user.pseudo }}
 			</span>
-			{% endif %}
+            {% endif %}
 
-		</div>
-	</div>
+        </div>
+    </div>
 
 
-	<div class="wrapper">
-		<div class="title">
-			<h2>SORTIES DU MOMENT</h2>
-		</div>
+    <div class="wrapper">
+    <div class="title">
+        <h2>SORTIES DU MOMENT</h2>
+    </div>
 
-		{{ form_start(formSortie) }}
+    {{ form_start(formSortie) }}
 
-		{% if form_errors(formSortie) %}
-			form_errors(formSortie)
-		{% endif %}
+    {% if form_errors(formSortie) %}
+        form_errors(formSortie)
+    {% endif %}
 
-		<div class="filterWrapper">
+    <div class="filterWrapper">
 
-			<div class="search">
-				{{ form_widget(formSortie.recherche) }}
-				<button class="searchButton">
-					Chercher</button>
-			</div>
+        <div class="search">
+            {{ form_widget(formSortie.recherche) }}
+            <button class="searchButton">
+                Chercher
+            </button>
+        </div>
 
-			<div class="filter">
+        <div class="filter">
 
-				<div class="inputFilter">
+            <div class="inputFilter">
 
-					<div class="row">
+                <div class="row">
 						<span>Campus :
 						</span>
-						{{ form_widget(formSortie.campus) }}
-					</div>
-					<div class="row">
+                    {{ form_widget(formSortie.campus) }}
+                </div>
+                <div class="row">
 						<span>Debut :
 						</span>
-						{{ form_widget(formSortie.dateDebut) }}
-					</div>
-					<div class="row">
+                    {{ form_widget(formSortie.dateDebut) }}
+                </div>
+                <div class="row">
 						<span>Fin :
 						</span>
-						{{ form_widget(formSortie.dateFin) }}
-					</div>
-				</div>
+                    {{ form_widget(formSortie.dateFin) }}
+                </div>
+            </div>
 
-				<div class="boxFilter">
-					{% for key, categorie in formSortie.categories.children %}
-						<div class="row">
-							{{ form_widget(categorie) }}
-							{{ form_label(categorie) }}
-						</div>
-					{% endfor %}
-				</div>
+            <div class="boxFilter">
+                {% for key, categorie in formSortie.categories.children %}
+                    <div class="row">
+                        {{ form_widget(categorie) }}
+                        {{ form_label(categorie) }}
+                    </div>
+                {% endfor %}
+            </div>
 
-			</div>
+        </div>
 
-		</div>
-		{{ form_end(formSortie) }}
-		<button><a href="{{ path("sortie_creer") }}">Créer une sortie</a></button>
+    </div>
+    {{ form_end(formSortie) }}
+    <button><a href="{{ path("sortie_creer") }}">Créer une sortie</a></button>
 
-		<table>
-			<thead>
-				<tr>
-					<th scope="col">Nom</th>
-					<th scope="col">Debut</th>
-					<th scope="col">Fin</th>
-					<th scope="col">Participants</th>
-					<th scope="col">Etat</th>
-					<th scope="col">Inscrit</th>
-					<th scope="col">Organisateur</th>
-					<th scope="col">Actions</th>
-				</tr>
-			</thead>
-			{% for sortie in sorties %}
-				<tr>
-					<td data-label="Nom">
-						{{ sortie.nom }}
-					</td>
-					<td data-label="Debut">
-						{{ sortie.dateHeureDebut | date('d/m/y') }} à {{ sortie.dateHeureDebut | date('m') }}h{{ sortie.dateHeureDebut | date('h')}}
-					</td>
-					<td data-label="Fin">
-						{{ sortie.dateLimiteInscription | date('d/m/y') }}
-					</td>
-					<td data-label="Participant(s)">
-						{{ sortie.participants | length }}
-						/
-						{{ sortie.nbInscriptionsMax }}
-					</td>
-					<td data-label="Etat">
-						{{ sortie.etat.libelle }}
-					</td>
-					<td data-label="Inscrit">
-						&nbsp;
-						{% if app.user in sortie.participants %}
-							X
-						{% endif %}
-					</td>
-					<td data-label="Organisateur">
-						<a href="{{ path('profil_show',{'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
-					</td>
-					<td data-label="Actions">
-						<a href="{{ path('sortie_afficher', {'id': sortie.id}) }}">Afficher</a>
-						{% if app.user == sortie.organisateur %}
-							<a href="">Modifier</a>
-							<a href="{{ path('sortie_annuler', {'id': sortie.id}) }}">Annuler</a>
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Debut</th>
+            <th scope="col">Fin</th>
+            <th scope="col">Participants</th>
+            <th scope="col">Etat</th>
+            <th scope="col">Inscrit</th>
+            <th scope="col">Organisateur</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        {% for sortie in sorties %}
+            <tr>
+                <td data-label="Nom">
+                    {{ sortie.nom }}
+                </td>
+                <td data-label="Debut">
+                    {{ sortie.dateHeureDebut | date('d/m/y') }} à {{ sortie.dateHeureDebut | date('m') }}
+                    h{{ sortie.dateHeureDebut | date('h') }}
+                </td>
+                <td data-label="Fin">
+                    {{ sortie.dateLimiteInscription | date('d/m/y') }}
+                </td>
+                <td data-label="Participant(s)">
+                    {{ sortie.participants | length }}
+                    /
+                    {{ sortie.nbInscriptionsMax }}
+                </td>
+                <td data-label="Etat">
+                    {{ sortie.etat.libelle }}
+                </td>
+                <td data-label="Inscrit">
+                    &nbsp;
+                    {% if app.user in sortie.participants %}
+                        X
+                    {% endif %}
+                </td>
+                <td data-label="Organisateur">
+                    <a href="{{ path('profil_show',{'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                </td>
+                <td data-label="Actions">
+                    <a href="{{ path('sortie_afficher', {'id': sortie.id}) }}">Afficher</a>
+                    {% if app.user == sortie.organisateur %}
+                        <a href="">Modifier</a>
+                        <a href="{{ path('sortie_annuler', {'id': sortie.id}) }}">Annuler</a>
 
-						{% endif %}
-						{% if app.user in sortie.participants and sortie.etat.libelle == "Ouverte" %}
-							<a href="{{ path('sortie_desistement', {'id': sortie.id}) }}">Se désister
-							</a>
-						{% else %}
-							{% if app.user != sortie.organisateur and sortie.etat.libelle == "Ouverte" %}
-								<a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
-							{% endif %}
-						{% endif %}
-					</td>
-				</tr>
-			</tbody>
-		{% endfor %}
-	</table>
-</div>{% endblock %}
+                    {% endif %}
+                    {% if app.user in sortie.participants and sortie.etat.libelle == "Ouverte" %}
+                        <a href="{{ path('sortie_desistement', {'id': sortie.id}) }}">Se désister
+                        </a>
+                    {% else %}
+                        {% if app.user != sortie.organisateur and sortie.etat.libelle == "Ouverte" %}
+                            {% if (sortie.participants | length) < sortie.nbInscriptionsMax %}
+                                <a href="{{ path('sortie_inscription', {'id': sortie.id}) }}">S'inscrire</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+    </div>{% endblock %}
