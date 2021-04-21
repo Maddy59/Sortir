@@ -11,33 +11,30 @@
 
 	<div class="">
 		<div class="">
-			<label>Date et heure de la sortie</label>
-			<label>Date limite d'inscription</label>
-			<label>Nombre de places</label>
-			<label>Durée</label>
+			<p>La sortie {{ sortie.nom | lower }} est prévue le {{ sortie.dateHeureDebut | date('d/m/y') }}, à {{ sortie.dateHeureDebut | date('m') }}h{{ sortie.dateHeureDebut | date('h') }} pour une durée de {{ sortie.duree }} minutes.</p>
+			</p>
+			<p>Elle est oranisée par <a href="{{ path('profil_show',{'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo | capitalize}}.</a>
+
+			<p>La date limite d'inscription est le {{ sortie.dateLimiteInscription | date('d/m/y') }}.</p>
+			<p>Il reste {{ sortie.nbInscriptionsMax - sortie.participants | length }} places disponibles.</p>
+
 			<label>Description et infos</label>
 			<label>Campus</label>
 			<label>Lieu</label>
 			<label>Rue</label>
 			<label>Code postal</label>
 			<label>Ville</label>
-			<label>Latitude</label>
-			<label>Longitude</label>
+
 		</div>
 
 		<div class="">
-			<label>{{ sortie.dateHeureDebut | date('d/m/y') }} à {{ sortie.dateHeureDebut | date('m') }}h{{ sortie.dateHeureDebut | date('h') }}</label>
-			<label>{{ sortie.dateLimiteInscription | date('d/m/y') }}</label>
-			<label>{{ sortie.nbInscriptionsMax }}</label>
-			<label>{{ sortie.duree }}</label>
 			<label>{{ sortie.infosSortie }}</label>
 			<label>{{ sortie.campus }}</label>
 			<label>{{ sortie.lieu.nom }}</label>
 			<label>{{ sortie.lieu.rue }}</label>
 			<label>{{ sortie.lieu.ville.codePostal }}</label>
 			<label>{{ sortie.lieu.ville.nom }}</label>
-			<label>{{ sortie.lieu.latitude }}</label>
-			<label>{{ sortie.lieu.longitude }}</label>
+
 		</div>
 	</div>
 
@@ -59,8 +56,9 @@
 		{% endfor %}
 		</tbody>
 	</table>
-
-
+	{%  if sortie.lieu.longitude and sortie.lieu.latitude %}
+	<iframe src="https://maps.google.com/maps?q={{ sortie.lieu.latitude }}, {{ sortie.lieu.longitude }}&z=15&output=embed" width="360" height="270" frameborder="0" style="border:0"></iframe>
+	{% endif %}
 {% endblock %}
 
 
