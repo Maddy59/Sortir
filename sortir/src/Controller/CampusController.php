@@ -6,6 +6,7 @@ use App\Entity\Campus;
 use App\Form\CampusType;
 use App\Form\SearchFormCampusType;
 use App\Repository\CampusRepository;
+use Doctrine\DBAL\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,21 +18,21 @@ class CampusController extends AbstractController
     /**
      * @Route("/campus", name="campus_lister")
      */
-    public function lister(CampusRepository $campusRepository,Request $request): Response
+    public function lister(CampusRepository $campusRepository, Request $request): Response
     {
         $campusees = [];
-        $campus =new Campus();
-        $formCampus =$this->createForm(SearchFormCampusType::class,$campus);
+        $campus = new Campus();
+        $formCampus = $this->createForm(SearchFormCampusType::class, $campus);
         $formCampus->handleRequest($request);
-        if($formCampus->isSubmitted()&& $formCampus->isValid()){
-            $campusees=$campusRepository->rechercheCampus($campus);
-        }else{
-            $campusees=$campusRepository->findAll();
+        if ($formCampus->isSubmitted() && $formCampus->isValid()) {
+            $campusees = $campusRepository->rechercheCampus($campus);
+        } else {
+            $campusees = $campusRepository->findAll();
         }
 
         return $this->render('campus/listeCampus.html.twig', [
             'campus' => $campusees,
-            'formCampus'=>$formCampus->createView(),
+            'formCampus' => $formCampus->createView(),
         ]);
     }
 
@@ -93,10 +94,14 @@ class CampusController extends AbstractController
      */
     public function supprimer(Request $request, Campus $campus): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$campus->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($campus);
-            $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete' . $campus->getId(), $request->request->get('_token'))) {
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($campus);
+                $entityManager->flush();
+            } catch (Exception $e) {
+                $this->addFlash("echec", "Ce Campus est associé à des lieux ou des sorties vous ne pouvez pas l'effacer");
+            }
         }
 
         return $this->redirectToRoute('campus_lister');

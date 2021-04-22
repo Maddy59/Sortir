@@ -6,6 +6,7 @@ use App\Entity\Ville;
 use App\Form\SearchFormVilleType;
 use App\Form\VilleType;
 use App\Repository\VilleRepository;
+use Doctrine\DBAL\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -95,9 +96,13 @@ class VilleController extends AbstractController
     public function supprimer(Request $request, Ville $ville): Response
     {
         if ($this->isCsrfTokenValid('delete'.$ville->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($ville);
-            $entityManager->flush();
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($ville);
+                $entityManager->flush();
+            } catch(Exception $e){
+                $this->addFlash("echec", "Cette ville est associé à des lieux ou des sorties vous ne pouvez pas l'effacer");
+            }
         }
 
         return $this->redirectToRoute('ville_lister');

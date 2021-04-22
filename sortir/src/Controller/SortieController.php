@@ -80,10 +80,10 @@ class SortieController extends AbstractController
     /**
      * @Route("/inscription/{id}", name="inscription")
      */
-    public function inscription($id, ObjetDansArray $objetDansArray, SortieRepository $sortieRepository, EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request): Response
+    public function inscription(Sortie $sortie, ObjetDansArray $objetDansArray, SortieRepository $sortieRepository, EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request): Response
     {
         $user = $this->getUser();
-        $sortie = $sortieRepository->find($id);
+
         if (count($sortie->getParticipants()) < $sortie->getNbInscriptionsMax() && !$objetDansArray->existsInArray($user, $sortie->getParticipants())) {
             if ($sortie->getEtat()->getLibelle() != 'Ouverte') {
                 $this->addFlash('echec', 'Les inscriptions ne sont plus ouvertes pour cette sortie');
@@ -102,10 +102,10 @@ class SortieController extends AbstractController
     /**
      * @Route("/desistement/{id}", name="desistement")
      */
-    public function desistement($id, ObjetDansArray $objetDansArray, SortieRepository $sortieRepository, EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request): Response
+    public function desistement(Sortie $sortie, ObjetDansArray $objetDansArray, SortieRepository $sortieRepository, EntityManagerInterface $entityManager, UserRepository $userRepository, Request $request): Response
     {
         $user = $this->getUser();
-        $sortie = $sortieRepository->find($id);
+
         if ($objetDansArray->existsInArray($user, $sortie->getParticipants())) {
             if ($sortie->getEtat()->getLibelle() != 'Ouverte') {
                 $this->addFlash('echec', "Vous ne pouvez pas vous désinscrire car les inscriptions sont fermées");
@@ -124,9 +124,8 @@ class SortieController extends AbstractController
     /**
      * @Route("/afficher/{id}", name="afficher")
      */
-    public function afficher($id, SortieRepository $sortieRepository)
+    public function afficher(Sortie $sortie, SortieRepository $sortieRepository)
     {
-        $sortie = $sortieRepository->find($id);
 
         return $this->render('sortie/afficher.html.twig', [
             'sortie' => $sortie,
@@ -166,6 +165,11 @@ class SortieController extends AbstractController
      */
     public function modifier(Sortie $sortie, EtatRepository $etatRepository, EntityManagerInterface $entityManager, Request $request): Response
     {
+
+        if ($this->getUser()->getUsername() != $sortie->getOrganisateur()->getUsername()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $form = $this->createForm(ModifierSortieForm::class, $sortie);
         $form->handleRequest($request);
 
