@@ -1,17 +1,36 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    {{ parent() }}
+<link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
+{% endblock %}
 {% block body %}
-<div class="container -md">
-    <h1 class='text-center'>Gestion des campus</h1>
-    <h3>Filtrer les campus</h3>
-    <div class="container">
-        Le nom contient:
+    <div class="wrapper">
+        <div class="title">
+            <h2>Gestion des campus</h2>
+        </div>
+
         {{ form_start(formCampus) }}
-        {{ form_widget(formCampus) }}
-        <button>Rechercher</button>
+        {% if form_errors(formCampus) %}
+            form_errors(formCampus)
+        {% endif %}
+
+        <div class="filterWrapper">
+            <div class="search">
+                <div class="inputFilter">
+                    <span>Le nom contient :</span>
+                    {{ form_widget(formCampus) }}
+                    <div class="button">
+                        <button class="searchButton">
+                            Chercher
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        <div class="filter">
         {{ form_end(formCampus) }}
     </div>
-    <br>
+
     <table class="table">
         <thead>
         <tr>
@@ -24,23 +43,19 @@
             <tr>
                <td>{{ campus.nom }}</td>
                 <td>
-                    {% if campus.sorties %}
-                        <a href="{{ path('campus_modifier', {'id': campus.id}) }}">Modifier</a>
-                    {% else %}
+                       <a href="{{ path('campus_modifier', {'id': campus.id}) }}">Modifier</a>
                         <a href="{{ path('campus_detail', {'id': campus.id}) }}">Supprimer</a>
-                    {% endif %}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">Pas de campus enregistré</td>
+                <td>Pas de campus enregistré</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
             <a href="{{ path('campus_ajouter') }}" class="btn btn-outline-primary">Ajouter un campus</a>
-       </div>
-    </div>
-    <a href="{{ path('campus_lister') }}">Retour à la liste</a>
+            <a href="{{ path('campus_lister') }}">Retour à la liste</a>
+        </div>
     </div>
 {% endblock %}

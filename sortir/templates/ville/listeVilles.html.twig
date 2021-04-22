@@ -13,28 +13,24 @@
         {% if form_errors(formVille) %}
             form_errors(formVille)
         {% endif %}
+
         <div class="filterWrapper">
             <div class="search">
-                <div class="button">
-                    <button class="searchButton">
-                        Chercher
-                    </button>
-                </div>
-            </div>
-            <div class="filter">
                 <div class="inputFilter">
-                    <div class="row">
-                        <span>Le nom contient :</span>
-                        {{ form_widget(formVille) }}
+                    <span>Le nom contient :</span>
+                    {{ form_widget(formVille) }}
+                    <div class="button">
+                        <button class="searchButton">
+                            Chercher
+                        </button>
                     </div>
                 </div>
             </div>
+
+            <div class="filter">
             {{ form_end(formVille) }}
+            </div>
 
-
-
-
-            <br>
             <table class="table">
                 <thead>
                 <tr>
@@ -55,7 +51,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="4">Pas de ville enregistrée</td>
+                        <td >Pas de ville enregistrée</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -64,8 +60,4 @@
             <a href="{{ path('ville_lister') }}">Retour à la liste</a>
         </div>
     </div>
-
-
-
-
 {% endblock %}

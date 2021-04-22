@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
+{% endblock %}
 {% block body %}
-<div class="container -md">
+<div class="wrapper">
     <h3>Ville</h3>
 
     <table class="table">
@@ -16,10 +19,10 @@
         </tr>
         </tbody>
     </table>
-<div class="container">
-    {#  <a href="{{ path('ville_modifier', {'id': ville.id}) }}"class="btn btn-outline-primary">Modifier</a>#}
-       {{ include('ville/_supprimer_form.html.twig') }}
-</div>
+        <div class="container">
+            {#  <a href="{{ path('ville_modifier', {'id': ville.id}) }}"class="btn btn-outline-primary">Modifier</a>#}
+            {{ include('ville/_supprimer_form.html.twig') }}
+        </div>
     <a href="{{ path('ville_lister') }}">Retour à la liste</a>
 </div>
 {% endblock %}
