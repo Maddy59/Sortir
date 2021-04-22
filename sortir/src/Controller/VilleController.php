@@ -59,7 +59,6 @@ class VilleController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/ville/{id}", name="ville_detail", methods={"GET"})
      */
@@ -103,6 +102,5 @@ class VilleController extends AbstractController
 
         return $this->redirectToRoute('ville_lister');
     }
-
 
 }
