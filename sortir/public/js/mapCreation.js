@@ -27,7 +27,8 @@ function initAutocomplete() {
 
             let street_number = adress.find((i) => i.types[0] === 'street_number') || ''
             !!street_number && (street_number = street_number.short_name)
-            const route = adress.find((i) => i.types[0] === 'route').short_name
+            let route = adress.find((i) => i.types[0] === 'route') || ''  
+            !!route && (route = route.short_name)
 
             const street = street_number + ' ' + route
             const zip = adress.find((i) => i.types[0] === 'postal_code').short_name

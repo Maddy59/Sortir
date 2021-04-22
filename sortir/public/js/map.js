@@ -5,7 +5,7 @@ function initAutocomplete() {
 
   const lat = parseFloat(dataLatLng.dataset.lat)
   const lng = parseFloat(dataLatLng.dataset.lng)
-  console.log(lat);
+  console.log(lat)
 
   const LatLng = new google.maps.LatLng(lat, lng)
 
@@ -36,7 +36,8 @@ function initAutocomplete() {
 
             let street_number = adress.find((i) => i.types[0] === 'street_number') || ''
             !!street_number && (street_number = street_number.short_name)
-            const route = adress.find((i) => i.types[0] === 'route').short_name
+            let route = adress.find((i) => i.types[0] === 'route') || ''
+            !!route && (route = route.short_name)
 
             const street = street_number + ' ' + route
             const zip = adress.find((i) => i.types[0] === 'postal_code').short_name
@@ -50,7 +51,9 @@ function initAutocomplete() {
               'modifier_sortie_form_lieu_longitude'
             ).value = LatLng.lng()
             document.getElementById('modifier_sortie_form_lieu_ville_nom').value = city
-            document.getElementById('modifier_sortie_form_lieu_ville_codePostal').value = zip
+            document.getElementById(
+              'modifier_sortie_form_lieu_ville_codePostal'
+            ).value = zip
           }
         }
       }
