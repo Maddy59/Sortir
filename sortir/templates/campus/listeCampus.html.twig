@@ -24,8 +24,11 @@
             <tr>
                <td>{{ campus.nom }}</td>
                 <td>
-                   <a href="{{ path('campus_detail', {'id': campus.id}) }}">Supprimer</a>
-                   <a href="{{ path('campus_modifier', {'id': campus.id}) }}">Modifier</a>
+                    {% if campus.sorties %}
+                        <a href="{{ path('campus_modifier', {'id': campus.id}) }}">Modifier</a>
+                    {% else %}
+                        <a href="{{ path('campus_detail', {'id': campus.id}) }}">Supprimer</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
