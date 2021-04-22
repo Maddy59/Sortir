@@ -1,64 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{sortie.nom}}{% endblock %}
+{% block title %}{{ sortie.nom }}{% endblock %}
 
 {% block stylesheets %}
-	{{ parent() }}
+    {{ parent() }}
+    <link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('build/form.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
-	<h1>{{ sortie.nom }}</h1>
+    <div class="wrapper">
+        <div class="title">
+            <h2>{{ sortie.nom }}</h2>
+        </div>
 
-	<div class="">
-		<div class="">
-			<p>La sortie {{ sortie.nom | lower }} est prévue le {{ sortie.dateHeureDebut | date('d/m/y') }}, à {{ sortie.dateHeureDebut | date('m') }}h{{ sortie.dateHeureDebut | date('h') }} pour une durée de {{ sortie.duree }} minutes.</p>
-			</p>
-			<p>Elle est oranisée par <a href="{{ path('profil_show',{'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo | capitalize}}.</a>
+        <div class="filterWrapper">
+            <div class="search">
+                <div class="inputFilter">
+                    <p>Details de la sortie: {{ sortie.infosSortie | default("Aucun detail donnée") }} </p>
+                    <p>La sortie {{ sortie.nom | lower }} est prévue le {{ sortie.dateHeureDebut | date('d/m/y') }},
+                        à {{ sortie.dateHeureDebut | date('m') }}h{{ sortie.dateHeureDebut | date('h') }} pour une durée
+                        de {{ sortie.duree }} minutes.</p>
+                    </p>
+                    <p>Elle est oranisée par <a
+                                href="{{ path('profil_show',{'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo | capitalize }}
+                            .</a>
+                    <p>La date limite d'inscription est le {{ sortie.dateLimiteInscription | date('d/m/y') }}.</p>
+                    <p>Il reste {{ sortie.nbInscriptionsMax - sortie.participants | length }} places disponibles.</p>
+                    <p>Campus : {{ sortie.campus }} </p>
+                    <p>Lieu : {{ sortie.lieu.nom }} -  {{ sortie.lieu.rue }} - {{ sortie.lieu.ville.codePostal }} - {{ sortie.lieu.ville.nom }}</p>
 
-			<p>La date limite d'inscription est le {{ sortie.dateLimiteInscription | date('d/m/y') }}.</p>
-			<p>Il reste {{ sortie.nbInscriptionsMax - sortie.participants | length }} places disponibles.</p>
+                </div>
 
-			<label>Description et infos</label>
-			<label>Campus</label>
-			<label>Lieu</label>
-			<label>Rue</label>
-			<label>Code postal</label>
-			<label>Ville</label>
+            </div>
 
-		</div>
 
-		<div class="">
-			<label>{{ sortie.infosSortie }}</label>
-			<label>{{ sortie.campus }}</label>
-			<label>{{ sortie.lieu.nom }}</label>
-			<label>{{ sortie.lieu.rue }}</label>
-			<label>{{ sortie.lieu.ville.codePostal }}</label>
-			<label>{{ sortie.lieu.ville.nom }}</label>
+            {% if sortie.lieu.longitude and sortie.lieu.latitude %}
+                <iframe src="https://maps.google.com/maps?q={{ sortie.lieu.latitude }}, {{ sortie.lieu.longitude }}&z=15&output=embed"
+                        width="360" height="270" frameborder="0" style="border:0"></iframe>
+            {% endif %}
+        </div>
 
-		</div>
-	</div>
+        <h2>Liste des participants inscrits</h2>
 
-	<h2>Liste des participants inscrits</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Pseudo</th>
+                <th>Prénom Nom</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for participant in sortie.participants %}
+                <tr>
+                    <td>{{ participant.pseudo | capitalize }}</td>
+                    <td>{{ participant.prenom | capitalize }} {{ participant.nom | upper }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-	<table>
-		<thead>
-			<tr>
-				<th>Pseudo</th>
-				<th>Prénom Nom</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% for participant in sortie.participants %}
-			<tr>
-				<td>{{ participant.pseudo | capitalize }}</td>
-				<td>{{ participant.prenom | capitalize }} {{ participant.nom | upper }}</td>
-			</tr>
-		{% endfor %}
-		</tbody>
-	</table>
-	{%  if sortie.lieu.longitude and sortie.lieu.latitude %}
-	<iframe src="https://maps.google.com/maps?q={{ sortie.lieu.latitude }}, {{ sortie.lieu.longitude }}&z=15&output=embed" width="360" height="270" frameborder="0" style="border:0"></iframe>
-	{% endif %}
+    </div>
 {% endblock %}
 
 

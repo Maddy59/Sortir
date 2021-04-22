@@ -1,4 +1,6 @@
 {{ form_start(form) }}
+<div>
     {{ form_widget(form) }}
-    <button class="btn btn-outline-primary">{{ button_label|default('Enregistrer') }}</button>
+    <button><a href="{{ path('ville_lister') }}"><label for="">Retour à la liste</label></a></button>
+</div>
 {{ form_end(form) }}

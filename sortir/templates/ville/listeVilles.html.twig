@@ -45,7 +45,7 @@
                         <td>{{ ville.nom }}</td>
                         <td>{{ ville.codePostal }}</td>
                         <td>
-                            <a href="{{ path('ville_detail', {'id': ville.id}) }}">Supprimer</a>
+                            {{ include('ville/_supprimer_form.html.twig') }}
                             <a href="{{ path('ville_modifier', {'id': ville.id}) }}">Modifier</a>
                         </td>
                     </tr>

@@ -1,61 +1,61 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
-<link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block body %}
-    <div class="wrapper">
-        <div class="title">
-            <h2>Gestion des campus</h2>
-        </div>
+<div class="wrapper">
+    <div class="title">
+        <h2>Gestion des campus</h2>
+    </div>
 
-        {{ form_start(formCampus) }}
-        {% if form_errors(formCampus) %}
-            form_errors(formCampus)
-        {% endif %}
+    {{ form_start(formCampus) }}
+    {% if form_errors(formCampus) %}
+        form_errors(formCampus)
+    {% endif %}
 
-        <div class="filterWrapper">
-            <div class="search">
-                <div class="inputFilter">
-                    <span>Le nom contient :</span>
-                    {{ form_widget(formCampus) }}
-                    <div class="button">
-                        <button class="searchButton">
-                            Chercher
-                        </button>
-                    </div>
+    <div class="filterWrapper">
+        <div class="search">
+            <div class="inputFilter">
+                <span>Le nom contient :</span>
+                {{ form_widget(formCampus) }}
+                <div class="button">
+                    <button class="searchButton">
+                        Chercher
+                    </button>
                 </div>
             </div>
+        </div>
 
         <div class="filter">
-        {{ form_end(formCampus) }}
+            {{ form_end(formCampus) }}
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for campus in campus %}
+                <tr>
+                    <td>{{ campus.nom }}</td>
+                    <td>
+                        <a href="{{ path('campus_modifier', {'id': campus.id}) }}">Modifier</a>
+                        {{ include('campus/_supprimer_form.html.twig') }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>Pas de campus enregistré</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('campus_ajouter') }}" class="btn btn-outline-primary">Ajouter un campus</a>
+        <a href="{{ path('campus_lister') }}">Retour à la liste</a>
     </div>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for campus in campus %}
-            <tr>
-               <td>{{ campus.nom }}</td>
-                <td>
-                        <a href="{{ path('campus_modifier', {'id': campus.id}) }}">Modifier</a>
-                        <a href="{{ path('campus_detail', {'id': campus.id}) }}">Supprimer</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td>Pas de campus enregistré</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-            <a href="{{ path('campus_ajouter') }}" class="btn btn-outline-primary">Ajouter un campus</a>
-            <a href="{{ path('campus_lister') }}">Retour à la liste</a>
-        </div>
-    </div>
-{% endblock %}
+    {% endblock %}

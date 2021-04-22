@@ -6,96 +6,91 @@
     <link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block body %}
-<div class="info">
-    <div class="key">
+    <div class="info">
+        <div class="key">
 			<span>Date du jour :
 			</span>
-        <span>Participant :
+            <span>Participant :
 			</span>
-    </div>
-    <div class="value">
+        </div>
+        <div class="value">
 			<span>
 				{{ "now"|date("d/m/Y") }}
 			</span>
-        {% if app.user %}
-            <span>
+            {% if app.user %}
+                <span>
 				{{ app.user.pseudo }}
 			</span>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <div class="title">
+            <h2>GESTION UTILISATEUR</h2>
+        </div>
+
+        {{ form_start(gestionForm) }}
+        {% if form_errors(gestionForm) %}
+            form_errors(gestionForm)
         {% endif %}
 
-    </div>
-</div>
-
-<div class="wrapper">
-    <div class="title">
-        <h2>GESTION UTILISATEUR</h2>
-    </div>
-
-    {{ form_start(gestionForm) }}
-    {% if form_errors(gestionForm) %}
-        form_errors(gestionForm)
-    {% endif %}
-
-    <div class="filterWrapper">
-
-        <div class="search">
-            <div class="button">
-                <button class="searchButton">
-                    Chercher
-                </button>
-            </div>
-        </div>
-        <div class="filter">
-            <div class="inputFilter">
-                <div class="row">
-						<span>Recherche :
-						</span>
+        <div class="filterWrapper">
+            <div class="search">
+                <div class="inputFilter">
+                    <span>Recherche :</span>
                     {{ form_widget(gestionForm.nom) }}
+                    <div class="button">
+                        <button class="searchButton">
+                            Rechercher
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        {{ form_end(gestionForm) }}
 
 
-        <table>
-            <thead>
-            <tr>
-                <th scope="col">Pseudo</th>
-                <th scope="col">Email</th>
-                <th scope="col">Admin</th>
-                <th scope="col">Actif</th>
-                <th scope="col">Modifer les roles</th>
-            </tr>
-            </thead>
-            {% for user in users %}
+            {{ form_end(gestionForm) }}
+
+
+            <table>
+                <thead>
                 <tr>
-                    <td data-label="Nom">
-                        {{ user.pseudo }}
-                    </td>
-                    <td data-label="Prenom">
-                        {{ user.email }}
-                    </td>
-                    <td data-label="actif">
-                        {% if 'ROLE_ADMIN' in user.roles %}
-                            oui
-                        {% endif %}
-                    </td>
-                    <td data-label="admin">
-                        {% if 'ROLE_INACTIF' in user.roles %}
-                            Inactif
-                        {% else %}
-                            Actif
-                        {% endif %}
-                    </td>
-
-                    <td data-label="Modifer les roles">
-                        <a href="{{ path('admin_modifier_role', {id: user.id}) }}">Modifier</a>
-                    </td>
+                    <th scope="col">Pseudo</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Admin</th>
+                    <th scope="col">Actif</th>
+                    <th scope="col">Modifer les roles</th>
                 </tr>
-                </tbody>
-            {% endfor %}
-        </table>
+                </thead>
+                {% for user in users %}
+                    <tr>
+                        <td data-label="Nom">
+                            {{ user.pseudo }}
+                        </td>
+                        <td data-label="Prenom">
+                            {{ user.email }}
+                        </td>
+                        <td data-label="actif">
+                            {% if 'ROLE_ADMIN' in user.roles %}
+                                oui
+                            {% endif %}
+                        </td>
+                        <td data-label="admin">
+                            {% if 'ROLE_INACTIF' in user.roles %}
+                                Inactif
+                            {% else %}
+                                Actif
+                            {% endif %}
+                        </td>
 
+                        <td data-label="Modifer les roles">
+                            <a href="{{ path('admin_modifier_role', {id: user.id}) }}">Modifier</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
     </div>
-    {% endblock %}
+{% endblock %}
