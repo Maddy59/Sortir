@@ -51,6 +51,7 @@ main {
       margin: 0;
     }
   }
+  
   .filterWrapper {
     @include flex(none, none, column);
     .search {

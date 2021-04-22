@@ -7,6 +7,7 @@ use App\Entity\Sortie;
 use App\Form\LieuType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -63,8 +64,9 @@ class ModifierSortieForm extends AbstractType
             ->add('enregistrer', SubmitType::class, ['label' => 'Enregistrer'])
             ->add('publier', SubmitType::class, ['label' => 'Publier la sortie'])
             ->add('supprimer', SubmitType::class, ['label' => 'Supprimer'])
-            ->add('annuler', SubmitType::class, ['label' => 'Annuler']);
-
+            ->add('annuler', ButtonType::class, ['label' => 'Annuler',
+                'attr' => ['onclick' => 'location.href="/"'],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

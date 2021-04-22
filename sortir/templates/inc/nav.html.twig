@@ -1,6 +1,7 @@
 <nav>
+
 	{% block stylesheets %}
-			<link href="{{ asset('build/nav.css') }}" rel="stylesheet"/>
+		<link href="{{ asset('build/nav.css') }}" rel="stylesheet"/>
 	{% endblock %}
 
 
@@ -13,10 +14,18 @@
 		<img src="{{ asset('img/logo.png') }}" alt="">
 		<label for="">SORTIR</label>
 	</a>
-		{% if app.user %}
+	<input type="checkbox" id="hamb" name="hamb">
 
-	<li class="link">
+	{% if app.user %}
+		<label class="hambWrapper" for="hamb">
+			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="34px" height="27px" viewbox="0 0 34 27" enable-background="new 0 0 34 27" xml:space="preserve">
+				<rect fill="#FFFFFF" width="34" height="4"/>
+				<rect y="11" fill="#FFFFFF" width="34" height="4"/>
+				<rect y="23" fill="#FFFFFF" width="34" height="4"/>
+			</svg>
+		</label>
 
+		<li class="link">
 			{% if "ROLE_ADMIN" in app.user.roles  %}
 
 				{# TODO: ajouter les liens vers le controlleur campus #}
@@ -44,7 +53,6 @@
 			<button>
 				<a class="logout" href="{{ path('app_logout') }}" title="Se deconnecter">Se déconnecter</a>
 			</button>
-
 		</li>
 	{% endif %}
 

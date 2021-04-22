@@ -3,7 +3,12 @@
 nav {
   * {
     color: white;
+    position: relative;
     button {
+      @media screen and (max-width: 1200px) {
+        margin: 5px 0 5px 0;
+      }
+
       @include shadow;
       border-radius: 5px;
       background: #2f3036;
@@ -15,6 +20,21 @@ nav {
           color: #24252a;
         }
       }
+    }
+  }
+
+  #hamb {
+    display: none;
+  }
+  @media screen and (min-width: 1200px) {
+    .hambWrapper {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    #hamb:checked ~ .link {
+      @include flex(none, none, column);
     }
   }
 
@@ -48,6 +68,17 @@ nav {
   }
 
   .link {
+    @media screen and (max-width: 1200px) {
+      background: inherit;
+      padding: 10px;
+      border-radius: 0 0 0 10px;
+      top: 75px;
+      right: 0;
+      z-index: 1;
+      position: absolute;
+      display: none;
+      transition: width 2s all;
+    }
     a {
       text-decoration: none;
       margin: 0 10px 0 10px;

@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Campus;
-use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\LieuType;
 use Symfony\Component\Form\AbstractType;
@@ -12,7 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -66,8 +65,9 @@ class CreerSortieForm extends AbstractType
 
             ->add('enregistrer', SubmitType::class, ['label' => 'Enregistrer'])
             ->add('publier', SubmitType::class, ['label' => 'Publier la sortie'])
-            ->add('annuler', SubmitType::class, ['label' => 'Annuler']);
-
+            ->add('annuler', ButtonType::class, ['label' => 'Annuler',
+                'attr' => ['onclick' => 'location.href="/"'],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -171,8 +171,48 @@ class SortieController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+
+            switch ($form->getClickedButton()->getName()) {
+
+                case 'supprimer':
+
+                    $entityManager->remove($sortie);
+                    $entityManager->flush();
+                    $this->addFlash('succes', 'Votre sortie a bien été supprimée.');
+                    return $this->redirectToRoute('accueil_accueil');
+
+                case 'enregistrer':
+
+                    $lieu = $sortie->getlieu();
+                    $ville = $lieu->getVille();
+
+                    $entityManager->persist($ville);
+                    $entityManager->persist($lieu);
+                    $entityManager->persist($sortie);
+
+                    $entityManager->flush();
+
+                    $this->addFlash('succes', 'Votre sortie a bien été enregistrée.');
+                    return $this->redirectToRoute('accueil_accueil');
+
+                case 'publier':
+
+                    $etatDefaut = $etatRepository->find(1);
+                    $sortie->setEtat($etatDefaut);
+
+                    $lieu = $sortie->getlieu();
+                    $ville = $lieu->getVille();
+
+                    $entityManager->persist($ville);
+                    $entityManager->persist($lieu);
+                    $entityManager->persist($sortie);
+                    
+                    $entityManager->flush();
+
+                    $this->addFlash('succes', 'Votre sortie a bien été publiée.');
+                    return $this->redirectToRoute('accueil_accueil');
+            }
         }
 
         return $this->render('sortie/modifier.html.twig', [

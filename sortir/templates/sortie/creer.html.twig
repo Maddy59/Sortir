@@ -12,7 +12,7 @@
 	<script src="{{ asset('js/mapCreation.js') }}"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key={{ app.request.server.get('KEY') }}&callback=initAutocomplete&libraries=places&v=weekly" async></script>
 	<script>
-		document.getElementById('sortie_adresse').addEventListener('keypress', function (event) {
+		document.getElementById('creer_sortie_form_adresse').addEventListener('keypress', function (event) {
 if (event.keyCode == 13) {
 event.preventDefault();
 }
