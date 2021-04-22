@@ -6,14 +6,31 @@
     <link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block body %}
+<div class="info">
+    <div class="key">
+			<span>Date du jour :
+			</span>
+        <span>Participant :
+			</span>
+    </div>
+    <div class="value">
+			<span>
+				{{ "now"|date("d/m/Y") }}
+			</span>
+        {% if app.user %}
+            <span>
+				{{ app.user.pseudo }}
+			</span>
+        {% endif %}
 
+    </div>
+</div>
 <div class="wrapper">
     <div class="title">
         <h2>GESTION UTILISATEUR</h2>
     </div>
 
     {{ form_start(gestionForm) }}
-
     {% if form_errors(gestionForm) %}
         form_errors(gestionForm)
     {% endif %}
@@ -21,24 +38,22 @@
     <div class="filterWrapper">
 
         <div class="search">
-            <button class="searchButton">
-                Chercher
-            </button>
+            <div class="button">
+                <button class="searchButton">
+                    Chercher
+                </button>
+            </div>
         </div>
-
         <div class="filter">
-
             <div class="inputFilter">
-
                 <div class="row">
 						<span>Recherche :
 						</span>
                     {{ form_widget(gestionForm.nom) }}
                 </div>
-
             </div>
-
         </div>
+
         {{ form_end(gestionForm) }}
 
 
