@@ -1,15 +1,25 @@
 {% extends "base.html.twig" %}
 
 {% block stylesheets %}
-	{{ parent() }}
-			<link href="{{ asset('build/form.css') }}" rel="stylesheet"/>
+    {{ parent() }}
+    <link href="{{ asset('build/form.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block title %}
-	Register
+    Register
 {% endblock %}
 
 {% block body %}
-		{{ form(registrationForm) }}
-
-	{% endblock %}
+    <div class="regisForm-row">
+        <div class="regisForm-col">
+            <div>
+            {{ form(registrationForm) }}
+            </div>
+        </div>
+        <div class="regisForm-col">
+            <div>
+            {{ form(registrationCsv) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
