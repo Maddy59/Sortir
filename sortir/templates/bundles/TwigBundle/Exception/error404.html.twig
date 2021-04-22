@@ -1,17 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    {{ parent() }}
-{% endblock %}
-
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('build/accueil.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('build/profil_show.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}
+    {{ parent() }} | Acces interdit
 {% endblock %}
 
 {% block body %}
-    404
+    <div class="wrapper">
+        <div class="title"><h2>La page que vous cherche n'a pas été trouvé</h2></div>
 
+        <img src="{{ asset('img/error404.png') }}" alt="oh no alex moris">
+        <div class="filterWrapper">
 
+            <div class="search">
+
+                <div class="button">
+                    <button class="searchButton">
+                        <a href="{{ path('accueil_accueil') }}">Retourner à l'accueil</a>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

@@ -141,7 +141,7 @@ class SortieController extends AbstractController
         $sortie = $sortieRepository->find($id);
 
         if ($this->getUser()->getUsername() != $sortie->getOrganisateur()->getUsername()) {
-            return new Response(500);
+            throw $this->createAccessDeniedException();
         }
         $form = $this->createForm(AnnulerSortieForm::class, $sortie);
         $form->handleRequest($request);
