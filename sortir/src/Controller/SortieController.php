@@ -38,6 +38,11 @@ class SortieController extends AbstractController
         $form = $this->createForm(CreerSortieForm::class, $sortie);
 
         $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->getClickedButton()->getName() === 'Annuler') {
+            return $this->redirectToRoute('accueil_accueil');
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             switch ($form->getClickedButton()->getName()) {
@@ -75,11 +80,6 @@ class SortieController extends AbstractController
 
                     $this->addFlash('succes', 'Votre sortie a bien été publiée.');
                     return $this->redirectToRoute('accueil_accueil');
-
-                case 'Annuler':
-
-                    return $this->redirectToRoute('accueil_accueil');
-
             }
         }
         return $this->render('sortie/creer.html.twig', [
@@ -154,6 +154,10 @@ class SortieController extends AbstractController
         $form = $this->createForm(AnnulerSortieForm::class, $sortie);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->getClickedButton()->getName() === 'Annuler') {
+            return $this->redirectToRoute('accueil_accueil');
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             switch ($form->getClickedButton()->getName()) {
@@ -164,12 +168,7 @@ class SortieController extends AbstractController
                     $etat = $etatRepository->find(6);
                     $sortie->setEtat($etat);
                     $em->persist($sortie);
-                    $em->flush();
-
-                case 'Annuler':
-
-                    return $this->redirectToRoute('accueil_accueil');
-            }
+                    $em->flush();}
 
         }
         return $this->render('sortie/annuler.html.twig', [
@@ -198,6 +197,10 @@ class SortieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager = $this->getDoctrine()->getManager();
+
+            if ($form->isSubmitted() && $form->getClickedButton()->getName() === 'Annuler') {
+                return $this->redirectToRoute('accueil_accueil');
+            }
 
             switch ($form->getClickedButton()->getName()) {
 
@@ -238,11 +241,6 @@ class SortieController extends AbstractController
 
                     $this->addFlash('succes', 'Votre sortie a bien été publiée.');
                     return $this->redirectToRoute('accueil_accueil');
-
-                case 'Annuler':
-
-                    return $this->redirectToRoute('accueil_accueil');
-
             }
         }
 
