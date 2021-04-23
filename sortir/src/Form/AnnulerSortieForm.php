@@ -41,7 +41,7 @@ class AnnulerSortieForm extends AbstractType
             ])
             ->add('Enregistrer', SubmitType::class)
             ->add('Annuler', ButtonType::class, [
-                'attr' => ['onclick' => 'location.href="/"']]);
+                'attr' => ['onclick' => "location.href='{{ path('accueil_accueil') }}'"]]);
     }
     public function configureOptions(OptionsResolver $resolver)
     {

@@ -84,7 +84,7 @@ class ModifierSortieForm extends AbstractType
             ->add('publier', SubmitType::class, ['label' => 'Publier la sortie'])
             ->add('supprimer', SubmitType::class, ['label' => 'Supprimer'])
             ->add('Annuler', ButtonType::class, [
-                'attr' => ['onclick' => 'location.href="/"'],
+                'attr' => ['onclick' => "location.href='{{ path('accueil_accueil') }}'"],
             ]);
     }
 

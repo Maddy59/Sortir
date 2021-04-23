@@ -77,7 +77,7 @@ class CreerSortieForm extends AbstractType
             ->add('enregistrer', SubmitType::class, ['label' => 'Enregistrer'])
             ->add('publier', SubmitType::class, ['label' => 'Publier la sortie'])
             ->add('annuler', ButtonType::class, ['label' => 'Annuler',
-                'attr' => ['onclick' => 'location.href="/"'],
+                'attr' => ['onclick' => "location.href='{{ path('accueil_accueil') }}'"],
             ]);
     }
 
