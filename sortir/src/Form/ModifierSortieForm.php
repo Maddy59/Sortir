@@ -83,8 +83,9 @@ class ModifierSortieForm extends AbstractType
             ->add('enregistrer', SubmitType::class, ['label' => 'Enregistrer'])
             ->add('publier', SubmitType::class, ['label' => 'Publier la sortie'])
             ->add('supprimer', SubmitType::class, ['label' => 'Supprimer'])
-            ->add('Annuler', SubmitType::class);
+            ->add('Annuler', ButtonType::class);
     }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

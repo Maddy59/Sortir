@@ -9,3 +9,10 @@
 
 {% block body %}
 	{{form(AnnulerSortieForm)}}{% endblock %}
+
+	{% block javascripts  %}
+
+		<script type="text/javascript">
+			document.getElementById("annuler_sortie_form_Annuler").addEventListener("click", () => location.href ='{{ path('accueil_accueil') }}');
+		</script>
+	{% endblock %}

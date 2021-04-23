@@ -39,10 +39,6 @@ class SortieController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->getClickedButton()->getName() === 'Annuler') {
-            return $this->redirectToRoute('accueil_accueil');
-        }
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             switch ($form->getClickedButton()->getName()) {
@@ -154,10 +150,6 @@ class SortieController extends AbstractController
         $form = $this->createForm(AnnulerSortieForm::class, $sortie);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->getClickedButton()->getName() === 'Annuler') {
-            return $this->redirectToRoute('accueil_accueil');
-        }
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             switch ($form->getClickedButton()->getName()) {
@@ -194,13 +186,10 @@ class SortieController extends AbstractController
 
         $form = $this->createForm(ModifierSortieForm::class, $sortie, ['idVille' => $idVille]);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager = $this->getDoctrine()->getManager();
-
-            if ($form->isSubmitted() && $form->getClickedButton()->getName() === 'Annuler') {
-                return $this->redirectToRoute('accueil_accueil');
-            }
 
             switch ($form->getClickedButton()->getName()) {
 
