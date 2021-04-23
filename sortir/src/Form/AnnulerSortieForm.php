@@ -40,8 +40,7 @@ class AnnulerSortieForm extends AbstractType
                 'attr' => ['placeholder' => 'Max : 500 mots'],
             ])
             ->add('Enregistrer', SubmitType::class)
-            ->add('Annuler', ButtonType::class, [
-                'attr' => ['onclick' => "location.href='{{ path('accueil_accueil') }}'"]]);
+            ->add('Annuler', SubmitType::class);
     }
     public function configureOptions(OptionsResolver $resolver)
     {
