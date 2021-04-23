@@ -40,7 +40,7 @@ class CreerSortieForm extends AbstractType
                 'label' => 'Nombre de places :',
             ])
             ->add('duree', IntegerType::class, [
-                'label' => 'Durée :',
+                'label' => 'Durée (min) :',
             ])
             ->add('infosSortie', null, [
                 'required' => false,

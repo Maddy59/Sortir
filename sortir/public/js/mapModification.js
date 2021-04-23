@@ -44,7 +44,7 @@ async function initAutocomplete() {
     map.data.forEach(function (feature) {
       map.data.remove(feature)
     })
-    getPoly()
+    await getPoly()
     zoom(map)
   }
 
