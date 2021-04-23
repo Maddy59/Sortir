@@ -25,8 +25,6 @@ Encore.setOutputPath('public/build/')
   .enableSingleRuntimeChunk()
 
   .cleanupOutputBeforeBuild()
-  .enableSourceMaps(!Encore.isProduction())
-  .enableVersioning(Encore.isProduction())
 
   .configureBabel((config) => {
     config.plugins.push('@babel/plugin-proposal-class-properties')

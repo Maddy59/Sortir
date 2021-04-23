@@ -17,6 +17,7 @@ nav {
 
 nav * {
   color: white;
+  position: relative;
 }
 
 nav * button {
@@ -28,12 +29,40 @@ nav * button {
   margin: 0 5px 0 5px;
 }
 
+@media screen and (max-width: 1200px) {
+  nav * button {
+    margin: 5px 0 5px 0;
+  }
+}
+
 nav * button:hover {
   background: hsl(208.8deg, 62%, calc(62% * 1));
 }
 
 nav * button:hover a {
   color: #24252a;
+}
+
+nav #hamb {
+  display: none;
+}
+
+@media screen and (min-width: 1200px) {
+  nav .hambWrapper {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  nav #hamb:checked ~ .link {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
 }
 
 nav .logo {
@@ -64,6 +93,21 @@ nav .logo label {
 nav .logo img {
   width: 50px;
   margin: 0 20px 0 0;
+}
+
+@media screen and (max-width: 1200px) {
+  nav .link {
+    background: inherit;
+    padding: 10px;
+    border-radius: 0 0 0 10px;
+    top: 75px;
+    right: 0;
+    z-index: 1;
+    position: absolute;
+    display: none;
+    -webkit-transition: width 2s all;
+    transition: width 2s all;
+  }
 }
 
 nav .link a {

@@ -9,7 +9,9 @@
 {% endblock %}
 
 {% block javascripts  %}
-	<script src="{{ asset('js/map.js') }}"></script>
+	<script src="{{ asset('js/mapModification.js') }}"></script>
+	<script type="module" src="{{ asset('js/setAdress.js') }}"></script>
+
 	<script src="https://maps.googleapis.com/maps/api/js?key={{ app.request.server.get('KEY') }}&callback=initAutocomplete&libraries=places&v=weekly" async></script>
 	<script>
 		document.getElementById('modifier_sortie_form_adresse').addEventListener('keypress', function (event) {
@@ -35,8 +37,12 @@ event.preventDefault();
 
 		<div class="right">
 			{{ form_row(ModiferSortieForm.campus) }}
-			{{ form_row(ModiferSortieForm.lieu) }}
+			<div class="villeLieu">
+				{{ form_row(ModiferSortieForm.lieu) }}
+				{{ form_row(ModiferSortieForm.ville) }}
+			</div>
 			{{ form_row(ModiferSortieForm.adresse) }}
+
 			<div class="mapWrapper" data-lat={{lat}} data-lng={{lng}}>
 				<div id="map"></div>
 			</div>
@@ -47,7 +53,7 @@ event.preventDefault();
 		{{ form_row(ModiferSortieForm.enregistrer) }}
 		{{ form_row(ModiferSortieForm.publier) }}
 		{{ form_row(ModiferSortieForm.supprimer) }}
-		{{ form_row(ModiferSortieForm.annuler) }}
+		{{ form_row(ModiferSortieForm.Annuler) }}
 	</div>
 
 	{{ form_end(ModiferSortieForm) }}

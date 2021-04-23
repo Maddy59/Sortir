@@ -3,223 +3,224 @@
 main {
   position: relative;
   @include flex(center);
-}
-
-.info {
-  @include flex(space-between, none, row);
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 10px;
-
-  .value {
-    span {
-      @include bold;
-    }
-    @include flex(none, none, column);
-  }
-
-  .key {
-    @include flex(none, flex-end, column);
-    padding: 0 10px 0 0;
-  }
-}
-
-.wrapper {
-  @include flex(none, none, column);
-  max-width: 85vw;
-  margin: 75px 0 0 0;
-  padding: 30px;
-  border-radius: 10px;
-  position: relative;
-  background: #e8e8e8;
-  .title {
-    @include flex(center, center);
-    @include shadow;
-    @include color(greyd);
-    text-align: center;
-    color: white;
-    margin: 0 0 20px 0;
+  .info {
+    @include flex(space-between, none, row);
     position: absolute;
-    border-radius: 10px 10px 0 0;
-    left: 0;
     top: 0;
-    width: 100%;
-    height: 75px;
-    h2 {
-      @include bold;
-      margin: 0;
-    }
-  }
-  
-  .filterWrapper {
-    @include flex(none, none, column);
-    .search {
-      display: flex;
-      flex: 1;
-      margin: 80px 0 30px 0;
-      @media screen and (max-width: 700px) {
-        @include flex(space-between, center, column);
-        height: 100px;
-      }
-      .button {
-        @include flex;
-        @media screen and (max-width: 430px) {
-          @include flex(none, none, column);
-        }
-        button {
-          @media screen and (max-width: 430px) {
-            margin: 10px 0 0 0;
-          }
-          @media screen and (max-width: 700px) {
-            margin: 10px 10px 0 0;
-          }
+    right: 0;
+    padding: 10px;
 
-          margin: 0 10px 0 0;
-          @include color;
-          border-radius: 10px;
-          width: 150px;
-          height: 42px;
-          color: white;
-          &:hover {
-            @include color(bluel);
-            color: #24252a;
-          }
-        }
-      }
-
-      input {
-        height: 42px;
-        padding: 0 0 0 30px;
-        width: 100%;
-        max-width: 450px;
-        border-radius: 10px;
-        margin: 0 10px 0 0;
-      }
-    }
-
-    .filter {
-      @media screen and (max-width: 800px) {
-        flex-direction: column;
-      }
-      @include flex;
-      .inputFilter {
-        @media screen and (min-width: 800px) {
-          margin: 0 100px 0 30px;
-        }
-        @include flex(none, none, column);
-        flex-grow: 1;
-        max-width: 270px;
-        .row {
-          @media screen and (max-width: 330px) {
-            flex-direction: column;
-          }
-          @include flex(space-between);
-          min-height: 35px;
-          select,
-          input {
-            width: 170px;
-            border-radius: 10px;
-            padding: 0 5px 0 15px;
-            margin: 5px;
-          }
-          span {
-            @include flex(none, center);
-          }
-          margin: 0 0 15px 0;
-        }
-      }
-      .boxFilter {
-        @include flex(space-between, flex-start, column);
-        max-width: 400px;
-        .row {
-          @include check;
-        }
-      }
-    }
-  }
-  table {
-    @include shadow;
-    width: 100%;
-    table-layout: fixed;
-    border-style: hidden;
-    margin: 35px 0 0 0;
-    border-radius: 10px;
-    border-collapse: collapse;
-
-    tr {
-      background: #f8f8f8;
-      padding: 0.35em;
-    }
-
-    tbody:nth-of-type(odd) {
-      tr {
-        background: #e8e8e8;
-      }
-    }
-
-    th:first-child {
-      border-radius: 10px 0 0 0;
-    }
-
-    th:last-child {
-      border-radius: 0 10px 0 0;
-    }
-
-    tbody:last-child > tr > td:first-child {
-      border-radius: 0 0 0 10px;
-    }
-
-    tbody:last-child > tr > td:last-child {
-      border-radius: 0 0 10px 0;
-    }
-
-    th,
-    td {
-      padding: 0.625em;
-      text-align: center;
-    }
-
-    thead tr {
-      @include gradient;
-    }
-
-    th {
-      overflow: hidden;
-      font-size: 16px;
-      letter-spacing: 0.1em;
-      color: white;
-    }
-
-    @media screen and (max-width: 800px) {
-      box-shadow: none;
-
-      thead {
-        display: none;
-      }
-
-      tr {
-        @include shadow;
-        display: block;
-        margin: 0 0 20px 0;
-      }
-
-      td {
-        border-bottom: 1px solid #ddd;
-        display: block;
-        font-size: 0.8em;
-        text-align: right;
-      }
-
-      td::before {
+    .value {
+      span {
         @include bold;
-        content: attr(data-label);
-        float: left;
-        text-transform: uppercase;
+      }
+      @include flex(none, none, column);
+    }
+
+    .key {
+      @include flex(none, flex-end, column);
+      padding: 0 10px 0 0;
+    }
+  }
+  .wrapper {
+    @include flex(none, none, column);
+    @media screen and (min-width: 1300px) {
+      max-width: 85vw;
+    }
+
+    margin: 75px 0 0 0;
+    padding: 30px;
+    border-radius: 10px;
+    position: relative;
+    background: #e8e8e8;
+    .title {
+      @include flex(center, center);
+      @include shadow;
+      @include color(greyd);
+      text-align: center;
+      color: white;
+      margin: 0 0 20px 0;
+      position: absolute;
+      border-radius: 10px 10px 0 0;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 75px;
+      h2 {
+        @include bold;
+        margin: 0;
+      }
+    }
+
+    .filterWrapper {
+      @include flex(none, none, column);
+      .search {
+        display: flex;
+        flex: 1;
+        margin: 80px 0 30px 0;
+        @media screen and (max-width: 700px) {
+          @include flex(space-between, center, column);
+          height: 100px;
+        }
+        .button {
+          @include flex;
+          @media screen and (max-width: 430px) {
+            @include flex(none, none, column);
+          }
+          button {
+            @media screen and (max-width: 430px) {
+              margin: 10px 0 0 0;
+            }
+            @media screen and (max-width: 700px) {
+              margin: 10px 10px 0 0;
+            }
+
+            margin: 0 10px 0 0;
+            @include color;
+            border-radius: 10px;
+            width: 150px;
+            height: 42px;
+            color: white;
+            &:hover {
+              @include color(bluel);
+              color: #24252a;
+            }
+          }
+        }
+
+        input {
+          height: 42px;
+          padding: 0 0 0 30px;
+          width: 100%;
+          max-width: 450px;
+          border-radius: 10px;
+          margin: 0 10px 0 0;
+        }
       }
 
-      td:last-child {
-        border-bottom: 0;
+      .filter {
+        @media screen and (max-width: 800px) {
+          flex-direction: column;
+        }
+        @include flex;
+        .inputFilter {
+          @media screen and (min-width: 800px) {
+            margin: 0 100px 0 30px;
+          }
+          @include flex(none, none, column);
+          flex-grow: 1;
+          max-width: 270px;
+          .row {
+            @media screen and (max-width: 330px) {
+              flex-direction: column;
+            }
+            @include flex(space-between);
+            min-height: 35px;
+            select,
+            input {
+              width: 170px;
+              border-radius: 10px;
+              padding: 0 5px 0 15px;
+              margin: 5px;
+            }
+            span {
+              @include flex(none, center);
+            }
+            margin: 0 0 15px 0;
+          }
+        }
+        .boxFilter {
+          @include flex(space-between, flex-start, column);
+          max-width: 400px;
+          .row {
+            @include check;
+          }
+        }
+      }
+    }
+    table {
+      @include shadow;
+      width: 100%;
+      table-layout: fixed;
+      border-style: hidden;
+      margin: 35px 0 0 0;
+      border-radius: 10px;
+      border-collapse: collapse;
+
+      tr {
+        background: #f8f8f8;
+        padding: 0.35em;
+      }
+
+      tbody:nth-of-type(odd) {
+        tr {
+          background: #e8e8e8;
+        }
+      }
+
+      th:first-child {
+        border-radius: 10px 0 0 0;
+      }
+
+      th:last-child {
+        border-radius: 0 10px 0 0;
+      }
+
+      tbody:last-child > tr > td:first-child {
+        border-radius: 0 0 0 10px;
+      }
+
+      tbody:last-child > tr > td:last-child {
+        border-radius: 0 0 10px 0;
+      }
+
+      th,
+      td {
+        padding: 0.625em;
+        text-align: center;
+      }
+
+      thead tr {
+        @include gradient;
+      }
+
+      th {
+        overflow: hidden;
+        font-size: 16px;
+        letter-spacing: 0.1em;
+        color: white;
+      }
+
+      @media screen and (max-width: 800px) {
+        box-shadow: none;
+
+        thead {
+          display: none;
+        }
+
+        tr {
+          @include shadow;
+          display: block;
+          margin: 0 0 20px 0;
+        }
+
+        td {
+          border-bottom: 1px solid #ddd;
+          display: block;
+          font-size: 0.8em;
+          text-align: right;
+        }
+
+        td::before {
+          @include bold;
+          content: attr(data-label);
+          float: left;
+          text-transform: uppercase;
+        }
+
+        td:last-child {
+          border-bottom: 0;
+        }
       }
     }
   }

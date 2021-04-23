@@ -27,14 +27,23 @@ li {
           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
+* {
+  font-size: 16px;
+}
+
+* button {
+  cursor: pointer;
+}
+
 html {
   height: 100%;
 }
 
 html body {
-  background: linear-gradient(-45deg, #3f5efb 0%, #fc466b 100%);
-  -webkit-animation: gradient 15s ease infinite;
-          animation: gradient 15s ease infinite;
+  background-color: #FF3CAC;
+  background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
+  -webkit-animation: gradient 60s ease infinite;
+          animation: gradient 60s ease infinite;
   background-size: 400% 400%;
   min-height: 100vh;
   display: -webkit-box;
@@ -44,6 +53,7 @@ html body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  margin: 0;
 }
 
 @-webkit-keyframes gradient {

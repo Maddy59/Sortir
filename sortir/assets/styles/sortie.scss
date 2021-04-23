@@ -51,6 +51,21 @@ main {
         min-width: 0;
         max-width: 750px;
         width: 100%;
+        * {
+          input,
+          select {
+            max-width: unset;
+          }
+        }
+        .villeLieu {
+          @include flex(none, none, row);
+          div {
+            width: 100%;
+          }
+          div:nth-child(2) {
+            margin-left: 15px;
+          }
+        }
         .mapWrapper {
           @include flex;
           margin-top: 10px;

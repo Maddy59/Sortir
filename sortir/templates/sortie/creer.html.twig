@@ -34,7 +34,11 @@ event.preventDefault();
 		</div>
 		<div class="right">
 			{{ form_row(form.campus) }}
-			{{ form_row(form.lieu) }}
+			<div class="villeLieu">
+				{{ form_row(form.lieu) }}
+				{{ form_row(form.ville) }}
+
+			</div>
 			{{ form_row(form.adresse) }}
 			<div class="mapWrapper">
 				<div id="map"></div>

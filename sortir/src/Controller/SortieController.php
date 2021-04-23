@@ -35,45 +35,50 @@ class SortieController extends AbstractController
         $sortie->setOrganisateur($this->getUser());
         $sortie->setCampus($this->getUser()->getCampus());
 
-        $sortieForm = $this->createForm(CreerSortieForm::class, $sortie);
+        $form = $this->createForm(CreerSortieForm::class, $sortie);
 
-        $sortieForm->handleRequest($request);
-        if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-            if ($sortieForm->get('enregistrer')->isClicked()) {
-                $etatDefaut = $etatRepository->find(1);
-                $sortie->setEtat($etatDefaut);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                $lieu = $sortie->getlieu();
-                $ville = $lieu->getVille();
+            switch ($form->getClickedButton()->getName()) {
 
-                $entityManager->persist($ville);
-                $entityManager->persist($lieu);
-                $entityManager->persist($sortie);
+                case 'enregistrer':
 
-                $entityManager->flush();
+                    $etat = $etatRepository->find(1);
+                    $sortie->setEtat($etat);
 
-                $this->addFlash('succes', 'Votre sortie a bien été créée.');
-                return $this->redirectToRoute('accueil_accueil');
-            }
-            if ($sortieForm->get('publier')->isClicked()) {
-                $etatDefaut = $etatRepository->find(2);
-                $sortie->setEtat($etatDefaut);
+                    $ville = $form['ville']->getData();
+                    $lieu = $sortie->getlieu();
+                    $lieu->setVille($ville);
 
-                $lieu = $sortie->getlieu();
-                $ville = $lieu->getVille();
+                    $entityManager->persist($lieu);
+                    $entityManager->persist($sortie);
 
-                $entityManager->persist($ville);
-                $entityManager->persist($lieu);
-                $entityManager->persist($sortie);
+                    $entityManager->flush();
 
-                $entityManager->flush();
+                    $this->addFlash('succes', 'Votre sortie a bien été créée.');
+                    return $this->redirectToRoute('accueil_accueil');
 
-                $this->addFlash('succes', 'Votre sortie a bien été publiée.');
-                return $this->redirectToRoute('accueil_accueil');
+                case 'publier':
+
+                    $etat = $etatRepository->find(2);
+                    $sortie->setEtat($etat);
+
+                    $ville = $form['ville']->getData();
+                    $lieu = $sortie->getlieu();
+                    $lieu->setVille($ville);
+
+                    $entityManager->persist($lieu);
+                    $entityManager->persist($sortie);
+
+                    $entityManager->flush();
+
+                    $this->addFlash('succes', 'Votre sortie a bien été publiée.');
+                    return $this->redirectToRoute('accueil_accueil');
             }
         }
         return $this->render('sortie/creer.html.twig', [
-            'form' => $sortieForm->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -135,9 +140,8 @@ class SortieController extends AbstractController
     /**
      * @Route("/annuler/{id}", name="annuler")
      */
-    public function annuler($id, Sortie $sortie, SortieRepository $sortieRepository, EtatRepository $etatRepository, EntityManagerInterface $entityManager, Request $request): Response
+    public function annuler(Sortie $sortie, SortieRepository $sortieRepository, EtatRepository $etatRepository, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $sortie = $sortieRepository->find($id);
 
         if ($this->getUser()->getUsername() != $sortie->getOrganisateur()->getUsername()) {
             throw $this->createAccessDeniedException();
@@ -148,11 +152,10 @@ class SortieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            $etat = $etatRepository->findByLibelle("Annulé");
+            $etat = $etatRepository->find(6);
             $sortie->setEtat($etat);
             $em->persist($sortie);
             $em->flush();
-
         }
         return $this->render('sortie/annuler.html.twig', [
             'AnnulerSortieForm' => $form->createView(),
@@ -172,7 +175,11 @@ class SortieController extends AbstractController
 
         $form = $this->createForm(ModifierSortieForm::class, $sortie);
         $form->handleRequest($request);
+        
+        $idVille = $sortie->getLieu()->getVille()->getId();
 
+        $form = $this->createForm(ModifierSortieForm::class, $sortie, ['idVille' => $idVille]);
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -188,10 +195,10 @@ class SortieController extends AbstractController
 
                 case 'enregistrer':
 
+                    $ville = $form['ville']->getData(1);
                     $lieu = $sortie->getlieu();
-                    $ville = $lieu->getVille();
+                    $lieu->setVille($ville);
 
-                    $entityManager->persist($ville);
                     $entityManager->persist($lieu);
                     $entityManager->persist($sortie);
 
@@ -202,16 +209,16 @@ class SortieController extends AbstractController
 
                 case 'publier':
 
-                    $etatDefaut = $etatRepository->find(1);
-                    $sortie->setEtat($etatDefaut);
+                    $etat = $etatRepository->find(2);
+                    $sortie->setEtat($etat);
 
+                    $ville = $form['ville']->getData();
                     $lieu = $sortie->getlieu();
-                    $ville = $lieu->getVille();
+                    $lieu->setVille($ville);
 
-                    $entityManager->persist($ville);
                     $entityManager->persist($lieu);
                     $entityManager->persist($sortie);
-                    
+
                     $entityManager->flush();
 
                     $this->addFlash('succes', 'Votre sortie a bien été publiée.');

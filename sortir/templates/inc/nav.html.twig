@@ -5,51 +5,47 @@
 	{% endblock %}
 
 
-
 	{# TODO décommenter la condition pour que l'entete n'apparaisse pas si on est sur la page de login une fois les pages mises en place #}
 
 	<a class="logo" href="{{ path('accueil_accueil') }}">
 		<img src="{{ asset('img/logo.png') }}" alt="">
 		<label for="">SORTIR</label>
 	</a>
-	<input type="checkbox" id="hamb" name="hamb">
 
 	{% if app.user %}
-		<label class="hambWrapper" for="hamb">
-			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="34px" height="27px" viewbox="0 0 34 27" enable-background="new 0 0 34 27" xml:space="preserve">
-				<rect fill="#FFFFFF" width="34" height="4"/>
-				<rect y="11" fill="#FFFFFF" width="34" height="4"/>
-				<rect y="23" fill="#FFFFFF" width="34" height="4"/>
+		<button class="hamber" onclick="this.classList.toggle('opened');this.setAttribute('aria-expanded', this.classList.contains('opened'))" aria-label="Main Menu">
+			<svg width="50" height="50" viewbox="0 0 100 100">
+				<path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"/>
+				<path class="line line2" d="M 20,50 H 80"/>
+				<path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"/>
 			</svg>
-		</label>
+		</button>
 
 		<li class="link">
 			{% if "ROLE_ADMIN" in app.user.roles  %}
 
 				{# TODO: ajouter les liens vers le controlleur campus #}
-				<button>
-					<a class="ville" href="{{ path('ville_lister') }}" title="Villes">Villes</a>
-
+				<button onclick="location.href='{{ path('ville_lister') }}'">
+					Villes
 				</button>
-				<button>
-					<a class="campus" href="{{ path('campus_lister') }}" title="Campus">Campus</a>
-
+				<button onclick="location.href='{{ path('campus_lister') }}'">
+					Campus
 				</button>
-				<button>
-					<a class="addUser" href="{{ path('register_form') }}" title="Ajouter utilisateur">Ajouter utilisateur</a>
+				<button onclick="location.href='{{ path('register_form') }}'">
+					Ajouter utilisateur
 				</button>
-				<button>
-					<a class="addUser" href="{{ path('admin_profilutilisateurs') }}" title="Ajouter utilisateur">Gestion des utilisateurs</a>
+				<button onclick="location.href='{{ path('admin_profilutilisateurs') }}'">
+					Gestion des utilisateurs
 				</button>
 			{% endif %}
-			<button>
-				<a class="accueil" href="{{ path('accueil_accueil') }}" title="Accueil">Accueil</a>
+			<button onclick="location.href='{{ path('accueil_accueil') }}'">
+				Accueil
 			</button>
-			<button>
-				<a class="profil" href="{{ path('profil_edit') }}" title="Mon profil">Mon profil</a>
+			<button onclick="location.href='{{ path('profil_edit') }}'">
+				Mon profil
 			</button>
-			<button>
-				<a class="logout" href="{{ path('app_logout') }}" title="Se deconnecter">Se déconnecter</a>
+			<button onclick="location.href='{{ path('app_logout') }}'">
+				Se déconnecter
 			</button>
 		</li>
 	{% endif %}

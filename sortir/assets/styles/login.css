@@ -96,8 +96,8 @@ main form .log .checkbox input {
 
 main form .log .checkbox input + label::before {
   content: '';
-  min-width: 15px;
-  min-height: 15px;
+  min-width: 10px;
+  min-height: 10px;
   background: white;
   border: 2px solid #2f3137;
   border-radius: 7px;

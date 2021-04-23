@@ -19,9 +19,7 @@ class LieuType extends AbstractType
             ->add('nom', TextType::class, ['label' => 'Nom du lieu'])
             ->add('rue', HiddenType::class)
             ->add('latitude', HiddenType::class)
-            ->add('longitude', HiddenType::class)
-            ->add('ville', VilleType::class, [
-                'label' => false]);
+            ->add('longitude', HiddenType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

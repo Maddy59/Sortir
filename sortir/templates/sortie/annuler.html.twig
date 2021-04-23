@@ -4,17 +4,8 @@
 {% endblock %}
 {% block stylesheets %}
 	{{ parent() }}
-			<link href="{{ asset('build/form.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('build/form.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
-
-	{{form(AnnulerSortieForm)}}
-
-		{% block javascripts %}
-			<script>
-				document.getElementById("annuler_sortie_form_Annuler").addEventListener("click", () => window.location ="{{ path('accueil_accueil') }}");
-			</script>
-		{% endblock %}
-
-	{% endblock %}
+	{{form(AnnulerSortieForm)}}{% endblock %}

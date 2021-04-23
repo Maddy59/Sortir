@@ -2,12 +2,13 @@
 
 namespace App\Form;
 
+use App\Entity\Lieu;
 use App\Entity\Sortie;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,10 +28,11 @@ class AnnulerSortieForm extends AbstractType
                     'attr' => ['readonly' => true],
                     'label' => 'Date',
                 ])
-            ->add('campus', TextType::class, [
-                'attr' => ['readonly' => true],
-            ])
-            ->add('lieu', TextType::class, [
+            ->add('campus')
+            ->add('lieu', EntityType::class, [
+                'class' => Lieu::class,
+                'choice_value' => 'nom',
+                'mapped' => false,
                 'attr' => ['readonly' => true],
             ])
             ->add('motif', null, [
@@ -38,9 +40,9 @@ class AnnulerSortieForm extends AbstractType
                 'attr' => ['placeholder' => 'Max : 500 mots'],
             ])
             ->add('Enregistrer', SubmitType::class)
-            ->add('Annuler', ButtonType::class);
+            ->add('Annuler', ButtonType::class, [
+                'attr' => ['onclick' => 'location.href="/"']]);
     }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

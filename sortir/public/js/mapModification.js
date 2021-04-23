@@ -1,32 +1,42 @@
-function initAutocomplete() {
+async function initAutocomplete() {
   var geocoder = new google.maps.Geocoder()
+  var dataLatLng = document.querySelector('.mapWrapper')
+  const lat = parseFloat(dataLatLng.dataset.lat)
+  const lng = parseFloat(dataLatLng.dataset.lng)
+  const LatLng = new google.maps.LatLng(lat, lng)
 
   const docId = {
-    street: document.getElementById('creer_sortie_form_lieu_rue'),
-    adress: document.getElementById('creer_sortie_form_adresse'),
-    lat: document.getElementById('creer_sortie_form_lieu_latitude'),
-    lng: document.getElementById('creer_sortie_form_lieu_longitude'),
+    street: document.getElementById('modifier_sortie_form_lieu_rue'),
+    adress: document.getElementById('modifier_sortie_form_adresse'),
+    lat: document.getElementById('modifier_sortie_form_lieu_latitude'),
+    lng: document.getElementById('modifier_sortie_form_lieu_longitude'),
   }
-  
-  cityZip = document.getElementById('creer_sortie_form_ville')
+
+  cityZip = document.getElementById('modifier_sortie_form_ville')
   city = cityZip.selectedOptions[0].text.split(',')[0]
   zip = cityZip.selectedOptions[0].text.split(',')[1]
 
   cityZip.addEventListener('change', () => {
     setBorder()
   })
-
   const map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: 46.4953618, lng: 1.6927562 },
-    zoom: 5,
+    center: LatLng,
+    zoom: 16,
     mapTypeId: 'roadmap',
   })
 
   var marker = new google.maps.Marker({
-    position: { lat: 46.4953618, lng: 1.6927562 },
+    position: LatLng,
     map,
-    title: 'France',
+    title: 'Lieu de la sortie.',
   })
+
+  const getPoly = async () => {
+    url = `https://nominatim.openstreetmap.org/search?city=${city}&format=geojson&polygon_geojson=1&countrycodes=fr&limit=1`
+    data = await fetch(url)
+    data = await data.json()
+    map.data.addGeoJson(data)
+  }
 
   const setBorder = async () => {
     city = cityZip.selectedOptions[0].text.split(',')[0]
@@ -34,12 +44,10 @@ function initAutocomplete() {
     map.data.forEach(function (feature) {
       map.data.remove(feature)
     })
-    url = `https://nominatim.openstreetmap.org/search?city=${city}&format=geojson&polygon_geojson=1&countrycodes=fr&limit=1`
-    data = await fetch(url)
-    data = await data.json()
-    map.data.addGeoJson(data) 
+    getPoly()
     zoom(map)
   }
+
   map.data.setStyle({
     fillColor: 'transparent',
     strokeWeight: 2,
@@ -71,14 +79,14 @@ function initAutocomplete() {
     }
   }
 
-  setBorder()
+  getPoly()
 
   const setAdress = (LatLng) => {
     geocoder.geocode(
       {
         latLng: LatLng,
       },
-      function (results, status) {
+      (results, status) => {
         if (status == google.maps.GeocoderStatus.OK) {
           if (results[0]) {
             const adress = results[0].address_components
@@ -92,9 +100,10 @@ function initAutocomplete() {
 
             let route = adress.find((i) => i.types[0] === 'route') || ''
             !!route && (route = route.short_name)
+            console.log(results[0].formatted_address)
 
-            let street = street_number + ' ' + route
-            console.log(street)
+            const street = street_number + ' ' + route
+
             docId.adress.value = results[0].formatted_address
             docId.street.value = street
             docId.lat.value = LatLng.lat()
@@ -105,12 +114,14 @@ function initAutocomplete() {
     )
   }
 
+  setAdress(LatLng)
+
   map.addListener('click', function (e) {
     setAdress(e.latLng)
     marker.setPosition(e.latLng, map)
   })
 
-  const input = document.getElementById('creer_sortie_form_adresse')
+  const input = document.getElementById('modifier_sortie_form_adresse')
   const searchBox = new google.maps.places.SearchBox(input)
 
   map.addListener('bounds_changed', () => {

@@ -5,15 +5,11 @@ nav {
     color: white;
     position: relative;
     button {
-      @media screen and (max-width: 1200px) {
-        margin: 5px 0 5px 0;
-      }
-
       @include shadow;
       border-radius: 5px;
       background: #2f3036;
       padding: 9px 5px 9px 5px;
-      margin: 0 5px 0 5px;
+      margin: 5px 5px 5px 5px;
       &:hover {
         @include color(bluel);
         a {
@@ -23,19 +19,51 @@ nav {
     }
   }
 
-  #hamb {
-    display: none;
+  .hamber {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    padding: 0;
+    box-shadow: none;
   }
-  @media screen and (min-width: 1200px) {
-    .hambWrapper {
-      display: none;
-    }
+  .line {
+    fill: none;
+    stroke: white;
+    stroke-width: 6;
+    transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+      stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .line1 {
+    stroke-dasharray: 60 207;
+    stroke-width: 6;
+  }
+  .line2 {
+    stroke-dasharray: 60 60;
+    stroke-width: 6;
+  }
+  .line3 {
+    stroke-dasharray: 60 207;
+    stroke-width: 6;
+  }
+  .opened .line1 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+    stroke-width: 6;
+  }
+  .opened .line2 {
+    stroke-dasharray: 1 60;
+    stroke-dashoffset: -30;
+    stroke-width: 6;
+  }
+  .opened .line3 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+    stroke-width: 6;
   }
 
-  @media screen and (max-width: 1200px) {
-    #hamb:checked ~ .link {
-      @include flex(none, none, column);
-    }
+  .hamber[class='hamber opened'] ~ .link {
+    visibility: visible;
   }
 
   @include shadow;
@@ -68,20 +96,14 @@ nav {
   }
 
   .link {
-    @media screen and (max-width: 1200px) {
-      background: inherit;
-      padding: 10px;
-      border-radius: 0 0 0 10px;
-      top: 75px;
-      right: 0;
-      z-index: 1;
-      position: absolute;
-      display: none;
-      transition: width 2s all;
-    }
-    a {
-      text-decoration: none;
-      margin: 0 10px 0 10px;
-    }
+    @include flex(none, none, column);
+    background: inherit;
+    padding: 10px;
+    border-radius: 0 0 0 10px;
+    top: 75px;
+    right: 0;
+    z-index: 1;
+    position: absolute;
+    visibility: hidden;
   }
 }
