@@ -40,7 +40,7 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $sortie->setArchivee(false);
             switch ($form->getClickedButton()->getName()) {
 
                 case 'enregistrer':
